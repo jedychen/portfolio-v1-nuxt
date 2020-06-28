@@ -20,7 +20,7 @@
         </v-row>
       </template>
     </v-img>
-    <p class="caption mt-2">
+    <p class="subheading mt-2">
       {{ content.image.description }}
     </p>
   </div>

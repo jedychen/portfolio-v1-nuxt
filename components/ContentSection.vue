@@ -6,12 +6,12 @@
     <!-- Render section's title and intro. -->
     <v-col
       cols="12"
-      class="content-block pa-6"
+      class="pa-6"
     >
-      <h1 class="display-2 mb-4">
+      <h1 class="text-h2 mt-16 mb-6 font-weight-medium">
         {{ section.title }}
       </h1>
-      <p class="mt-6">
+      <p class="text-h4 mb-12 font-weight-light">
         {{ section.description }}
       </p>
     </v-col>

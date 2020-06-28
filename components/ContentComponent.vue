@@ -3,6 +3,7 @@
   <div
     v-if="type == 'text'"
     v-html="parsedHtml"
+    class="title font-weight-regular content__text"
   />
   <InlineImage
     v-else-if="type == 'inlineImage'"
@@ -26,6 +27,12 @@
   />
   <div v-else />
 </template>
+
+<style lang="scss" scoped>
+.content__text {
+  line-height: 1.5em;
+}
+</style>
 
 <script>
 import { documentToHtmlString } from '@contentful/rich-text-html-renderer';

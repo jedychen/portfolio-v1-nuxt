@@ -2,18 +2,10 @@
   <v-app-bar
     absolute
     color="grey darken-3"
-    dark
     hide-on-scroll
     short
     :scroll-target="contentId"
   >
-    <v-avatar>
-      <v-img
-        src="/logo.jpg"
-        alt="Logo"
-      />
-    </v-avatar>
-
     <v-toolbar-title
       class="header__title hidden-xs-only"
     >

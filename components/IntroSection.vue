@@ -5,41 +5,48 @@
   >
     <v-col
       cols="12"
-      md="6"
-      class="content-block pa-6"
+      class="px-7"
     >
       <h1 class="mb-4 intro-section__title">
         {{ content.title }}
       </h1>
+    </v-col>
+    <v-col
+      cols="12"
+      md="4"
+      class="pa-6"
+    >
+      
       <v-chip
         v-for="(tag, i) in content.tags"
         :key="i"
-        label
-        
-        small
+        outlined
         class="ma-1"
+        color="secondary"
       >
         {{ tag }}
       </v-chip>
-      <p class="title font-weight-light mt-8">
+      <p class="text-h5 font-weight-light ml-1 mt-8">
         {{ content.date }}
       </p>
     </v-col>
     <v-col
       cols="12"
-      md="6"
-      class="content-block pa-6"
+      md="8"
+      class="pa-6"
     >
       <InlineVideo :content="content.media" />
-      <p class="mt-6">
+      <p class="text-h6 font-weight-regular content__text mt-6">
         {{ content.description }}
       </p>
     </v-col>
     <v-col
       cols="12"
-      class="content-block pa-6"
+      class="pa-6"
     >
-      <v-divider />
+      <v-divider 
+        color="white"
+      />
     </v-col>
   </v-row>
 </template>
@@ -50,6 +57,11 @@
   font-size: 60px;
   font-weight: 400;
 }
+
+.content__text {
+  line-height: 1.5em;
+}
+
 </style>
 
 <script>

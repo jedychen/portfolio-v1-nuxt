@@ -1,6 +1,5 @@
 <template>
-  <v-app 
-    dark
+  <v-app
     class="main-app"
   >
     <TheHeader id="#scrolling-content" />
@@ -15,9 +14,9 @@
 </template>
 
 <style lang="scss">
-body {
-  background: black;
-}
+// body {
+//   background: black;
+// }
 </style>
 
 <script>
@@ -34,5 +33,9 @@ export default {
     return {
     }
   },
+
+  created(){
+    this.$vuetify.theme.dark = true;
+  }
 };
 </script>

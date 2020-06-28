@@ -24,7 +24,7 @@
         cols="12"
         sm="10"
         md="12"
-        lg="9"
+        lg="10"
         class="page-content-col mt-12"
       >
         <IntroSection :content="introSectionItem" />

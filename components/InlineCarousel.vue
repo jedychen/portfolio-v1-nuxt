@@ -19,25 +19,32 @@
     >
       <v-col
         cols="12"
-        sm="2"
+        sm="10"
         class="pb-0"
       >
-        <p class="caption mb-0 font-weight-bold">
-          {{ currentIndex + 1 }} / {{ content.slides.length }}
+        <p class="subheading">
+          {{ currentDescription }}
         </p>
       </v-col>
       <v-col
         cols="12"
-        sm="10"
-        class="pb-0"
+        sm="2"
+        class="pb-0 carousel__counter"
       >
-        <p class="caption">
-          {{ currentDescription }}
+        <p class="subheading mb-0 font-weight-bold">
+          {{ currentIndex + 1 }} / {{ content.slides.length }}
         </p>
       </v-col>
     </v-row>
   </div>
 </template>
+
+<style lang="scss" scoped>
+.carousel__counter {
+  text-align: right;
+}
+</style>
+
 
 <script>
   export default {

@@ -1,9 +1,11 @@
 import colors from 'vuetify/es5/util/colors'
+import minifyTheme from 'minify-css-string'
 
 require('dotenv').config({ path: '.env' })
 
 export default {
   mode: 'spa',
+  target: 'static',
   /*
   ** Headers of the page
   */
@@ -27,12 +29,14 @@ export default {
   ** Global CSS
   */
   css: [
+    '@/assets/styles/_global.scss',
   ],
   /*
   ** Plugins to load before mounting the App
   */
   plugins: [
     '~/plugins/vue-vimeo-player',
+    '~/plugins/contentful',
   ],
   /*
   ** Nuxt.js dev-modules
@@ -55,7 +59,9 @@ export default {
     theme: {
       dark: true,
       themes: {
+        options: { minifyTheme },
         dark: {
+          background: '#00a86b',
           primary: colors.blue.darken2,
           accent: colors.grey.darken3,
           secondary: colors.amber.darken3,

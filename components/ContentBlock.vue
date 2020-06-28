@@ -4,7 +4,7 @@
     v-resize="onResize"
     cols="12"
     :md="width"
-    class="content-block pa-6"
+    class="pa-6"
   >
     <ContentComponent
       v-for="(item, i) in block.inlineItems"
@@ -54,7 +54,7 @@ export default {
   created() {
     this.onResize = debounce(()=>{
         if (this.topMargin == true && window.innerWidth>=this.breakpointMd) {
-          this.$el.style.marginTop = '-100px';
+          this.$el.style.marginTop = '-200px';
         } else {
           this.$el.style.marginTop = '0px';
         }
