@@ -2,7 +2,7 @@
   "projects": [
     {
         "position": 0,
-        "url": "#equilibrium",
+        "url": "equilibrium",
         "imageUrl": "equilibrium.jpg",
         "themeColor": "#8b8f9a",
         "blocks": [
@@ -40,7 +40,7 @@
     },
     {
         "position": 1,
-        "url": "#vision-poster",
+        "url": "vision-poster",
         "imageUrl": "vision-poster.jpg",
         "themeColor": "#ba3a72",
         "titleIndex": 2,
@@ -118,7 +118,7 @@
     },
     {
         "position": 3,
-        "url": "/hu",
+        "url": "hu",
         "imageUrl": "hu.jpg",
         "themeColor": "#ee6f40",
         "titleIndex": 2,
@@ -157,7 +157,7 @@
     },
     {
         "position": 4,
-        "url": "/sketch",
+        "url": "sketch",
         "imageUrl": "sketch.jpg",
         "themeColor": "#9b9046",
         "titleIndex": 2,

@@ -2,6 +2,7 @@ import FlipCard from "~/assets/js/flipCard.js";
 
 export const state = () => ({
   flipCard: new FlipCard(),
+  transitionAwayTimer: null,
 })
 
 export const getters = {
@@ -22,7 +23,8 @@ export const mutations = {
     state.flipCard.setRendering(rendering);
   },
   flipCardTransitionAway(state) {
-    state.flipCard.transitionAway();
+    state.transitionAwayTimer = 
+        setTimeout(() => state.flipCard.transitionAway(), 3000);
   },
   flipCardTransitionBack(state) {
     state.flipCard.transitionBack();

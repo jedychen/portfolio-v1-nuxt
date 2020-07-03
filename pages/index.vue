@@ -50,6 +50,12 @@
     }
   }
 
+  &.loading-in-progress {
+    .loading__container {
+      visibility: visible;
+    }
+  }
+
   &.project-clicked {
     opacity: 0;
     visibility: hidden;
@@ -70,12 +76,21 @@
 
 .loading__container {
   position: fixed;
+  visibility: hidden;
 
   .loading__text {
     color: white;
     opacity: 1;
     transition: all 0.5s ease;
   }
+}
+
+.page-enter-active, .page-leave-active {
+  transition: opacity .5s;
+}
+
+.page-enter, .page-leave-to {
+  opacity: 0;
 }
 </style>
 
@@ -100,12 +115,16 @@ export default {
   watch: {
     loadingProgress(value) {
       if (value >= 100) {
+        this.container.classList.remove("loading-in-progress")
         this.container.classList.add("loading-completed")
+      } else {
+        this.container.classList.add("loading-in-progress")
       }
     },
     clickedProject(value) {
       if (value != '') {
         this.container.classList.add("project-clicked")
+        this.$router.push({ path: `/work/${value}`})
       }
     }
   },

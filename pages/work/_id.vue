@@ -50,6 +50,13 @@
 .project-page {
   background: black;
 }
+
+.page-enter-active, .page-leave-active {
+  transition: opacity .5s;
+}
+.page-enter, .page-leave-to {
+  opacity: 0;
+}
 </style>
 
 <script>
@@ -98,6 +105,8 @@ export default {
   },
 
   mounted() {
+    let id = this.$route.params.id;
+    console.log(id);
     this.calcuPageLength();
   },
 

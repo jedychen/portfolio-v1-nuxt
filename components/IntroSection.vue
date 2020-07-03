@@ -22,7 +22,7 @@
         :key="i"
         outlined
         class="ma-1"
-        color="secondary"
+        color="primary"
       >
         {{ tag }}
       </v-chip>

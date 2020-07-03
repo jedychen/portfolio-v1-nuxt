@@ -70,7 +70,7 @@ class FlipCard {
     this.intersectedObject_ = null; // Intersected object with raycaster.
     this.projectClicked_ = false;
     this.loadingProgress_ = 0;
-    this.url_ = "";
+    this.url_ = '';
     this.isRendering_ = true; // If the threeJS is rendering.
     this.container_ = null;
     this.aspectRatio_ = 1;
@@ -183,6 +183,7 @@ class FlipCard {
       this.flipCardRender.transitionBack();
       this.projectClicked_ = false;
     }
+    this.url_ = '';
   }
 
   // Main functions
@@ -566,8 +567,6 @@ class FlipCard {
       this.intersectedObject_ = intersects[0].object;
       this.flipCardRender.transitionAway(this.intersectedObject_);
       this.url_ = this.flipCardRender.getUrl(this.intersectedObject_);
-      // TODO (jedy) Set this in router.
-      setTimeout(() => this.setRendering(false), 3000);
       this.projectClicked_ = true;
     }
   }

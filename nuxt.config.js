@@ -37,6 +37,7 @@ export default {
   plugins: [
     '~/plugins/vue-vimeo-player',
     '~/plugins/contentful',
+    '~/plugins/route',
   ],
   /*
   ** Nuxt.js dev-modules
@@ -49,12 +50,14 @@ export default {
   */
   modules: [
     '@nuxtjs/dotenv',
+    
   ],
   /*
   ** vuetify module configuration
   ** https://github.com/nuxt-community/vuetify-module
   */
   vuetify: {
+    treeShake: true,
     customVariables: ['~/assets/variables.scss'],
     theme: {
       dark: true,
@@ -62,9 +65,9 @@ export default {
         options: { minifyTheme },
         dark: {
           background: '#00a86b',
-          primary: colors.blue.darken2,
-          accent: colors.grey.darken3,
-          secondary: colors.amber.darken3,
+          primary: colors.red.lighten4,
+          accent: colors.blue.darken3,
+          secondary: colors.red.darken3,
           info: colors.teal.lighten1,
           warning: colors.amber.base,
           error: colors.deepOrange.accent4,

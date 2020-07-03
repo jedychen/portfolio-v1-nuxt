@@ -21,18 +21,18 @@
 
     <v-toolbar-items>
       <v-btn icon>
-        <router-link to="/">
+        <nuxt-link to="/">
           Work
-        </router-link>
+        </nuxt-link>
       </v-btn>
       <v-divider
         class="mx-4"
         vertical
       />
       <v-btn icon>
-        <router-link to="/about">
+        <nuxt-link to="/about">
           About
-        </router-link>
+        </nuxt-link>
       </v-btn>
     </v-toolbar-items>
   </v-app-bar>
