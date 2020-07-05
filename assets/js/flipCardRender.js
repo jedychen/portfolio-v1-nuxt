@@ -12,7 +12,7 @@ import { randomInRange, calcDistance } from "./utils.js";
  *    "blocks": Array, Cards info.
  *       "horizontalFlip": boolean, If card is flipping horizontally.
  *       "text": string, Text displayed at the back of card. Separated with ','.
- *       "weight": string. Font weight like "normal", "border".
+ *       //"weight": string. Font weight like "normal", "border".
  */
 
 /** @private */
@@ -156,8 +156,8 @@ class FlipCardRender {
       this.CARD_SIZE,
       CONFIGURATION_.cardThickness
     );
-    for (let projectConfig of projectsConfig.projects) {
-      this.setupSingleProject_(projectConfig, cardImages, geometry);
+    for (let [index, projectConfig] of this.enumerate(projectsConfig.projects)) {
+      this.setupSingleProject_(index, projectConfig, cardImages, geometry);
     }
     this.isInitialized_ = true;
   }
@@ -181,19 +181,20 @@ class FlipCardRender {
   /**
    * Set up cards for a single project.
    * Use the project theme color for text background and card's side background.
+   * @param {number} index Index position of this project on the canvas.
    * @param {JSON} projectConfig Json data of single project's config.
    * @param {Array} cardImages Array of card image textures.
    * @param {THREE.BoxBufferGeometry} geometry Card geometry.
    * @private
    */
-  setupSingleProject_(projectConfig, cardImages, geometry) {
-    const projectIndex = projectConfig.position;
+  setupSingleProject_(index, projectConfig, cardImages, geometry) {
+    const projectIndex = index;
     const material = new THREE.MeshBasicMaterial({
       color: projectConfig.themeColor,
     });
 
     for (let i = 0; i < 6; i++) {
-      let horizontalFlip = Math.random() >= 0.5;
+      let horizontalFlip = projectConfig.cards[i].horizontalFlip;
       let cardMaterial = [
         material, //left
         material, //right
@@ -207,10 +208,10 @@ class FlipCardRender {
         new THREE.MeshStandardMaterial({
           // back
           map: this.drawTextAsTexture_(
-            projectConfig.blocks[i].text.split(","),
+            projectConfig.cards[i].text.split(","),
             projectConfig.themeColor,
-            projectConfig.blocks[i].weight,
-            horizontalFlip
+            "normal",
+            horizontalFlip,
           ),
         }),
       ];
@@ -221,7 +222,7 @@ class FlipCardRender {
       card.projectIndex = projectIndex;
       card.rotateDirection = Math.random() < 0.5 ? -Math.PI : Math.PI;
       card.rotateAxis = horizontalFlip ? "y" : "x";
-      card.url = projectConfig.url;
+      card.url = projectConfig.slug;
 
       this.setupCardPos_(card);
       this.addCardFlipAnimation_(card);
@@ -413,7 +414,7 @@ class FlipCardRender {
 
   /**
    * Set transition animation when visiting back.
-   * @public
+   * @private
    */
   transitionBack_() {
     for (let card of this.cards_) {
@@ -439,6 +440,19 @@ class FlipCardRender {
       gsap.to(card.position, config_ripple);
 
       this.addCardFlipAnimation_(card);
+    }
+  }
+
+  /**
+   * Interates over an iterable, and return index.
+   * @public
+   */
+  *enumerate(iterable) {
+    let i = 0;
+
+    for (const x of iterable) {
+        yield [i, x];
+        i++;
     }
   }
 }

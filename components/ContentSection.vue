@@ -1,7 +1,6 @@
 <template>
   <v-row
     no-gutters
-    class="content-section"
   >
     <!-- Render section's title and intro. -->
     <v-col

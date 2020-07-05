@@ -1,7 +1,6 @@
 <template>
   <v-row
     no-gutters
-    class="content-section"
   >
     <v-col
       cols="12"

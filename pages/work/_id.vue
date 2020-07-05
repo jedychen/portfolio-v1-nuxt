@@ -35,6 +35,7 @@
           class="content-section-container"
           @ready="calcuPageLength"
         />
+        <UpNextSection :content="upNextSectionItems" />
       </v-col>
       <!-- Right Margin -->
       <v-col
@@ -61,17 +62,19 @@
 
 <script>
 import contentful from '@/plugins/contentful.js'
+import * as prettify from 'pretty-contentful'
 import debounce from 'lodash/debounce'
-import ContentSection from '@/components/ContentSection';
-import IntroSection from '@/components/IntroSection';
-import SideNav from '@/components/SideNav';
-import * as prettify from 'pretty-contentful';
+import SideNav from '@/components/SideNav'
+import IntroSection from '@/components/IntroSection'
+import ContentSection from '@/components/ContentSection'
+import UpNextSection from '@/components/UpNextSection'
 
 export default {
   components: {
     SideNav,
     IntroSection,
     ContentSection,
+    UpNextSection,
   },
 
   data () {
@@ -80,6 +83,7 @@ export default {
       scrollTop: 0, // Scrolling distance to top.
       introSectionItem: {},
       contentSectionItems: [],
+      upNextSectionItems: [],
       sideNavWaypointOffset: 50,
     }
   },
@@ -101,49 +105,48 @@ export default {
   },
 
   beforeMount() {
-    this.parseContentful();
+    this.parseContentful()
   },
 
   mounted() {
-    let id = this.$route.params.id;
-    console.log(id);
-    this.calcuPageLength();
+    this.calcuPageLength()
   },
 
   methods: {
     calcuPageLength() {
-      const contentCol = document.querySelector(".page-content-col");
+      const contentCol = document.querySelector(".page-content-col")
       if (contentCol != null)
-        this.pageLength = contentCol.offsetHeight;
-      this.calcuWaypoints();
+        this.pageLength = contentCol.offsetHeight
+      this.calcuWaypoints()
     },
     calcuWaypoints() {
-      const sections = document.querySelectorAll(".content-section-container");
+      const sections = document.querySelectorAll(".content-section-container")
       sections.forEach((item, index) => {
-        let offsetTop = item.offsetTop;
-        let vhPos = Math.floor((offsetTop - this.sideNavWaypointOffset) * 100 / this.pageLength);
-        this.$store.commit("setWaypoint", {index: index, vhPos: vhPos});
+        let offsetTop = item.offsetTop
+        let vhPos = Math.floor((offsetTop - this.sideNavWaypointOffset) * 100 / this.pageLength)
+        this.$store.commit("setWaypoint", {index: index, vhPos: vhPos})
       });
     },
     onResize: debounce(function(){
-      this.calcuPageLength();
+      this.calcuPageLength()
     }, 100),
     onScroll(e) {
       this.scrollTop = e.target.scrollTop;
-      let presentage = this.scrollTop / (this.pageLength - window.innerHeight);
-      presentage = this.clamp(presentage, 0, 1);
-      this.$store.commit("setScrollPresentage", presentage);
+      let presentage = this.scrollTop / (this.pageLength - window.innerHeight)
+      presentage = this.clamp(presentage, 0, 1)
+      this.$store.commit("setScrollPresentage", presentage)
     },
     clamp(num, min, max) {
-      return num <= min ? min : num >= max ? max : num;
+      return num <= min ? min : num >= max ? max : num
     },
     parseContentful() {
       const flattenedData = prettify(this.projects)
       // Divide the contentful response by data type
       for (let item of flattenedData) {
-        if (item.contentType == 'projectPage') {
-          this.introSectionItem = item.introSection;
-          this.contentSectionItems = item.contentSections;
+        if (item.slug == this.$route.params.id) {
+          this.introSectionItem = item.introSection
+          this.contentSectionItems = item.contentSections
+          this.upNextSectionItems = item.otherWork
           break;
         }
       }

@@ -1,6 +1,14 @@
 <template>
   <div class="feature-work__container">
-    <div id="threejs-container" />
+    <div 
+      id="threejs-container"
+      v-touch="{
+        left: () => swipe('Left'),
+        right: () => swipe('Right'),
+        up: () => swipe('Up'),
+        down: () => swipe('Down')
+      }"
+    />
     <v-container class="loading__container">
       <v-row
         class="fill-height"
@@ -95,12 +103,31 @@
 </style>
 
 <script>
+import contentful from '@/plugins/contentful.js'
+import * as prettify from 'pretty-contentful'
+
 export default {
   data() {
     return {
       theme_class: "feature-work__container",
       container: null,
     }
+  },
+
+  asyncData ({ params }) {
+    return Promise.all([
+      // fetch all blog posts sorted by creation date
+      contentful.getEntries({
+        'content_type': 'projectConfigurations',
+        include: 6,
+      })
+    ]).then(([result]) => {
+      // return data that should be available
+      // in the template
+      return {
+        projects: result.items
+      }
+    }).catch(console.error)
   },
 
   computed: {
@@ -129,12 +156,16 @@ export default {
     }
   },
 
+  beforeMount() {
+    this.parseContentful()
+  },
+
   mounted() {
-    this.container = document.querySelector(".feature-work__container");
-    this.detectWebGL();
-    this.$store.commit("flipCardStore/initFlipCard", document.querySelector('#threejs-container'));
+    this.container = document.querySelector(".feature-work__container")
+    this.detectWebGL()
+    this.$store.commit("flipCardStore/init", document.querySelector('#threejs-container'))
     if (this.loadingProgress >= 100) {
-      this.container.classList.add("loading-completed");
+      this.container.classList.add("loading-completed")
     }
   },
 
@@ -144,7 +175,15 @@ export default {
       const Detector={canvas:!!window.CanvasRenderingContext2D,webgl:function(){try{var e=document.createElement("canvas");return!!window.WebGLRenderingContext&&(e.getContext("webgl")||e.getContext("experimental-webgl"))}catch(t){return false}}(),workers:!!window.Worker,fileapi:window.File&&window.FileReader&&window.FileList&&window.Blob,getWebGLErrorMessage:function(){var e=document.createElement("div");e.id="webgl-error-message";e.style.fontFamily="monospace";e.style.fontSize="13px";e.style.fontWeight="normal";e.style.textAlign="center";e.style.background="#fff";e.style.color="#000";e.style.padding="1.5em";e.style.width="400px";e.style.margin="5em auto 0";if(!this.webgl){e.innerHTML=window.WebGLRenderingContext?['Your graphics card does not seem to support <a href="http://khronos.org/webgl/wiki/Getting_a_WebGL_Implementation" style="color:#000">WebGL</a>.<br />','Find out how to get it <a href="http://get.webgl.org/" style="color:#000">here</a>.'].join("\n"):['Your browser does not seem to support <a href="http://khronos.org/webgl/wiki/Getting_a_WebGL_Implementation" style="color:#000">WebGL</a>.<br/>','Find out how to get it <a href="http://get.webgl.org/" style="color:#000">here</a>.'].join("\n")}return e},addGetWebGLMessage:function(e){var t,n,r;e=e||{};t=e.parent!==undefined?e.parent:document.body;n=e.id!==undefined?e.id:"oldie";r=Detector.getWebGLErrorMessage();r.id=n;t.appendChild(r)}};
       const script=document.createElement('script');
       if (!Detector.webgl) Detector.addGetWebGLMessage()
-    }
+    },
+    swipe (direction) {
+      this.$store.commit('flipCardStore/swipeDevice', direction)
+    },
+    parseContentful() {
+      const flattenedData = prettify(this.projects)
+      // Divide the contentful response by data type
+      this.$store.commit("flipCardStore/setConfigsData", flattenedData[0])
+    },
   },
 };
 </script>

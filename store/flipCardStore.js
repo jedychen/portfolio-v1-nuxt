@@ -15,18 +15,24 @@ export const getters = {
 }
 
 export const mutations = {
-  initFlipCard(state, container) {
+  setConfigsData(state, json) {
+    state.flipCard.setProjectConfigs(json);
+  },
+  init(state, container) {
     state.flipCard.init(container);
     state.flipCard.animate();
   },
-  setRenderFlipCard(state, rendering) {
-    state.flipCard.setRendering(rendering);
-  },
-  flipCardTransitionAway(state) {
+  transitionAway(state) {
     state.transitionAwayTimer = 
         setTimeout(() => state.flipCard.transitionAway(), 3000);
   },
-  flipCardTransitionBack(state) {
+  transitionBack(state) {
     state.flipCard.transitionBack();
+  },
+  swipeDevice(state, direction) {
+    if (direction == 'Up')
+      state.flipCard.swipDeviceUp();
+    else if (direction == 'Down')
+      state.flipCard.swipDeviceDown();
   },
 }

@@ -1,8 +1,6 @@
 import * as THREE from "three";
-import * as Hammer from "hammerjs";
 import gsap from "gsap";
 import FlipCardRender from "./flipCardRender.js";
-import json from "../project_data.json";
 import { mobileCheck, tabletCheck } from "./utils.js";
 
 /**
@@ -120,7 +118,9 @@ class FlipCard {
     );
     this.raycaster_ = new THREE.Raycaster();
 
-    this.projectsConfig_ = json; // Load the Json file from local storage.
+    while (this.projectsConfig_ == null) {}
+    
+ 
     this.projectNum_ = this.projectsConfig_.projects.length;
 
     this.loadCoverImages_();
@@ -138,6 +138,15 @@ class FlipCard {
   }
 
   // Public functions
+
+  /**
+   * Set project configs.
+   * @public
+   */
+  setProjectConfigs(json) {
+    this.projectsConfig_ = json; // Load the Json file from contentful
+    console.log(json)
+  }
 
   /**
    * Get current progess of loading assets/images.
@@ -249,10 +258,7 @@ class FlipCard {
     for (let i = 0; i < this.projectNum_; i++) {
       // 6 cards per project.
       for (let j = 0; j < 6; j++) {
-        let cardImage = imageLoader.load(
-          require("@/assets/images/" +
-            this.projectsConfig_.projects[i].imageUrl)
-        );
+        let cardImage = imageLoader.load(this.projectsConfig_.projects[i].coverImage.file.url);
         cardImage.repeat.set(0.333, 0.5);
         cardImage.offset.set(imageOffsets[j].x, imageOffsets[j].y);
         this.cardImages_.push(cardImage);
@@ -415,15 +421,11 @@ class FlipCard {
    * @private
    */
   addEventListeners_() {
-    if (this.isDesktop_()) {
-      this.container_.addEventListener(
-        "wheel",
-        this.scrollDevice_.bind(this),
-        false
-      );
-    } else {
-      this.addHammerListener_();
-    }
+    this.container_.addEventListener(
+      "wheel",
+      this.scrollDevice_.bind(this),
+      false
+    );
 
     this.container_.addEventListener(
       "mousemove",
@@ -443,15 +445,11 @@ class FlipCard {
    * @private
    */
   removeEventListeners_() {
-    if (this.isDesktop_()) {
-      this.container_.removeEventListener(
-        "wheel",
-        this.scrollDevice_.bind(this),
-        false
-      );
-    } else {
-      this.removeHammerListener_();
-    }
+    this.container_.removeEventListener(
+      "wheel",
+      this.scrollDevice_.bind(this),
+      false
+    );
 
     this.container_.removeEventListener(
       "mousemove",
@@ -471,29 +469,6 @@ class FlipCard {
   }
 
   /**
-   * Add listener (Hammer.js) for interactions on mobile/tablet.
-   * @private
-   */
-  addHammerListener_() {
-    this.hammerSwipe = null;
-    this.hammertime = new Hammer(this.container_, {
-      inputClass: Hammer.TouchInput,
-    });
-    this.hammertime.get("swipe").set({ direction: Hammer.DIRECTION_VERTICAL });
-    this.hammertime.on("swipeup", this.swipDeviceUp_.bind(this));
-    this.hammertime.on("swipedown", this.swipDeviceDown_.bind(this));
-  }
-
-  /**
-   * Remove listener (Hammer.js) for interactions on mobile/tablet.
-   * @private
-   */
-  removeHammerListener_() {
-    this.hammertime.off("swipeup", this.swipDeviceUp_.bind(this));
-    this.hammertime.off("swipedown", this.swipDeviceDown_.bind(this));
-  }
-
-  /**
    * Handler for scrolling device on desktop.
    * @param {Event} event JS event.
    * @private
@@ -509,9 +484,9 @@ class FlipCard {
 
   /**
    * Handler for swipping device up on mobile.
-   * @private
+   * @public
    */
-  swipDeviceUp_() {
+  swipDeviceUp() {
     let changedPosY = this.camera_.position.y - CONFIGURATION_.swipeSpeed;
     if (changedPosY <= -this.cameraY_ + this.CAMERA_BOTTOM_MARGIN)
       changedPosY = -this.cameraY_ + this.CAMERA_BOTTOM_MARGIN;
@@ -524,9 +499,9 @@ class FlipCard {
 
   /**
    * Handler for swipping device down on mobile.
-   * @private
+   * @public
    */
-  swipDeviceDown_() {
+  swipDeviceDown() {
     let changedPosY = this.camera_.position.y + CONFIGURATION_.swipeSpeed;
     if (changedPosY >= this.cameraY_) changedPosY = this.cameraY_;
     this.hammerSwipe = gsap.to(this.camera_.position, {
