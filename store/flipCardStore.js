@@ -12,6 +12,9 @@ export const getters = {
   getClickedProject(state) {
     return state.flipCard.getUrl();
   },
+  getPasswordProtectionState(state) {
+    return state.flipCard.getPasswordProtectionState();
+  },
 }
 
 export const mutations = {

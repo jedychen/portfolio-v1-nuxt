@@ -70,6 +70,8 @@ import ContentSection from '@/components/ContentSection'
 import UpNextSection from '@/components/UpNextSection'
 
 export default {
+  middleware: ['password-protect'],
+
   components: {
     SideNav,
     IntroSection,
@@ -124,7 +126,7 @@ export default {
       sections.forEach((item, index) => {
         let offsetTop = item.offsetTop
         let vhPos = Math.floor((offsetTop - this.sideNavWaypointOffset) * 100 / this.pageLength)
-        this.$store.commit("setWaypoint", {index: index, vhPos: vhPos})
+        this.$store.commit('waypointStore/setWaypoint', {index: index, vhPos: vhPos})
       });
     },
     onResize: debounce(function(){
@@ -134,7 +136,7 @@ export default {
       this.scrollTop = e.target.scrollTop;
       let presentage = this.scrollTop / (this.pageLength - window.innerHeight)
       presentage = this.clamp(presentage, 0, 1)
-      this.$store.commit("setScrollPresentage", presentage)
+      this.$store.commit('waypointStore/setScrollPresentage', presentage)
     },
     clamp(num, min, max) {
       return num <= min ? min : num >= max ? max : num

@@ -69,6 +69,7 @@ class FlipCard {
     this.projectClicked_ = false;
     this.loadingProgress_ = 0;
     this.url_ = '';
+    this.passwordProtected_ = false;
     this.isRendering_ = true; // If the threeJS is rendering.
     this.container_ = null;
     this.aspectRatio_ = 1;
@@ -145,7 +146,6 @@ class FlipCard {
    */
   setProjectConfigs(json) {
     this.projectsConfig_ = json; // Load the Json file from contentful
-    console.log(json)
   }
 
   /**
@@ -162,6 +162,14 @@ class FlipCard {
    */
   getUrl() {
     return this.url_;
+  }
+
+  /**
+   * Get current state of password protection.
+   * @public
+   */
+  getPasswordProtectionState() {
+    return this.passwordProtected_;
   }
 
   /**
@@ -193,6 +201,7 @@ class FlipCard {
       this.projectClicked_ = false;
     }
     this.url_ = '';
+    this.passwordProtected_ = false;
   }
 
   // Main functions
@@ -542,6 +551,7 @@ class FlipCard {
       this.intersectedObject_ = intersects[0].object;
       this.flipCardRender.transitionAway(this.intersectedObject_);
       this.url_ = this.flipCardRender.getUrl(this.intersectedObject_);
+      this.passwordProtected_ = this.flipCardRender.getPasswordProtectionState(this.intersectedObject_);
       this.projectClicked_ = true;
     }
   }

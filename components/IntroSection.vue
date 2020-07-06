@@ -53,7 +53,7 @@
 <style lang="scss" scoped>
 .intro-section__title {
   font-family: 'Mayeka-Regular', sans-serif;
-  font-size: 60px;
+  font-size: 72px;
   font-weight: 400;
 }
 

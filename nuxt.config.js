@@ -50,7 +50,7 @@ export default {
   */
   modules: [
     '@nuxtjs/dotenv',
-    
+    'nuxt-password-protect',
   ],
   /*
   ** vuetify module configuration
@@ -74,6 +74,20 @@ export default {
           success: colors.green.accent3
         }
       }
+    }
+  },
+  /*
+  ** password page protection configuration
+  ** https://github.com/stephenkr/nuxt-password-protect
+  */
+  passwordProtect: {
+    formPath: '/password',
+    password: 'jedy',
+    tokenSeed: 10110011110,
+    cookieName: '_password',
+    cookie: {
+      prefix: '',
+      expires: 5
     }
   },
   /*

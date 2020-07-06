@@ -84,6 +84,16 @@ class FlipCardRender {
   }
 
   /**
+   * Get a card's password protection state.
+   * @param {THREE.Mesh} element Card element.
+   * @return {boolean}
+   * @public
+   */
+  getPasswordProtectionState(element) {
+    return element.passwordProtected;
+  }
+
+  /**
    * Get a project's width value.
    * @return {string}
    * @public
@@ -223,6 +233,7 @@ class FlipCardRender {
       card.rotateDirection = Math.random() < 0.5 ? -Math.PI : Math.PI;
       card.rotateAxis = horizontalFlip ? "y" : "x";
       card.url = projectConfig.slug;
+      card.passwordProtected = projectConfig.passwordProtected;
 
       this.setupCardPos_(card);
       this.addCardFlipAnimation_(card);

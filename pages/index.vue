@@ -151,6 +151,8 @@ export default {
     clickedProject(value) {
       if (value != '') {
         this.container.classList.add("project-clicked")
+        let passwordProtectionState = this.$store.getters['flipCardStore/getPasswordProtectionState']
+        this.$store.commit("passwordStore/setProtectionState", passwordProtectionState)
         this.$router.push({ path: `/work/${value}`})
       }
     }
@@ -161,6 +163,7 @@ export default {
   },
 
   mounted() {
+    this.$passwordProtect.removeAuthorisation()
     this.container = document.querySelector(".feature-work__container")
     this.detectWebGL()
     this.$store.commit("flipCardStore/init", document.querySelector('#threejs-container'))

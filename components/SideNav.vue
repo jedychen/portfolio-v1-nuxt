@@ -131,16 +131,16 @@ export default {
 
   computed: {
     waypointPresentage() {
-      return this.$store.getters.getScrollPresentage;
+      return this.$store.getters['waypointStore/getScrollPresentage'];
     },
     sectionNumber() {
       return this.sections.length
     },
     waypointPosList() {
-      return this.$store.getters.getWaypointPosList;
+      return this.$store.getters['waypointStore/getWaypointPosList'];
     },
     waypointPosListUpdated() {
-      return this.$store.getters.getWaypointPosListUpdated;
+      return this.$store.getters['waypointStore/getWaypointPosListUpdated'];
     },
   },
 

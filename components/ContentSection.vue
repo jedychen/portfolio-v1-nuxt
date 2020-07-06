@@ -7,7 +7,7 @@
       cols="12"
       class="pa-6"
     >
-      <h1 class="text-h2 mt-16 mb-6 font-weight-medium">
+      <h1 class="text-h2 mt-16 mb-6 font-weight-regular">
         {{ section.title }}
       </h1>
       <p class="text-h4 mb-12 font-weight-light">

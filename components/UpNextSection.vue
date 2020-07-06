@@ -22,7 +22,6 @@
       class="pa-6"
     >
       <v-card
-        raised="8"
         :href="project.slug"
         class="ml-1 mt-4"
       >
@@ -31,7 +30,7 @@
           :src="project.coverImage.file.url"
           
         >
-          <p class="mx-4 my-4 up-next-section__title">
+          <p class="mx-4 my-4 up-next-section__sub-title">
           {{ project.title }}
           </p>
         </v-img>
@@ -41,11 +40,12 @@
 </template>
 
 <style lang="scss" scoped>
-.up-next-section__title {
+.up-next-section__sub-title {
   font-family: 'Mayeka-Regular', sans-serif;
   font-size: 40px;
   font-weight: 400;
   line-height: 1em;
+  opacity: 0.8;
 }
 </style>
 
