@@ -12,7 +12,6 @@
         md="2"
       >
         <v-text-field
-          ref="password"
           v-model="inputValue"
           label="Password"
           color="white"
@@ -20,11 +19,7 @@
           :type="show ? 'text' : 'password'"
           filled
           outlined
-          persistent-hint
           required
-          :rules="[
-            () => !!inputValue || 'Password is required',
-          ]"
           :error-messages="errorMessages"
           @click:append="show = !show"
         ></v-text-field>
@@ -65,7 +60,7 @@ export default {
     return {
       inputValue: '',
       isAuthorised: false,
-      needAuthentication: false,
+      needAuthentication: true,
       show: false,
       errorMessages: '',
     }
@@ -73,7 +68,6 @@ export default {
 
   mounted() {
     this.needAuthentication = this.$store.getters['passwordStore/getProtectionState']
-    console.log(this.needAuthentication)
     this.isAuthorised = this.$passwordProtect.isAuthorised()
     if (this.needAuthentication == false) {
       this.$passwordProtect.authorise('jedy')

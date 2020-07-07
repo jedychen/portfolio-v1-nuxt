@@ -30,6 +30,7 @@ export const mutations = {
         setTimeout(() => state.flipCard.transitionAway(), 3000);
   },
   transitionBack(state) {
+    clearTimeout(state.transitionAwayTimer);
     state.flipCard.transitionBack();
   },
   swipeDevice(state, direction) {

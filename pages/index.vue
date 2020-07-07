@@ -163,7 +163,7 @@ export default {
   },
 
   mounted() {
-    this.$passwordProtect.removeAuthorisation()
+    // this.$passwordProtect.removeAuthorisation()
     this.container = document.querySelector(".feature-work__container")
     this.detectWebGL()
     this.$store.commit("flipCardStore/init", document.querySelector('#threejs-container'))

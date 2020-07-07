@@ -1,5 +1,5 @@
 export const state = () => ({
-  isProtected: false,
+  isProtected: true,
 })
 
 export const getters = {
