@@ -16,7 +16,7 @@ export const getters = {
   },
   getWaypointPosListUpdated(state) {
     return state.waypointUpdatedNumber;
-  }
+  },
 }
 
 export const mutations = {

@@ -132,6 +132,7 @@ export default {
     onResize: debounce(function(){
       this.calcuPageLength()
     }, 100),
+    // Get the presentatge of current scrolling content.
     onScroll(e) {
       this.scrollTop = e.target.scrollTop;
       let presentage = this.scrollTop / (this.pageLength - window.innerHeight)

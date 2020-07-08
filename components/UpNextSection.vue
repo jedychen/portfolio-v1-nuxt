@@ -26,11 +26,15 @@
         class="ml-1 mt-4"
       >
         <v-img
+          gradient="rgba(0, 0, 0, 0.3),
+                       rgba(0, 0, 0, 0)"
           :aspect-ratio="3/2"
           :src="project.coverImage.file.url"
-          
         >
-          <p class="mx-4 my-4 up-next-section__sub-title">
+          <p
+            :style="'color:'+project.themeColor"
+            class="mx-4 my-4 up-next-section__sub-title"
+          >
           {{ project.title }}
           </p>
         </v-img>
@@ -45,7 +49,6 @@
   font-size: 40px;
   font-weight: 400;
   line-height: 1em;
-  opacity: 0.8;
 }
 </style>
 

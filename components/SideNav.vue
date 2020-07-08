@@ -15,21 +15,24 @@
           class="side-nav__list mt-12"
         >
           <v-list-item-group
-            v-model="sectionNumber"
             color="primary"
           >
             <v-list-item
               v-for="(section, i) in sections"
               :id="'side-nav-list-item-'+i"
               :key="i"
+              :ripple="false"
               class="side-nav__list-item"
             >
               <v-list-item-content>
-                <v-list-item-title
+                <v-btn
+                  :ripple="false"
+                  text
+                  @click="$vuetify.goTo(scrollingTarget(section.title), scrollingOptions)"
                   class="side-nav__list-item-text subtitle-2"
                 >
                   {{ section.title }}
-                </v-list-item-title>
+                </v-btn>
               </v-list-item-content>
             </v-list-item>
           </v-list-item-group>
@@ -142,6 +145,14 @@ export default {
     waypointPosListUpdated() {
       return this.$store.getters['waypointStore/getWaypointPosListUpdated'];
     },
+    scrollingOptions() {
+      return {
+        container: '#scrolling-content',
+        duration: 300,
+        offset: 0.4 * window.innerHeight,
+        easing: 'easeInOutCubic',
+      }
+    },
   },
 
   watch: {
@@ -174,8 +185,9 @@ export default {
     setWaypointSectionStyle(initialize=false) {
       for(let i=0; i<this.sections.length; i++) {
         let nav_item = document.querySelector(this.selector.itemIdPrefix + i.toString());
-        if (i==0 && initialize) 
+        if (i==0 && initialize) {
           nav_item.classList.add("side-nav__list-item-active");
+        }
         nav_item.style.position = "absolute";
         nav_item.style.width = "100%";
         nav_item.style.top = this.waypointPosList[i] + "vh";
@@ -209,7 +221,10 @@ export default {
     onResize: debounce(function(){
       this.calcuTotalHeight();
       this.setActiveLink();
-    }, 100)
+    }, 100),
+    scrollingTarget(title) {
+      return '#' + title.toLowerCase().trim()
+    },
   },
 };
 </script>
