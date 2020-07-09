@@ -125,7 +125,7 @@ export default {
       const sections = document.querySelectorAll(".content-section-container")
       sections.forEach((item, index) => {
         let offsetTop = item.offsetTop
-        let vhPos = Math.floor((offsetTop - this.sideNavWaypointOffset) * 100 / this.pageLength)
+        let vhPos = (offsetTop) * 100 / this.pageLength
         this.$store.commit('waypointStore/setWaypoint', {index: index, vhPos: vhPos})
       });
     },

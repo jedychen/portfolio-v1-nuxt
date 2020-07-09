@@ -42,7 +42,7 @@
         cols="5"
         class="side-bar__divide-line"
       >
-        <div class="side-bar__waypoint" />
+        <div class="side-bar__waypoint-bar" />
         <v-divider
           vertical
         />
@@ -97,7 +97,7 @@
   }
 }
 
-.side-bar__waypoint {
+.side-bar__waypoint-bar {
   height: 25px;
   position: absolute;
   border-left: 2px solid white;
@@ -122,12 +122,12 @@ export default {
   data () {
     return {
       totalHeight: 0, // Side Nav's total height.
-      waypointOffset: 0, // Waypoint indicator's top offset.
+      waypointBarOffset: 0, // Waypoint indicator's top offset.
       selector: {
         container: '.side-nav__container',
         list: '.side-nav__list-wrapper',
         itemIdPrefix: '#side-nav-list-item-',
-        waypoint: '.side-bar__waypoint',
+        waypointBar: '.side-bar__waypoint-bar',
       },
     }
   },
@@ -149,7 +149,7 @@ export default {
       return {
         container: '#scrolling-content',
         duration: 300,
-        offset: 0.4 * window.innerHeight,
+        offset: 200,
         easing: 'easeInOutCubic',
       }
     },
@@ -157,7 +157,7 @@ export default {
 
   watch: {
     waypointPresentage(value) {
-      this.setWaypointPos(value);
+      this.setWaypointBarPos(value);
       this.setActiveLink();
     },
     waypointPosListUpdated(value) {
@@ -172,15 +172,15 @@ export default {
     this.setWaypointSectionStyle(true);
     this.calcuTotalHeight();
     this.initData();
-    this.setWaypointPos(0);
+    this.setWaypointBarPos(0);
   },
 
   methods: {
     initData() {
       const first_item = document.querySelector(this.selector.itemIdPrefix + (0).toString());
       const first_item_box = first_item.getBoundingClientRect()
-      this.waypointHeight = document.querySelector(this.selector.waypoint).getBoundingClientRect().height;
-      this.waypointOffset = first_item_box.top + first_item_box.height * 0.5 + this.waypointHeight * 0.5;
+      this.waypointBarHeight = document.querySelector(this.selector.waypointBar).getBoundingClientRect().height;
+      this.waypointBarOffset = first_item_box.top + first_item_box.height * 0.5 + this.waypointBarHeight * 0.5;
     },
     setWaypointSectionStyle(initialize=false) {
       for(let i=0; i<this.sections.length; i++) {
@@ -188,20 +188,22 @@ export default {
         if (i==0 && initialize) {
           nav_item.classList.add("side-nav__list-item-active");
         }
+        // Set side nav list items' positions.
         nav_item.style.position = "absolute";
         nav_item.style.width = "100%";
         nav_item.style.top = this.waypointPosList[i] + "vh";
       }
     },
-    setWaypointPos(presentage) {
-      let waypointElem = document.querySelector(this.selector.waypoint);
-      const top = this.waypointOffset + 
-          presentage * (this.totalHeight - this.waypointOffset) -
-          this.waypointHeight;
-      waypointElem.style.top = (top).toString() + 'px';
+    // Sets the waypoint bar.
+    setWaypointBarPos(presentage) {
+      let waypointBarElem = document.querySelector(this.selector.waypointBar);
+      const top = this.waypointBarOffset + 
+          presentage * (this.totalHeight - this.waypointBarOffset) -
+          this.waypointBarHeight;
+      waypointBarElem.style.top = (top).toString() + 'px';
     },
     setActiveLink() {
-      let waypointElem = document.querySelector(this.selector.waypoint);
+      let waypointElem = document.querySelector(this.selector.waypointBar);
       const waypoint_offset = waypointElem.getBoundingClientRect().top;
       let num = 0;
       for(let i=0; i<this.sections.length; i++) {
