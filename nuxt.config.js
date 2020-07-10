@@ -51,6 +51,7 @@ export default {
   modules: [
     '@nuxtjs/dotenv',
     'nuxt-password-protect',
+    '@nuxtjs/markdownit',
   ],
   /*
   ** vuetify module configuration
@@ -89,6 +90,18 @@ export default {
       prefix: '',
       expires: 5
     }
+  },
+  // [optional] markdownit options
+  // See https://github.com/markdown-it/markdown-it
+  markdownit: {
+    preset: 'default',
+    linkify: true,
+    breaks: true,
+    injected: true,
+    use: [
+      'markdown-it-div',
+      'markdown-it-attrs'
+    ]
   },
   /*
   ** Build configuration

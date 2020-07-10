@@ -47,6 +47,16 @@
 </template>
 
 <style lang="scss" scoped>
+@keyframes appear {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+.page-content-col {
+  animation: appear .5s ease-in 0.8s;
+  animation-fill-mode: both;
+}
+
 .project-page__container,
 .project-page {
   background: black;

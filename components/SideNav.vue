@@ -28,10 +28,11 @@
                 <v-btn
                   :ripple="false"
                   text
-                  @click="$vuetify.goTo(scrollingTarget(section.title), scrollingOptions)"
-                  class="side-nav__list-item-text subtitle-2"
+                  @click="$vuetify.goTo(scrollingTarget(section.slug), scrollingOptions)"
+                  class="side-nav__list-item-text subtitle-2 side-nav__button"
+                
                 >
-                  {{ section.title }}
+                  {{ section.slug }}
                 </v-btn>
               </v-list-item-content>
             </v-list-item>
@@ -94,6 +95,11 @@
       font-weight: 500;
       color: white;
     }
+  }
+
+  .side-nav__button {
+    display: inline-block;
+    white-space: normal;
   }
 }
 
@@ -225,7 +231,7 @@ export default {
       this.setActiveLink();
     }, 100),
     scrollingTarget(title) {
-      return '#' + title.toLowerCase().trim()
+      return '#' + title.toLowerCase().trim().split(' ').join('-')
     },
   },
 };

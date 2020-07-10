@@ -6,8 +6,8 @@
     <!-- Render Introduction. -->
     <v-col
       cols="12"
-      md="5"
-      class="pa-6"
+      md="4"
+      class="py-6"
     >
       <h3 class="text-h3 font-weight-light text-md-right text-sm-left">
         {{ section.title }}
@@ -20,8 +20,8 @@
     />
     <v-col
       cols="12"
-      md="6"
-      class="pa-6 mt-2"
+      md="7"
+      class="py-6 mt-2"
     >
       <v-row
         no-gutters

@@ -3,9 +3,15 @@
     v-slot:default="{ hover }"
   >
     <v-card
-      :color="hover ? 'grey darken-3' : 'grey darken-4'"
+      :light="hover ? true : false"
       max-width="344"
-      to="/work/"
+      outlined
+      nuxt
+      shaped
+      :ripple="false"
+      :to="content.link"
+      target="_blank"
+      class="mx-auto"
     >
       <v-img
         v-if="content.cover != null"

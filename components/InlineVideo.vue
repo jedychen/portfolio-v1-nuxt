@@ -1,5 +1,7 @@
 <template>
-  <div>
+  <div
+    class="video-wrapper"
+  >
     <vimeo-player
       v-if="content != null"
       ref="player"
@@ -9,11 +11,27 @@
       :player-height="1080"
       :player-width="1920"
       :loop="loop"
-      class="vimeo mb-8"
+      class="video-player mb-8"
       @ready="onReady"
     />
   </div>
 </template>
+
+<style lang="scss" scoped>
+.video-wrapper {
+  position: relative;
+  padding-bottom: 56.25%;
+  background-color: grey;
+}
+
+.video-player {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+</style>
 
 <script>
 export default {
@@ -27,22 +45,25 @@ export default {
   },
 
   data() {
-    return {}
+    return {
+      loaded: false,
+    }
   },
 
   computed: {
     loop() {
       if (this.content != null) {
         if (this.content.loop == true)
-          return '1';
+          return '1'
       }
-      return '0';
+      return '0'
     },
   },
 
   methods: {
     onReady() {
-      this.$emit("ready");
+      this.loaded = true
+      this.$emit("ready")
     }
   }
 }

@@ -8,7 +8,7 @@
       class="pa-6"
     >
       <h1
-        :id="section.title.toLowerCase().trim()"
+        :id="section.slug.toLowerCase().trim().split(' ').join('-')"
         class="text-h2 mt-16 mb-6 font-weight-regular"
       >
         {{ section.title }}

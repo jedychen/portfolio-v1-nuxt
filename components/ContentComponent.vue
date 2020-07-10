@@ -3,7 +3,7 @@
   <div
     v-if="type == 'text'"
     v-html="parsedHtml"
-    class="title font-weight-regular content__text"
+    class="rich-text-content text-h6 font-weight-regular content__text"
   />
   <InlineImage
     v-else-if="type == 'inlineImage'"
@@ -25,6 +25,10 @@
     :content="parsedSlides"
     @ready="childReady"
   />
+  <InlineTable
+    v-else-if="type == 'inlineTable'"
+    :content="parsedTable"
+  />
   <div v-else />
 </template>
 
@@ -39,6 +43,7 @@ import { documentToHtmlString } from '@contentful/rich-text-html-renderer';
 import InlineCard from '@/components/InlineCard';
 import InlineCarousel from '@/components/InlineCarousel';
 import InlineImage from '@/components/InlineImage';
+import InlineTable from '@/components/InlineTable';
 import InlineVideo from '@/components/InlineVideo';
 
 export default {
@@ -48,6 +53,7 @@ export default {
     InlineCard,
     InlineCarousel,
     InlineImage,
+    InlineTable,
     InlineVideo,
   },
 
@@ -65,6 +71,7 @@ export default {
       parsedImage: null,
       parsedVideo: null,
       parsedSlides: null,
+      parsedTable: null,
       parsedCard: null,
     }
   },
@@ -86,6 +93,8 @@ export default {
       this.parsedSlides = this.component;
     } else if (this.type == "inlineCard") {
       this.parsedCard = this.component;
+    } else if (this.type == "inlineTable") {
+      this.parsedTable = this.component;
     }
   },
 

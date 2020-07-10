@@ -21,11 +21,11 @@
           no-gutters
           class="mb-12"
         >
-          <!-- Render Introduction. -->
+          <!-- Introduction. -->
           <v-col
             cols="12"
             md="5"
-            class="pa-6"
+            class="py-6"
           >
             <p class="text-h6 font-weight-regular text-md-right text-sm-left">
               {{ content.introduction }}
@@ -36,10 +36,12 @@
             md="1"
             class="hidden-xs hidden-sm"
           />
+
+          <!-- Title and Subtitle. -->
           <v-col
             cols="12"
             md="6"
-            class="pa-6"
+            class="py-6"
           >
             <h1 class="text-h3 intro__title">
               {{ content.title }}
@@ -49,6 +51,7 @@
               {{ content.subtitle }}
             </h2>
 
+            <!-- Social Links. -->
             <v-tooltip
               bottom
               v-for="socialLink in content.socialLinks"
@@ -71,11 +74,13 @@
             </v-tooltip>
           </v-col>
         </v-row>
+
         <AboutSection
           v-for="item in contentSectionItems"
           :key="item.title"
           :section="item"
         />
+
       </v-col>
       <!-- Right Margin -->
       <v-col
