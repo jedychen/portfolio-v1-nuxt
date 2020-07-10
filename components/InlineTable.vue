@@ -3,8 +3,15 @@
     class="table"
   >
     <v-simple-table
+      class="black"
     >
       <template v-slot:default>
+        <thead>
+          <tr>
+            <th class="text-left"></th>
+            <th class="text-left"></th>
+          </tr>
+        </thead>
         <tbody>
           <tr
             v-for="row in content.rows"
@@ -25,8 +32,6 @@
               <div 
                 v-html="$md.render(cell.content)"
                 class="my-4"
-                align="start"
-                justify="end"
               />
             </td>
           </tr>
@@ -38,11 +43,17 @@
 
 <style lang="scss" scoped>
 .table {
-  td {
-    width: 75%;
-    
-    &.table-cell-first {
-      width: 25%;
+  tbody {
+    td {
+      width: 75%;
+      
+      &.table-cell-first {
+        width: 25%;
+      }
+    }
+
+    tr:hover {
+      background-color: transparent !important;
     }
   }
 }

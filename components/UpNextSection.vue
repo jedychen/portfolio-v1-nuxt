@@ -10,7 +10,7 @@
       <v-divider 
         color="white"
       />
-      <h2 class="mt-16 mb-8 text-h3 font-weight-light">
+      <h2 class="mt-16 mb-4 text-h3 font-weight-light">
         Other work
       </h2>
     </v-col>

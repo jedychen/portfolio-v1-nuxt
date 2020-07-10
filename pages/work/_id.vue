@@ -27,7 +27,10 @@
         lg="10"
         class="page-content-col mt-12"
       >
-        <IntroSection :content="introSectionItem" />
+        <IntroSection
+          :content="introSectionItem"
+          @ready="calcuPageLength"
+        />
         <ContentSection
           v-for="item in contentSectionItems"
           :key="item.title"

@@ -9,11 +9,11 @@
     >
       <h1
         :id="section.slug.toLowerCase().trim().split(' ').join('-')"
-        class="text-h2 mt-16 mb-6 font-weight-regular"
+        class="text-h2 mt-16 mb-4 font-weight-light"
       >
         {{ section.title }}
       </h1>
-      <p class="text-h4 mb-12 font-weight-light">
+      <p class="text-h5 font-italic font-weight-light">
         {{ section.description }}
       </p>
     </v-col>

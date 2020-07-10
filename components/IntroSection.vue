@@ -34,7 +34,10 @@
       md="8"
       class="pa-6"
     >
-      <InlineVideo :content="content.media" />
+      <ContentComponent
+        :component="content.media"
+        @ready="childReady"
+      />
       <p class="text-h6 font-weight-regular content__text mt-6">
         {{ content.description }}
       </p>
@@ -64,13 +67,13 @@
 </style>
 
 <script>
-import InlineVideo from '@/components/InlineVideo';
+import ContentComponent from '@/components/ContentComponent';
 
 export default {
   name: 'IntroSection',
 
   components: {
-    InlineVideo,
+    ContentComponent,
   },
 
   props: {
@@ -82,6 +85,12 @@ export default {
 
   data () {
     return {}
+  },
+
+  methods: {
+    childReady() {
+      this.$emit("ready");
+    }
   },
 }
 </script>
