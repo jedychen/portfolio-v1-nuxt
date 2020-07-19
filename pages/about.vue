@@ -59,8 +59,7 @@
             >
               <template v-slot:activator="{ on, attrs }">
                 <v-btn
-                  :color="socialLink.color"
-                  fab
+                  icon
                   small
                   class="mr-2"
                   :href="socialLink.link"
@@ -72,6 +71,7 @@
               </template>
               <span>{{ socialLink.title }}</span>
             </v-tooltip>
+            
           </v-col>
         </v-row>
 
@@ -91,10 +91,6 @@
 </template>
 
 <style lang="scss" scoped>
-.about__container {
-  background-color: black;
-}
-
 .intro__title {
   font-family: 'Mayeka-Regular', sans-serif;
   font-weight: 300;
@@ -102,7 +98,7 @@
 
 .intro__sub-title {
   font-family: 'Mayeka-Regular', sans-serif;
-  font-weight: 500;
+  font-weight: 400;
 }
 
 .page-enter-active, .page-leave-active {
@@ -149,17 +145,8 @@ export default {
     }).catch(console.error)
   },
 
-  computed: {
-  },
-
-  watch: {
-  },
-
   beforeMount() {
     this.parseContentful()
-  },
-
-  mounted() {
   },
 
   methods: {

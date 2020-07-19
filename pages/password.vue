@@ -13,12 +13,11 @@
       >
         <v-text-field
           v-model="inputValue"
-          label="Password"
-          color="white"
+          placeholder="Password"
+          color="info"
           :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
           :type="show ? 'text' : 'password'"
           filled
-          outlined
           required
           :error-messages="errorMessages"
           @click:append="show = !show"
@@ -31,11 +30,11 @@
         <v-btn
           fab
           middle
-          color="primary"
+          color="green"
           @click="loginUser()"
           class="mb-7"
         >
-          <v-icon>mdi-check</v-icon>
+          <v-icon>mdi-arrow-right-bold</v-icon>
         </v-btn>
       </v-col>
     </v-row>
@@ -82,7 +81,7 @@ export default {
       if (this.isAuthorised == true)
         this.$router.push(this.$route.query.previousPath)
       else
-        this.errorMessages = 'Wrong password. Please contact me on LinkedIn.'
+        this.errorMessages = 'Wrong password...'
     },
   }
 }

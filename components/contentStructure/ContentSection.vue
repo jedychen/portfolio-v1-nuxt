@@ -47,8 +47,8 @@
 </style>
 
 <script>
-import ContentBlock from '@/components/ContentBlock';
-import ContentBlockEmpty from '@/components/ContentBlockEmpty';
+import ContentBlock from '@/components/contentStructure/ContentBlock';
+import ContentBlockEmpty from '@/components/contentStructure/ContentBlockEmpty';
 
 export default {
   name: 'ContentSection',

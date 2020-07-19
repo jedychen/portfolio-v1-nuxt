@@ -40,11 +40,11 @@
 
 <script>
 import { documentToHtmlString } from '@contentful/rich-text-html-renderer';
-import InlineCard from '@/components/InlineCard';
-import InlineCarousel from '@/components/InlineCarousel';
-import InlineImage from '@/components/InlineImage';
-import InlineTable from '@/components/InlineTable';
-import InlineVideo from '@/components/InlineVideo';
+import InlineCard from '@/components/inlines/InlineCard';
+import InlineCarousel from '@/components/inlines/InlineCarousel';
+import InlineImage from '@/components/inlines/InlineImage';
+import InlineTable from '@/components/inlines/InlineTable';
+import InlineVideo from '@/components/inlines/InlineVideo';
 
 export default {
   name: 'ContentComponent',

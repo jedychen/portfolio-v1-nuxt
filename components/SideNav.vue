@@ -78,14 +78,10 @@
   animation-fill-mode: both;
 }
 
-.side-nav__list {
-  background: black;
-}
-
 .side-nav__list-item {
   .side-nav__list-item-text {
     font-weight: 300;
-    color: grey;
+    color: $theme-grey;
     animation: appear .5s ease-in 1.3s;
     animation-fill-mode: both;
   }
@@ -93,7 +89,7 @@
   &.side-nav__list-item-active {
     .side-nav__list-item-text {
       font-weight: 500;
-      color: white;
+      color: $copy-color;
     }
   }
 
@@ -104,9 +100,10 @@
 }
 
 .side-bar__waypoint-bar {
-  height: 25px;
+  height: 100vh;
+  background: linear-gradient(180deg, rgba(88, 78, 87, 1) 30%, rgba(183, 75, 65, 1) 55%, rgba(248, 136, 38, 1) 100%);
   position: absolute;
-  border-left: 2px solid white;
+  width: 2px;
   animation: appear .5s ease-in 0.8s;
   animation-fill-mode: both;
 }
@@ -206,7 +203,7 @@ export default {
       const top = this.waypointBarOffset + 
           presentage * (this.totalHeight - this.waypointBarOffset) -
           this.waypointBarHeight;
-      waypointBarElem.style.top = (top).toString() + 'px';
+      // waypointBarElem.style.top = (top).toString() + 'px';
     },
     setActiveLink() {
       let waypointElem = document.querySelector(this.selector.waypointBar);

@@ -1,10 +1,8 @@
 <template>
   <div
-    class="table"
+    class="inline-table"
   >
-    <v-simple-table
-      class="black"
-    >
+    <v-simple-table>
       <template v-slot:default>
         <thead>
           <tr>
@@ -27,7 +25,6 @@
                 'text-subtitle-1 table-cell-first font-weight-medium': index === 0,
                 'text-subtitle-1 font-weight-light': index !== 0,
               }"
-              
             >
               <div 
                 v-html="$md.render(cell.content)"
@@ -41,14 +38,18 @@
   </div>  
 </template>
 
-<style lang="scss" scoped>
-.table {
+<style lang="scss">
+.inline-table {
   tbody {
     td {
       width: 75%;
       
       &.table-cell-first {
         width: 25%;
+      }
+
+      a {
+        color: $copy-color;
       }
     }
 

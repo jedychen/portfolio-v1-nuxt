@@ -44,7 +44,14 @@ export default {
   */
   buildModules: [
     '@nuxtjs/vuetify',
+    '@nuxtjs/style-resources',
   ],
+  /*
+  ** Nuxt Style Resources modules
+  */
+  styleResources: {
+    scss: '@/assets/styles/setup/_variables.scss',
+  },
   /*
   ** Nuxt.js modules
   */
@@ -59,23 +66,8 @@ export default {
   */
   vuetify: {
     treeShake: true,
-    customVariables: ['~/assets/variables.scss'],
-    theme: {
-      dark: true,
-      themes: {
-        options: { minifyTheme },
-        dark: {
-          background: '#00a86b',
-          primary: colors.red.lighten4,
-          accent: colors.blue.darken3,
-          secondary: colors.red.darken3,
-          info: colors.teal.lighten1,
-          warning: colors.amber.base,
-          error: colors.deepOrange.accent4,
-          success: colors.green.accent3
-        }
-      }
-    }
+    customVariables: ['~/assets/styles/_vuetifyvariables.scss'],
+    frameworkOptions: "./vuetify.options.js",
   },
   /*
   ** password page protection configuration

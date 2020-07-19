@@ -24,7 +24,7 @@
         cols="12"
         sm="10"
         md="12"
-        lg="10"
+        lg="9"
         class="page-content-col mt-12"
       >
         <IntroSection
@@ -60,11 +60,6 @@
   animation-fill-mode: both;
 }
 
-.project-page__container,
-.project-page {
-  background: black;
-}
-
 .page-enter-active, .page-leave-active {
   transition: opacity .5s;
 }
@@ -79,7 +74,7 @@ import * as prettify from 'pretty-contentful'
 import debounce from 'lodash/debounce'
 import SideNav from '@/components/SideNav'
 import IntroSection from '@/components/IntroSection'
-import ContentSection from '@/components/ContentSection'
+import ContentSection from '@/components/contentStructure/ContentSection'
 import UpNextSection from '@/components/UpNextSection'
 
 export default {

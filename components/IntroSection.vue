@@ -19,9 +19,9 @@
       <v-chip
         v-for="(tag, i) in content.tags"
         :key="i"
-        outlined
+        
         class="ma-1"
-        color="primary"
+        color="secondary"
       >
         {{ tag }}
       </v-chip>
@@ -46,8 +46,8 @@
       cols="12"
       class="pa-6"
     >
-      <v-divider 
-        color="white"
+      <v-divider
+        class="secondary"
       />
     </v-col>
   </v-row>
@@ -63,11 +63,10 @@
 .content__text {
   line-height: 1.5em;
 }
-
 </style>
 
 <script>
-import ContentComponent from '@/components/ContentComponent';
+import ContentComponent from '@/components/contentStructure/ContentComponent';
 
 export default {
   name: 'IntroSection',

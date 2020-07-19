@@ -17,7 +17,7 @@
 
 <script>
 import debounce from 'lodash/debounce'
-import ContentComponent from '@/components/ContentComponent';
+import ContentComponent from '@/components/contentStructure/ContentComponent';
 
 export default {
   name: 'ContentBlock',

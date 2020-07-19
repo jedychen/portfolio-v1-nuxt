@@ -1,7 +1,7 @@
 <template>
   <v-app-bar
     absolute
-    color="grey darken-3"
+    color="secondary"
     hide-on-scroll
     short
     :scroll-target="contentId"
@@ -61,7 +61,6 @@
 
 <style lang="scss" scoped>
   .header__title {
-    color: white;
     font-family: 'Mayeka-Light', sans-serif;
     font-size: 30px;
     letter-spacing: 0.1rem;
@@ -70,11 +69,11 @@
   }
 
   .header-link {
-    color: rgba($color: white, $alpha: 0);
+    color: rgba($color: $copy-color, $alpha: 0);
     transition: color .3s;
 
     &.header-link--active {
-      color: white;
+      color: $copy-color;
     }
   }
 </style>

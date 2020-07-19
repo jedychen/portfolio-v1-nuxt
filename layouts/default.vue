@@ -5,7 +5,7 @@
     <TheHeader id="#scrolling-content" />
     <v-sheet
       id="scrolling-content"
-      class="overflow-y-auto"
+      class="overflow-y-auto sheet-dark"
       max-height="100vh"
     >
       <nuxt />
@@ -13,10 +13,7 @@
   </v-app>
 </template>
 
-<style lang="scss">
-// body {
-//   background: black;
-// }
+<style lang="scss" scoped>
 </style>
 
 <script>
@@ -27,15 +24,6 @@ export default {
 
   components: {
     TheHeader,
-  },
-
-  data() {
-    return {
-    }
-  },
-
-  created(){
-    this.$vuetify.theme.dark = true;
   },
 };
 </script>

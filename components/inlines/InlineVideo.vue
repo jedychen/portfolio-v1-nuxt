@@ -18,19 +18,19 @@
 </template>
 
 <style lang="scss" scoped>
-.video-wrapper {
-  position: relative;
-  padding-bottom: 56.25%;
-  background-color: grey;
-}
+// .video-wrapper {
+//   position: relative;
+//   padding-bottom: 56.25%;
+//   background-color: $theme-grey;
+// }
 
-.video-player {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
+// .video-player {
+//   position: absolute;
+//   top: 0;
+//   left: 0;
+//   width: 100%;
+//   height: 100%;
+// }
 </style>
 
 <script>

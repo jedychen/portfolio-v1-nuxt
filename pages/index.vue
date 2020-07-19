@@ -36,7 +36,6 @@
 <style lang="scss" scoped>
 .feature-work__container {
   align-items: center;
-  background-color: black;
   display: flex;
   height: 100vh;
   justify-content: center;
@@ -87,7 +86,7 @@
   visibility: hidden;
 
   .loading__text {
-    color: white;
+    color: $copy-color;
     opacity: 1;
     transition: all 0.5s ease;
   }
