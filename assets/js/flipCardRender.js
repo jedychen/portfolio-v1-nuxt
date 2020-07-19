@@ -20,7 +20,7 @@ const CONFIGURATION_ = {
   fontSize: 22, // Text at the back of cards.
   lineHeight: 40, // Text at the back of cards.
   cardName: "card",
-  cardThickness: 0.03,
+  cardThickness: 5,
 };
 
 // Drawing functions for FlipCard.
@@ -201,6 +201,7 @@ class FlipCardRender {
     const projectIndex = index;
     const material = new THREE.MeshBasicMaterial({
       color: projectConfig.themeColor,
+      transparent: true,
     });
 
     for (let i = 0; i < 6; i++) {
@@ -223,6 +224,7 @@ class FlipCardRender {
             "normal",
             horizontalFlip,
           ),
+          transparent: true,
         }),
       ];
 
@@ -410,8 +412,13 @@ class FlipCardRender {
       gsap.to(card.rotation, config_flip_back);
       // Moves the cards up on z axis.
       gsap.to(card.position, config_ripple);
-      // Fading animation to the front side of the cards
+      // Add fading animation to the all sides of the cards
+      gsap.to(card.material[0], config_fade);
+      gsap.to(card.material[1], config_fade);
+      gsap.to(card.material[2], config_fade);
+      gsap.to(card.material[3], config_fade);
       gsap.to(card.material[4], config_fade);
+      gsap.to(card.material[5], config_fade);
     }
   }
 
@@ -445,8 +452,13 @@ class FlipCardRender {
       config_ripple["delay"] =
         config_fade["delay"] + config_fade["duration"] - 1.2;
 
-      // Fading animation to the front side of the cards
+      // Add fading animation to the all sides of the cards
+      gsap.to(card.material[0], config_fade);
+      gsap.to(card.material[1], config_fade);
+      gsap.to(card.material[2], config_fade);
+      gsap.to(card.material[3], config_fade);
       gsap.to(card.material[4], config_fade);
+      gsap.to(card.material[5], config_fade);
       // Moves the cards up on z axis.
       gsap.to(card.position, config_ripple);
 

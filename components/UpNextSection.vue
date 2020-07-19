@@ -1,11 +1,11 @@
 <template>
   <v-row
     no-gutters
-    class="my-16"
+    class="my-8 pb-16 up-next-section"
   >
     <v-col
       cols="12"
-      class="px-7 mt-16"
+      class="px-7"
     >
       <v-divider 
         class="secondary"
@@ -23,29 +23,40 @@
       md="4"
       class="pa-6"
     >
-      <v-card
-        :href="project.slug"
-        class="ml-1 mt-4"
+
+      <v-hover
+        v-slot:default="{ hover }"
       >
-        <v-img
-          gradient="rgba(0, 0, 0, 0.3),
-                       rgba(0, 0, 0, 0)"
-          :aspect-ratio="3/2"
-          :src="project.coverImage.file.url"
+        <v-card
+          :href="project.slug"
+          :class="`elevation-${hover ? 12 : 0}`"
+          class="ml-1 mt-4 transition-swing"
         >
-          <p
-            :style="'color:'+project.themeColor"
-            class="mx-4 my-4 up-next-section__sub-title"
+          <v-img
+            gradient="rgba(0, 0, 0, 0.3),
+                        rgba(0, 0, 0, 0)"
+            :aspect-ratio="3/2"
+            :src="project.coverImage.file.url"
+            :lazy-src="imagePlaceholder"
           >
-          {{ project.title }}
-          </p>
-        </v-img>
-      </v-card>
+            <p
+              :style="'color:'+project.themeColor"
+              class="mx-4 my-4 up-next-section__sub-title"
+            >
+            {{ project.title }}
+            </p>
+          </v-img>
+        </v-card>
+      </v-hover>
     </v-col>
   </v-row>
 </template>
 
 <style lang="scss" scoped>
+.up-next-section {
+  background: linear-gradient(180deg, rgba(88, 78, 87, 1) 20%, rgba(183, 75, 65, 1) 60%, rgba(248, 136, 38, 1) 100%);
+};
+
 .up-next-section__sub-title {
   font-family: 'Mayeka-Regular', sans-serif;
   font-size: 40px;
@@ -66,7 +77,13 @@ export default {
   },
 
   data () {
-    return {}
+    return {
+      imagePlaceholder: "",
+    }
   },
+
+  created() {
+    this.imagePlaceholder = this.$store.getters['styleStore/getImagePlaceholder']
+  }
 }
 </script>

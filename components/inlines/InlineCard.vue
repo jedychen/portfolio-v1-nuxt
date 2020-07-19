@@ -11,7 +11,7 @@
       :ripple="false"
       :to="content.link"
       target="_blank"
-      class="mx-auto"
+      class="mx-auto transition-swing"
     >
       <v-img
         v-if="content.cover != null"
@@ -33,11 +33,15 @@
         <v-btn
           text
           depressed
-          class="disable-events"
+          class="disable-events inline-card__cta"
         >
           {{ content.ctaText }}
         </v-btn>
-        <v-icon>mdi-arrow-right</v-icon>
+        <v-icon
+          color="primary"
+        >
+          mdi-arrow-right
+        </v-icon>
       </v-card-actions>
     </v-card>
   </v-hover>
@@ -46,6 +50,10 @@
 <style lang="scss" scoped>
 .disable-events {
   pointer-events: none;
+}
+
+.inline-card__cta {
+  color: $theme-yellow;
 }
 </style>
 

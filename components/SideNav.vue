@@ -44,10 +44,7 @@
         class="side-bar__divide-line"
       >
         <div class="side-bar__waypoint-bar" />
-        <v-divider
-          vertical
-        />
-      </v-col>  
+      </v-col>
     </v-row>
   </div>
 </template>
@@ -89,7 +86,7 @@
   &.side-nav__list-item-active {
     .side-nav__list-item-text {
       font-weight: 500;
-      color: $copy-color;
+      color: $theme-yellow;
     }
   }
 
@@ -103,7 +100,7 @@
   height: 100vh;
   background: linear-gradient(180deg, rgba(88, 78, 87, 1) 30%, rgba(183, 75, 65, 1) 55%, rgba(248, 136, 38, 1) 100%);
   position: absolute;
-  width: 2px;
+  width: 4px;
   animation: appear .5s ease-in 0.8s;
   animation-fill-mode: both;
 }
@@ -125,7 +122,6 @@ export default {
   data () {
     return {
       totalHeight: 0, // Side Nav's total height.
-      waypointBarOffset: 0, // Waypoint indicator's top offset.
       selector: {
         container: '.side-nav__container',
         list: '.side-nav__list-wrapper',
@@ -159,10 +155,12 @@ export default {
   },
 
   watch: {
+    // Based on current scrolling percentage, set waypoint styles.
     waypointPresentage(value) {
       this.setWaypointBarPos(value);
-      this.setActiveLink();
+      this.setActiveLink(value);
     },
+    // Update waypoint positions, when loading page or page layout changes.
     waypointPosListUpdated(value) {
       this.setWaypointSectionStyle(false);
     },
@@ -174,17 +172,10 @@ export default {
     nav_list_wrapper.style.width = nav_list_col.getBoundingClientRect().width + "px";
     this.setWaypointSectionStyle(true);
     this.calcuTotalHeight();
-    this.initData();
     this.setWaypointBarPos(0);
   },
 
   methods: {
-    initData() {
-      const first_item = document.querySelector(this.selector.itemIdPrefix + (0).toString());
-      const first_item_box = first_item.getBoundingClientRect()
-      this.waypointBarHeight = document.querySelector(this.selector.waypointBar).getBoundingClientRect().height;
-      this.waypointBarOffset = first_item_box.top + first_item_box.height * 0.5 + this.waypointBarHeight * 0.5;
-    },
     setWaypointSectionStyle(initialize=false) {
       for(let i=0; i<this.sections.length; i++) {
         let nav_item = document.querySelector(this.selector.itemIdPrefix + i.toString());
@@ -197,22 +188,22 @@ export default {
         nav_item.style.top = this.waypointPosList[i] + "vh";
       }
     },
-    // Sets the waypoint bar.
+    // Sets the waypoint bar's background color (gradience).
     setWaypointBarPos(presentage) {
       let waypointBarElem = document.querySelector(this.selector.waypointBar);
-      const top = this.waypointBarOffset + 
-          presentage * (this.totalHeight - this.waypointBarOffset) -
-          this.waypointBarHeight;
-      // waypointBarElem.style.top = (top).toString() + 'px';
+      const firstPos = presentage * 100
+      const secondPos = Math.min(presentage * 100 + 10, 100)
+      const thirdPos = Math.min(presentage * 100 + 20, 100)
+      waypointBarElem.style.background = "linear-gradient(180deg, rgba(88, 78, 87, 1) " + firstPos + "%, rgba(183, 75, 65, 1) "
+          + secondPos +"%, rgba(248, 136, 38, 1) " + thirdPos + "%)";
     },
-    setActiveLink() {
-      let waypointElem = document.querySelector(this.selector.waypointBar);
-      const waypoint_offset = waypointElem.getBoundingClientRect().top;
+    // Sets the active style to waypoint buttons.
+    setActiveLink(presentage) {
       let num = 0;
       for(let i=0; i<this.sections.length; i++) {
         let nav_item = document.querySelector(this.selector.itemIdPrefix + i.toString());
         let current_nav_item_offset = nav_item.getBoundingClientRect().top;
-        if (current_nav_item_offset < waypoint_offset)
+        if (current_nav_item_offset/window.innerHeight < presentage)
           num = i;
         nav_item.classList.remove("side-nav__list-item-active");
       }

@@ -24,9 +24,9 @@
       exact
       exact-active-class="header-link--active"
       :class="{
-        'header-link header-link--active nuxt-link-active': isRouteActive('work'),
-        'header-link': !isRouteActive('work'),
+        'header-link--active nuxt-link-active': isRouteActive('work'),
       }"
+      class="header-link"
     >
       <v-btn
         text
@@ -73,7 +73,7 @@
     transition: color .3s;
 
     &.header-link--active {
-      color: $copy-color;
+      color: $theme-yellow;
     }
   }
 </style>

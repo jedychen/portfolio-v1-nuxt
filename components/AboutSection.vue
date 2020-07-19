@@ -9,7 +9,7 @@
       md="4"
       class="py-6"
     >
-      <h3 class="text-h3 font-weight-light text-md-right text-sm-left">
+      <h3 class="text-h3 font-weight-light text-md-right text-sm-left about-section__title">
         {{ section.title }}
       </h3>
     </v-col>
@@ -53,6 +53,10 @@
 </template>
 
 <style lang="scss" scoped>
+.about-section__title {
+  color: $theme-yellow;
+  text-decoration: underline;
+}
 </style>
 
 <script>
