@@ -133,7 +133,7 @@ export default {
       const sections = document.querySelectorAll(".content-section-container")
       sections.forEach((item, index) => {
         let offsetTop = item.offsetTop
-        let vhPos = (offsetTop) * 100 / this.pageLength
+        let vhPos = Math.min((offsetTop) * 100 / this.pageLength, 90)
         this.$store.commit('waypointStore/setWaypoint', {index: index, vhPos: vhPos})
       });
     },

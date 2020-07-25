@@ -1,38 +1,48 @@
 <template>
-  <div>
+  <div
+    class="mb-2"
+  >
     <v-carousel
       v-model="currentIndex"
       cycle
+      continuous
       hide-delimiter-background
       hide-delimiters
       @ready="onReady"
+      height="auto"
     >
       <v-carousel-item
         v-for="(slide, i) in content.slides"
-        :key="i"
-        :src="slide.file.url"
-      />
+        :key="content.title + i"
+        eager
+      >
+        <v-img
+          :aspect-ratio="16/9"
+          :src="slide.file.url"
+          :alt="slide.file.title"
+        />
+      </v-carousel-item>
     </v-carousel>
-
     <v-row
-      class="mt-2"
-    >
+        class="mt-2"
+        v-if="currentDescription"
+      >
+      <v-col
+        cols="12"
+        sm="2"
+        class="pb-0"
+      >
+        <p class="subheading font-italic mb-0 font-weight-bold">
+          {{ currentIndex + 1 }} / {{ content.slides.length }}
+        </p>
+      </v-col>
       <v-col
         cols="12"
         sm="10"
         class="pb-0"
       >
-        <p class="subheading">
+        <p class="subheading font-italic">
           {{ currentDescription }}
-        </p>
-      </v-col>
-      <v-col
-        cols="12"
-        sm="2"
-        class="pb-0 carousel__counter"
-      >
-        <p class="subheading mb-0 font-weight-bold">
-          {{ currentIndex + 1 }} / {{ content.slides.length }}
         </p>
       </v-col>
     </v-row>
@@ -40,11 +50,7 @@
 </template>
 
 <style lang="scss" scoped>
-.carousel__counter {
-  text-align: right;
-}
 </style>
-
 
 <script>
   export default {

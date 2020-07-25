@@ -4,7 +4,6 @@
       :src="content.image.file.url"
       :alt="content.image.title"
       :lazy-src="imagePlaceholder"
-      aspect-ratio="1.7"
       @load="onReady"
     >
       <template v-slot:placeholder>
@@ -15,16 +14,19 @@
         >
           <v-progress-circular
             indeterminate
-            color="grey lighten-5"
+            color="primary"
           />
         </v-row>
       </template>
     </v-img>
-    <p class="subheading mt-2">
+    <p class="subheading mt-2 font-italic">
       {{ content.image.description }}
     </p>
   </div>
 </template>
+
+<style lang="scss" scoped>
+</style>
 
 <script>
 export default {

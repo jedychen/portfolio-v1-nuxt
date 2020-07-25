@@ -11,6 +11,7 @@
       </h1>
     </v-col>
     <v-col
+      v-if="content.tags"
       cols="12"
       md="4"
       class="pa-6"
@@ -18,7 +19,7 @@
       
       <v-chip
         v-for="(tag, i) in content.tags"
-        :key="i"
+        :key="'project main tag' + i"
         
         class="ma-1"
         color="secondary"
@@ -30,6 +31,7 @@
       </p>
     </v-col>
     <v-col
+      v-if="content.media"
       cols="12"
       md="8"
       class="pa-6"

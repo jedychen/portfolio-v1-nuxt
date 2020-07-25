@@ -1,6 +1,7 @@
 <template>
   <v-row
     no-gutters
+    class="mb-12"
   >
     <!-- Render section's title and intro. -->
     <v-col
@@ -9,11 +10,11 @@
     >
       <h1
         :id="section.slug.toLowerCase().trim().split(' ').join('-')"
-        class="text-h2 mt-16 mb-4 font-weight-light"
+        class="text-h2 mt-16 mb-4 font-weight-light content-section__title"
       >
         {{ section.title }}
       </h1>
-      <p class="text-h5 font-italic font-weight-light">
+      <p class="text-h5 font-italic font-weight-light content-section__subtitle">
         {{ section.description }}
       </p>
     </v-col>
@@ -22,7 +23,7 @@
       v-for="(block, index) in section.contentBlocks"
     >
       <template v-if="block.alternateColumn && block.fullWidth == false">
-        <!-- 1. When the previous block is half width -->
+                <!-- 1. When the previous block is half width -->
         <!-- Add two empty blocks to alternate this block's column, -->
         <!-- and make this block have negative top margin. -->
         <!-- 2. When the previous block is full width -->
@@ -34,9 +35,8 @@
         </template>
       </template>
       <ContentBlock
-        :key="block.summary + ' block'"
+        :key="block.summary + ' block' + index"
         :block="block"
-        :top-margin="block.alternateColumn && section.contentBlocks[index - 1].fullWidth == false"
         @ready="childReady"
       />
     </template>
@@ -44,6 +44,9 @@
 </template>
 
 <style lang="scss" scoped>
+.content-section__subtitle {
+  color: $copy-color-light-grey;
+}
 </style>
 
 <script>

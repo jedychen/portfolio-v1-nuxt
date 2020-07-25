@@ -1,5 +1,6 @@
 <template>
   <v-row
+    v-if="content"
     no-gutters
     class="my-8 pb-16 up-next-section"
   >
@@ -38,6 +39,8 @@
             :aspect-ratio="3/2"
             :src="project.coverImage.file.url"
             :lazy-src="imagePlaceholder"
+            :alt="project.coverImage.title"
+            class="up-next-section__image"
           >
             <p
               :style="'color:'+project.themeColor"
@@ -52,7 +55,7 @@
   </v-row>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .up-next-section {
   background: linear-gradient(180deg, rgba(88, 78, 87, 1) 20%, rgba(183, 75, 65, 1) 60%, rgba(248, 136, 38, 1) 100%);
 };
@@ -62,6 +65,10 @@
   font-size: 40px;
   font-weight: 400;
   line-height: 1em;
+}
+
+.up-next-section__image .v-image__image {
+  background-size: 100% 100%;
 }
 </style>
 

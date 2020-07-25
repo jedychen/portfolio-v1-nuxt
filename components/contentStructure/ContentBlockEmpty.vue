@@ -1,7 +1,7 @@
 <template>
   <v-col
     cols="12"
-    md="6"
+    md="4"
     class="pa-6 hidden-sm-and-down"
   />
 </template>

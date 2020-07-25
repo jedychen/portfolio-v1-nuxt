@@ -11,9 +11,12 @@
       :player-height="1080"
       :player-width="1920"
       :loop="loop"
-      class="video-player mb-8"
+      class="video-player"
       @ready="onReady"
     />
+    <p class="subheading mt-2 font-italic">
+      {{ content.description }}
+    </p>
   </div>
 </template>
 
