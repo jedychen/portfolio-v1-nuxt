@@ -38,8 +38,8 @@
                         rgba(0, 0, 0, 0)"
             :aspect-ratio="3/2"
             :src="project.coverImage.file.url"
-            :lazy-src="imagePlaceholder"
             :alt="project.coverImage.title"
+            :lazy-src="imagePlaceholder"
             class="up-next-section__image"
           >
             <p

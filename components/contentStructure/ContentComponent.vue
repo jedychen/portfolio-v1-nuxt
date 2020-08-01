@@ -8,6 +8,7 @@
   <InlineImage
     v-else-if="type == 'inlineImage'"
     :content="parsedImage"
+    :fullWidth="fullWidth"
     @ready="childReady"
   />
   <InlineVideo
@@ -62,6 +63,10 @@ export default {
       default: null,
       type: Object
     },
+    fullWidth: {
+      default: true,
+      type: Boolean
+    },
   },
 
   data () {
@@ -81,7 +86,6 @@ export default {
   },
 
   mounted() {
-    console.log("component", this.component.contentType, this.component)
     this.type = this.component.contentType;
     if (this.type == "text") {
       this.parsedHtml = documentToHtmlString(this.component.htmlContent);

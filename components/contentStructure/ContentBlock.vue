@@ -9,6 +9,7 @@
       v-for="(item, i) in block.inlineItems"
       :key="i"
       :component="item"
+      :fullWidth="fullWidth"
       @ready="childReady"
     />
   </v-col>
@@ -36,6 +37,11 @@ export default {
       if (this.block.fullWidth == true)
         return 12;
       return 8;
+    },
+    fullWidth() {
+      if (this.block.fullWidth == true)
+        return true;
+      return false;
     }
   },
 

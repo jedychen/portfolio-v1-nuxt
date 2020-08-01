@@ -20,32 +20,13 @@
           :aspect-ratio="16/9"
           :src="slide.file.url"
           :alt="slide.file.title"
+          :lazy-src="imagePlaceholder"
         />
       </v-carousel-item>
     </v-carousel>
-    <v-row
-        class="mt-2"
-        v-if="currentDescription"
-      >
-      <v-col
-        cols="12"
-        sm="2"
-        class="pb-0"
-      >
-        <p class="subheading font-italic mb-0 font-weight-bold">
-          {{ currentIndex + 1 }} / {{ content.slides.length }}
-        </p>
-      </v-col>
-      <v-col
-        cols="12"
-        sm="10"
-        class="pb-0"
-      >
-        <p class="subheading font-italic">
-          {{ currentDescription }}
-        </p>
-      </v-col>
-    </v-row>
+    <p class="mt-2 subheading font-italic">
+      {{ currentIndex + 1 }} / {{ content.slides.length }} {{ '&nbsp;&nbsp;&nbsp;&nbsp;' + currentDescription }}
+    </p>
   </div>
 </template>
 
@@ -66,6 +47,7 @@
     data () {
       return {
         currentIndex: 0,
+        imagePlaceholder: "",
       }
     },
 
@@ -79,6 +61,10 @@
       onReady() {
         this.$emit("ready");
       }
+    },
+
+    created() {
+      this.imagePlaceholder = this.$store.getters['styleStore/getImagePlaceholder']
     }
   }
 </script>
