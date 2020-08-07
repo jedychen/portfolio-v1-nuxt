@@ -6,16 +6,21 @@
     short
     :scroll-target="contentId"
   >
-    <v-toolbar-title
-      class="header__title hidden-xs-only"
+    <nuxt-link
+      to="/"
+      class="header__link"
     >
-      Jedy Chen
-    </v-toolbar-title>
-    <v-toolbar-title
-      class="header__title hidden-sm-and-up"
-    >
-      Jedy
-    </v-toolbar-title>
+      <v-toolbar-title
+        class="header__title hidden-xs-only"
+      >
+        Jedy Chen
+      </v-toolbar-title>
+      <v-toolbar-title
+        class="header__title hidden-sm-and-up"
+      >
+        Jedy
+      </v-toolbar-title>
+    </nuxt-link>
 
     <v-spacer />
 
@@ -60,22 +65,31 @@
 </template>
 
 <style lang="scss" scoped>
-  .header__title {
-    font-family: 'Mayeka-Light', sans-serif;
-    font-size: 30px;
-    letter-spacing: 0.1rem;
-    margin-left: 20px;
-    white-space: nowrap;
-  }
+a.header__link {
+  text-decoration: none;
 
-  .header-link {
-    color: rgba($color: $copy-color, $alpha: 0);
-    transition: color .3s;
-
-    &.header-link--active {
-      color: $theme-yellow;
-    }
+  &:hover {
+    text-decoration: underline;
   }
+}
+
+.header__title {
+  font-family: 'Mayeka-Light', sans-serif;
+  font-size: 30px;
+  letter-spacing: 0.1rem;
+  margin-left: 20px;
+  white-space: nowrap;
+  color: $copy-color;
+}
+
+.header-link {
+  color: rgba($color: $copy-color, $alpha: 0);
+  transition: color .3s;
+
+  &.header-link--active {
+    color: $theme-yellow;
+  }
+}
 </style>
 
 <script>

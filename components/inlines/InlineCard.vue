@@ -16,7 +16,7 @@
       <v-img
         v-if="content.cover != null"
         :alt="content.cover.title"
-        :src="content.cover.file.url"
+        :src="content.cover.file.url + sizeSetting"
         height="200px"
         @load="onReady"
       />
@@ -72,6 +72,15 @@
       onReady() {
         this.$emit("ready");
       }
-    }
+    },
+
+    computed: {
+      sizeSetting() {
+        return '?w=' + this.maxWidth
+      },
+      maxWidth() {
+        return '760'
+      }
+    },
   }
 </script>

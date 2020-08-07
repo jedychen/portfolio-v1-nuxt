@@ -44,7 +44,9 @@
             class="py-6"
           >
             <h1 class="text-h3 intro__title">
-              {{ content.title }}
+              <span class="primary">
+                {{ content.title }}
+              </span>
             </h1>
 
             <h2 class="text-h2 mb-8 intro__sub-title">

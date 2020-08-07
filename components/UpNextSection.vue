@@ -39,7 +39,7 @@
             :aspect-ratio="3/2"
             :src="project.coverImage.file.url"
             :alt="project.coverImage.title"
-            :lazy-src="imagePlaceholder"
+            :lazy-src="project.coverImage.description"
             class="up-next-section__image"
           >
             <p
@@ -82,15 +82,5 @@ export default {
       type: Array,
     },
   },
-
-  data () {
-    return {
-      imagePlaceholder: "",
-    }
-  },
-
-  created() {
-    this.imagePlaceholder = this.$store.getters['styleStore/getImagePlaceholder']
-  }
 }
 </script>

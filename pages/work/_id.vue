@@ -35,6 +35,7 @@
           v-for="item in contentSectionItems"
           :key="item.title"
           :section="item"
+          v-intersect="onIntersect"
           class="content-section-container"
           @ready="calcuPageLength"
         />
@@ -95,6 +96,7 @@ export default {
       contentSectionItems: [],
       upNextSectionItems: [],
       sideNavWaypointOffset: 50,
+      activeWaypointTitle: '',
     }
   },
 
@@ -123,18 +125,26 @@ export default {
   },
 
   methods: {
+    onIntersect (entries, observer) {
+      // More information about these options
+      // is located here: https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API
+      const title = entries[0].target.querySelector('.content-section__title').id
+      if (entries[0].isIntersecting && title != this.activeWaypointTitle) {
+        this.activeWaypointTitle = title
+        this.$store.commit('waypointStore/setActiveWaypoint', title)
+      }
+    },
     calcuPageLength() {
       const contentCol = document.querySelector(".page-content-col")
       if (contentCol != null)
         this.pageLength = contentCol.offsetHeight
-      this.calcuWaypoints()
+      this.calcuWaypointsPosition()
     },
-    calcuWaypoints() {
+    calcuWaypointsPosition() {
       const sections = document.querySelectorAll(".content-section-container")
       sections.forEach((item, index) => {
         let offsetTop = item.offsetTop
         let vhPos = Math.min((offsetTop) * 100 / this.pageLength, 85)
-        console.log(vhPos)
         this.$store.commit('waypointStore/setWaypoint', {index: index, vhPos: vhPos})
       });
     },

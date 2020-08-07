@@ -3,7 +3,7 @@
     <v-img
       :src="content.image.file.url + sizeSetting"
       :alt="content.image.title"
-      :lazy-src="imagePlaceholder"
+      :lazy-src="content.image.description"
       @load="onReady"
       @click.stop="dialog = true"
       class="inline-image"
@@ -22,7 +22,7 @@
       </template>
     </v-img>
     <p class="subheading mt-2 font-italic">
-      {{ content.image.description }}
+      {{ content.caption }}
     </p>
     <v-dialog
       v-model="dialog"
@@ -31,7 +31,10 @@
       <v-img
         :src="content.image.file.url + sizeSettingMax"
         :alt="content.image.title"
+        :lazy-src="content.image.description"
         @load="onReady"
+        @click.stop="dialog = false"
+        class="inline-image"
       />
     </v-dialog>
   </div>
@@ -60,7 +63,6 @@ export default {
 
   data() {
     return {
-      imagePlaceholder: "",
       dialog: false,
     }
   },
@@ -84,9 +86,5 @@ export default {
       return '960'
     }
   },
-
-  created() {
-    this.imagePlaceholder = this.$store.getters['styleStore/getImagePlaceholder']
-  }
 }
 </script>

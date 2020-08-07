@@ -24,6 +24,7 @@
   <InlineCarousel
     v-else-if="type == 'inlineCarousel'"
     :content="parsedSlides"
+    :fullWidth="fullWidth"
     @ready="childReady"
   />
   <InlineTable

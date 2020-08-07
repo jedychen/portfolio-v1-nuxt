@@ -18,9 +18,9 @@
       >
         <v-img
           :aspect-ratio="16/9"
-          :src="slide.file.url"
-          :alt="slide.file.title"
-          :lazy-src="imagePlaceholder"
+          :src="slide.file.url + sizeSetting"
+          :alt="slide.title"
+          :lazy-src="slide.description"
         />
       </v-carousel-item>
     </v-carousel>
@@ -41,19 +41,32 @@
       content: {
         default: null,
         type: Object
-      }
+      },
+      fullWidth: {
+        default: true,
+        type: Boolean
+      },
     },
 
     data () {
       return {
         currentIndex: 0,
-        imagePlaceholder: "",
       }
     },
 
     computed: {
       currentDescription() {
-        return this.content.slides[this.currentIndex].description
+        if (this.content.captions)
+          return this.content.captions[this.currentIndex]
+        return ''
+      },
+      sizeSetting() {
+        return '?w=' + this.maxWidth
+      },
+      maxWidth() {
+        if (this.fullWidth == true)
+          return '1740'
+        return '960'
       }
     },
 
@@ -62,9 +75,5 @@
         this.$emit("ready");
       }
     },
-
-    created() {
-      this.imagePlaceholder = this.$store.getters['styleStore/getImagePlaceholder']
-    }
   }
 </script>

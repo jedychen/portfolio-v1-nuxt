@@ -23,6 +23,7 @@
               :key="i"
               :ripple="false"
               class="side-nav__list-item"
+              :class="'waypoint-' + sectionId(section.slug)"
             >
               <v-list-item-content>
                 <v-btn
@@ -30,7 +31,6 @@
                   text
                   @click="$vuetify.goTo(scrollingTarget(section.slug), scrollingOptions)"
                   class="side-nav__list-item-text subtitle-2 side-nav__button"
-                
                 >
                   {{ section.slug }}
                 </v-btn>
@@ -98,7 +98,7 @@
 
 .side-bar__waypoint-bar {
   height: 100vh;
-  background: linear-gradient(180deg, rgba(88, 78, 87, 1) 30%, rgba(183, 75, 65, 1) 55%, rgba(248, 136, 38, 1) 100%);
+  background: linear-gradient(180deg, $theme-grey 30%, $theme-orange 55%, $theme-yellow 100%);
   position: absolute;
   width: 4px;
   animation: appear .5s ease-in 0.8s;
@@ -127,22 +127,31 @@ export default {
         list: '.side-nav__list-wrapper',
         itemIdPrefix: '#side-nav-list-item-',
         waypointBar: '.side-bar__waypoint-bar',
+        waypoint: '.side-nav__list-item',
+        waypointPrefix: '.waypoint-',
       },
+      class: {
+        waypointActive: 'side-nav__list-item-active',
+      },
+      activeWaypointTitle: '',
     }
   },
 
   computed: {
     waypointPresentage() {
-      return this.$store.getters['waypointStore/getScrollPresentage'];
+      return this.$store.getters['waypointStore/getScrollPresentage']
     },
     sectionNumber() {
       return this.sections.length
     },
     waypointPosList() {
-      return this.$store.getters['waypointStore/getWaypointPosList'];
+      return this.$store.getters['waypointStore/getWaypointPosList']
+    },
+    activeWaypoint() {
+      return this.$store.getters['waypointStore/getActiveWaypoint']
     },
     waypointPosListUpdated() {
-      return this.$store.getters['waypointStore/getWaypointPosListUpdated'];
+      return this.$store.getters['waypointStore/getWaypointPosListUpdated']
     },
     scrollingOptions() {
       return {
@@ -157,69 +166,81 @@ export default {
   watch: {
     // Based on current scrolling percentage, set waypoint styles.
     waypointPresentage(value) {
-      this.setWaypointBarPos(value);
-      this.setActiveLink(value);
+      this.setWaypointBarPos(value)
     },
     // Update waypoint positions, when loading page or page layout changes.
     waypointPosListUpdated(value) {
-      this.setWaypointSectionStyle(false);
+      this.setWaypointsStyle()
     },
+    activeWaypoint(value) {
+      this.setActiveWaypoint(value)
+    }
   },
 
   mounted() {
-    let nav_list_wrapper = document.querySelector(this.selector.list);
-    let nav_list_col = document.querySelector(this.selector.container);
-    nav_list_wrapper.style.width = nav_list_col.getBoundingClientRect().width + "px";
-    this.setWaypointSectionStyle(true);
-    this.calcuTotalHeight();
-    this.setWaypointBarPos(0);
+    let nav_list_wrapper = document.querySelector(this.selector.list)
+    let nav_list_col = document.querySelector(this.selector.container)
+    nav_list_wrapper.style.width = nav_list_col.getBoundingClientRect().width + "px"
+    this.setWaypointsStyle()
+    this.setFirstWaypointStyle()
+    this.calcuTotalHeight()
+    this.setWaypointBarPos(0)
   },
 
   methods: {
-    setWaypointSectionStyle(initialize=false) {
+    setFirstWaypointStyle() {
+      let nav_item_first = document.querySelector(this.selector.itemIdPrefix + '0')
+      nav_item_first.classList.add(this.class.waypointActive)
+      this.activeWaypointTitle = nav_item_first.className.match(/waypoint-(.*) /)[1]
+    },
+    setWaypointsStyle() {
       for(let i=0; i<this.sections.length; i++) {
-        let nav_item = document.querySelector(this.selector.itemIdPrefix + i.toString());
-        if (i==0 && initialize) {
-          nav_item.classList.add("side-nav__list-item-active");
-        }
+        let nav_item = document.querySelector(this.selector.itemIdPrefix + i.toString())
         // Set side nav list items' positions.
-        nav_item.style.position = "absolute";
-        nav_item.style.width = "100%";
-        nav_item.style.top = this.waypointPosList[i] + "vh";
+        nav_item.style.position = "absolute"
+        nav_item.style.width = "100%"
+        nav_item.style.top = this.waypointPosList[i] + "vh"
       }
     },
     // Sets the waypoint bar's background color (gradience).
     setWaypointBarPos(presentage) {
-      let waypointBarElem = document.querySelector(this.selector.waypointBar);
+      let waypointBarElem = document.querySelector(this.selector.waypointBar)
       const firstPos = presentage * 100
       const secondPos = Math.min(presentage * 100 + 10, 100)
       const thirdPos = Math.min(presentage * 100 + 20, 100)
       waypointBarElem.style.background = "linear-gradient(180deg, rgba(88, 78, 87, 1) " + firstPos + "%, rgba(183, 75, 65, 1) "
-          + secondPos +"%, rgba(248, 136, 38, 1) " + thirdPos + "%)";
+          + secondPos +"%, rgba(248, 136, 38, 1) " + thirdPos + "%)"
     },
     // Sets the active style to waypoint buttons.
-    setActiveLink(presentage) {
-      let num = 0;
-      for(let i=0; i<this.sections.length; i++) {
-        let nav_item = document.querySelector(this.selector.itemIdPrefix + i.toString());
-        let current_nav_item_offset = nav_item.getBoundingClientRect().top;
-        if (current_nav_item_offset/window.innerHeight < presentage)
-          num = i;
-        nav_item.classList.remove("side-nav__list-item-active");
-      }
-      let nav_item = document.querySelector(this.selector.itemIdPrefix + (num).toString());
-      nav_item.classList.add("side-nav__list-item-active");
+    setActiveWaypoint(waypointTitle) {
+      if (waypointTitle != '' && waypointTitle !== this.activeWaypointTitle) {
+        let activeWaypointSelector = this.selector.waypointPrefix + waypointTitle
+        let prevWaypointSelector = this.selector.waypointPrefix + this.activeWaypointTitle
+        let nav_item_active = document.querySelector(this.selector.waypoint + activeWaypointSelector)
+        let nav_item_prev = document.querySelector(this.selector.waypoint + prevWaypointSelector)
+        if (nav_item_active) {
+          nav_item_active.classList.add(this.class.waypointActive)
+          if (nav_item_prev)
+            nav_item_prev.classList.remove(this.class.waypointActive)
+          this.activeWaypointTitle = waypointTitle
+        }
+      } 
     },
+    // Calculate total height of the full page.
     calcuTotalHeight() {
       this.totalHeight = document.querySelector(
-          this.selector.list).getBoundingClientRect().height;
+          this.selector.list).getBoundingClientRect().height
     },
     onResize: debounce(function(){
-      this.calcuTotalHeight();
-      this.setActiveLink();
+      this.calcuTotalHeight()
+      this.setActiveWaypoint(this.activeWaypoint)
     }, 100),
+    // Calculate total height of the full page.
+    sectionId(title) {
+      return title.toLowerCase().trim().split(' ').join('-')
+    },
     scrollingTarget(title) {
-      return '#' + title.toLowerCase().trim().split(' ').join('-')
+      return '#' + this.sectionId(title)
     },
   },
 };
