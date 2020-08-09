@@ -11,8 +11,7 @@ import { randomInRange, calcDistance } from "./utils.js";
  *    "themeColor": string, Color for card.
  *    "blocks": Array, Cards info.
  *       "horizontalFlip": boolean, If card is flipping horizontally.
- *       "text": string, Text displayed at the back of card. Separated with ','.
- *       //"weight": string. Font weight like "normal", "border".
+ *       "text": string, Text displayed at the back of a card. Seperate lines with ','.
  */
 
 /** @private */
@@ -60,7 +59,7 @@ class FlipCardRender {
    * @public
    */
   isCard(element) {
-    if (element.name == CONFIGURATION_.cardName) return true;
+    if (element && element.name == CONFIGURATION_.cardName) return true;
     return false;
   }
 
@@ -125,18 +124,32 @@ class FlipCardRender {
    * @param {THREE.Mesh} element Card element.
    * @public
    */
-  flip(element) {
+  startFlip(element) {
     element.flip.restart();
   }
 
   /**
-   * Hold the flipping animation.
+   * Continue the flipping animation.
+   * @param {THREE.Mesh} element Card element.
+   * @public
+   */
+  continueFlip(element) {
+    element.flip.play();
+  }
+
+  /**
+   * Hold the flipping animation to the 50% progress.
    * @param {THREE.Mesh} element Card element.
    * @public
    */
   holdFlip(element) {
     if (element.flip.progress() >= 0.5) {
-      element.flip.progress(0.5);
+      element.flip.tweenTo(
+        2,
+        {
+          ease: Power4.easeOut,
+        }
+      )
     }
   }
 
@@ -342,10 +355,12 @@ class FlipCardRender {
    * @private
    */
   addCardFlipAnimation_(card) {
-    const duration = 2; // 2 seconds
+    const duration = 2; // seconds
     let delay = 0;
     let pause = true;
     let repeat = 0;
+
+    // Auto flip for mobile versions.
     if (this.autoFlip_) {
       delay = randomInRange(0, 40);
       pause = false;
@@ -362,6 +377,7 @@ class FlipCardRender {
     var config_reverse = {
       ease: Elastic.easeOut,
       duration: duration,
+      delay: 0.1, // To avoid jumpping when holding the flipping animation.
     };
 
     config_flip[card.rotateAxis] = card.rotateDirection;
@@ -372,8 +388,8 @@ class FlipCardRender {
         paused: pause,
         repeat: repeat,
       })
-      .to(card.rotation, config_flip)
-      .to(card.rotation, config_reverse);
+      .to(card.rotation, config_flip, "flip")
+      .to(card.rotation, config_reverse, "reverse");
   }
 
   /**
@@ -384,11 +400,19 @@ class FlipCardRender {
   transitionAway(cardVisited) {
     this.cardLastVisited_ = cardVisited;
     for (let card of this.cards_) {
-      let config_flip_back = {
-        ease: Power4.easeOut,
-        duration: 0.5,
-      };
-      config_flip_back[card.rotateAxis] = 0;
+      
+      // Flips back the cards that are turned around.
+      if (card.flip.progress != 1.0) {
+        let config_flip_back = {
+          ease: Power4.easeOut,
+          duration: 0.5,
+        };
+        config_flip_back[card.rotateAxis] = 0;
+        gsap.to(card.rotation, config_flip_back);
+      }
+
+      // Removes the flip animation completely
+      card.flip.clear();
 
       let config_ripple = {
         ease: Elastic.easeOut,
@@ -405,11 +429,7 @@ class FlipCardRender {
       };
       config_fade["delay"] =
         config_ripple["delay"] + config_ripple["duration"] - 1.2;
-
-      // Removes the flip animation completely
-      card.flip.clear();
-      // Flips back the cards that are turned around.
-      gsap.to(card.rotation, config_flip_back);
+      
       // Moves the cards up on z axis.
       gsap.to(card.position, config_ripple);
       // Add fading animation to the all sides of the cards

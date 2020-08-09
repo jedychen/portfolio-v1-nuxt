@@ -222,26 +222,37 @@ class FlipCard {
     // Calculate objects intersecting the picking ray.
     const intersects = this.raycaster_.intersectObjects(this.group_.children);
 
+    let intersectCard = false;
+
+    // 1. When there is a ray intersection.
     if (intersects.length > 0) {
-      // When the mouse is moving on a new card.
+      // 1.1. When the mouse is moving on a new card.
       if (this.intersectedObject_ != intersects[0].object) {
-        this.intersectedObject_ = intersects[0].object;
+        // 1.1.1. Previous card should continue its flipping animation.
         if (this.flipCardRender.isCard(this.intersectedObject_)) {
-          document.documentElement.style.cursor = "pointer";
-          this.flipCardRender.flip(this.intersectedObject_);
+          this.flipCardRender.continueFlip(this.intersectedObject_);
         }
-      } else if (
-        // When the mouse is focusing on one single card.
-        this.intersectedObject_ &&
-        this.flipCardRender.isCard(this.intersectedObject_)
-      ) {
-        document.documentElement.style.cursor = "pointer";
+        // 1.1.2. New card should start its flipping animation from begining.
+        if (this.flipCardRender.isCard(intersects[0].object)) {
+          intersectCard = true;
+          this.flipCardRender.startFlip(intersects[0].object);
+        }
+        this.intersectedObject_ = intersects[0].object;
+      } 
+      // 1.2. When the mouse is focusing on one single card.
+      else if (this.flipCardRender.isCard(this.intersectedObject_)) {
+        // The current card holds on the flipped status (text canvas).
+        intersectCard = true;
         this.flipCardRender.holdFlip(this.intersectedObject_);
-      }
-    } else {
-      // When no intersected detected.
-      document.documentElement.style.cursor = "default";
+      } 
+      // 1.3. Else omitted... When the mouse is focusing on a none card, do nothing.
+    } 
+    // 2. When no intersection, the current card just continues its flipping animation.
+    else if (this.flipCardRender.isCard(this.intersectedObject_)) {
+      this.flipCardRender.continueFlip(this.intersectedObject_);
     }
+
+    document.documentElement.style.cursor = intersectCard ? "pointer" : "default";
 
     this.renderer_.render(this.scene_, this.camera_);
   }
@@ -483,7 +494,6 @@ class FlipCard {
    * @private
    */
   scrollDevice_(event) {
-    let currentPosY = this.camera_.position.y;
     let changedPosY = this.camera_.position.y - event.deltaY;
     if (changedPosY >= this.cameraY_) this.camera_.position.y = this.cameraY_;
     else if (changedPosY <= -this.cameraY_ + this.CAMERA_BOTTOM_MARGIN)
@@ -526,7 +536,7 @@ class FlipCard {
    * @private
    */
   onMouseMove_(event) {
-    // calculate mouse position in normalized device coordinates
+    // Calculate mouse position in normalized device coordinates
     // (-1 to +1) for both components
     event.preventDefault();
     this.mouse_.x = (event.offsetX / this.container_.clientWidth) * 2 - 1;
