@@ -4,12 +4,6 @@
   >
     <v-simple-table>
       <template v-slot:default>
-        <thead>
-          <tr>
-            <th class="text-left"></th>
-            <th class="text-left"></th>
-          </tr>
-        </thead>
         <tbody>
           <tr
             v-for="row in content.rows"
@@ -40,6 +34,10 @@
 
 <style lang="scss">
 .inline-table {
+  border-width: 1px;
+  border-style: solid;
+  border-color: $theme-grey;
+
   tbody {
     td {
       width: 75%;

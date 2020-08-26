@@ -6,15 +6,21 @@
     <!-- Render section's title and intro. -->
     <v-col
       cols="12"
-      class="pa-6"
     >
       <h1
         :id="section.slug.toLowerCase().trim().split(' ').join('-')"
-        class="text-h2 mt-16 mb-4 font-weight-light content-section__title"
+        class="text-h2 mt-16 font-weight-regular content-section__title"
+        :class="{
+          'mb-10': !section.description,
+          'mb-2': section.description,
+        }"
       >
         {{ section.title }}
       </h1>
-      <p class="text-h5 font-italic font-weight-light content-section__subtitle">
+      <p
+        v-if="section.description"
+        class="text-h4 font-weight-light content-section__subtitle mb-10"
+      >
         {{ section.description }}
       </p>
     </v-col>
@@ -45,7 +51,7 @@
 
 <style lang="scss" scoped>
 .content-section__subtitle {
-  color: $copy-color-light-grey;
+  color: $theme-orange;
 }
 </style>
 

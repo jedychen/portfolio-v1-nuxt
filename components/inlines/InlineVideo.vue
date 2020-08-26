@@ -12,9 +12,15 @@
       :player-width="1920"
       :loop="loop"
       class="video-player"
+      :class="{
+        'mb-8': !content.description,
+      }"
       @ready="onReady"
     />
-    <p class="subheading mt-2 font-italic">
+    <p
+      v-if="content.caption"
+      class="text-h6 mt-4 mb-10"
+    >
       {{ content.description }}
     </p>
   </div>

@@ -6,13 +6,12 @@
   >
     <v-col
       cols="12"
-      class="px-7"
     >
       <v-divider 
-        class="secondary"
+        class="accent"
       />
       <h2
-        class="mt-16 mb-4 text-h3 font-weight-light"
+        class="mt-16 mb-4 text-h3 font-weight-bold up-next-title"
       >
         Other work
       </h2>
@@ -22,16 +21,13 @@
       :key="project.title"
       cols="12"
       md="4"
-      class="pa-6"
     >
-
       <v-hover
         v-slot:default="{ hover }"
       >
         <v-card
           :href="project.slug"
-          :class="`elevation-${hover ? 12 : 0}`"
-          class="ml-1 mt-4 transition-swing"
+          class="mt-4"
         >
           <v-img
             gradient="rgba(0, 0, 0, 0.3),
@@ -40,7 +36,10 @@
             :src="project.coverImage.file.url"
             :alt="project.coverImage.title"
             :lazy-src="project.coverImage.description"
-            class="up-next-section__image"
+            class="up-next-section__image transition-swing"
+            :class="{
+              'up-next-section--selected': hover,
+            }"
           >
             <p
               :style="'color:'+project.themeColor"
@@ -57,8 +56,30 @@
 
 <style lang="scss">
 .up-next-section {
-  background: linear-gradient(180deg, rgba(88, 78, 87, 1) 20%, rgba(183, 75, 65, 1) 60%, rgba(248, 136, 38, 1) 100%);
-};
+  .v-image__image {
+    transition: opacity 0.2s ease-in-out;
+  }
+
+  .up-next-section__sub-title {
+    transition: opacity 0.2s ease-in-out;
+  }
+}
+
+.up-next-title {
+  background: linear-gradient( rgba(183, 75, 65, 1) 10%, rgba(248, 136, 38, 1) 40%);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.up-next-section--selected {
+  .v-image__image {
+    opacity: 0.5;
+  }
+
+  .up-next-section__sub-title {
+    opacity: 0.8;
+  }
+}
 
 .up-next-section__sub-title {
   font-family: 'Mayeka-Regular', sans-serif;

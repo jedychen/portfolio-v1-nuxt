@@ -2,64 +2,90 @@
   <v-row
     no-gutters
   >
+    <!-- title -->
     <v-col
       cols="12"
-      class="px-7"
+      md="8"
     >
-      <h1 class="mb-4 intro-section__title">
+      <h1 class="my-16 intro-section__title">
         {{ content.title }}
       </h1>
     </v-col>
+
+    <!-- date -->
     <v-col
-      v-if="content.tags"
       cols="12"
       md="4"
-      class="pa-6"
+      class="date-wrapper"
     >
-      
-      <v-chip
-        v-for="(tag, i) in content.tags"
-        :key="'project main tag' + i"
-        
-        class="ma-1"
-        color="secondary"
-      >
-        {{ tag }}
-      </v-chip>
-      <p class="text-h5 font-weight-light ml-1 mt-8">
+      <p class="text-h4 font-weight-light mx-4 mb-16 date-content">
         {{ content.date }}
       </p>
     </v-col>
+
+    <!-- video -->
     <v-col
       v-if="content.media"
       cols="12"
       md="8"
-      class="pa-6"
     >
       <ContentComponent
         :component="content.media"
         @ready="childReady"
       />
-      <p class="text-h6 font-weight-regular content__text mt-6">
-        {{ content.description }}
-      </p>
     </v-col>
+
+    <!-- copy and tags -->
     <v-col
       cols="12"
-      class="pa-6"
+      md="4"
+    >
+      <p class="text-subtitle-1 mx-4 font-weight-regular content__text">
+        {{ content.description }}
+      </p>
+
+      <div
+        v-if="content.tags"
+        class="my-8 mx-2"
+      >
+        <v-chip
+          v-for="(tag, i) in content.tags"
+          :key="'project main tag' + i"
+          class="ma-1"
+          color="secondary"
+        >
+          {{ tag }}
+        </v-chip>
+      </div>
+    </v-col>
+    
+    <!-- divider -->
+    <v-col
+      cols="12"
     >
       <v-divider
-        class="secondary"
+        class="secondary mt-4"
       />
     </v-col>
+    
   </v-row>
 </template>
 
 <style lang="scss" scoped>
 .intro-section__title {
-  font-family: 'Mayeka-Regular', sans-serif;
-  font-size: 72px;
+  font-family: 'Mayeka-Light', sans-serif;
+  font-size: 84px;
   font-weight: 400;
+  line-height: 1.0em;
+}
+
+.date-wrapper {
+  position: relative;
+}
+
+.date-content {
+  position: absolute;
+  bottom: 0;
 }
 
 .content__text {

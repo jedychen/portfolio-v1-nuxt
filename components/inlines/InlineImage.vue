@@ -7,6 +7,9 @@
       @load="onReady"
       @click.stop="dialog = true"
       class="inline-image"
+      :class="{
+        'mb-8': !content.caption,
+      }"
     >
       <template v-slot:placeholder>
         <v-row
@@ -21,12 +24,14 @@
         </v-row>
       </template>
     </v-img>
-    <p class="subheading mt-2 font-italic">
-      {{ content.caption }}
+    <p
+      v-if="content.caption"
+      class="text-h6 mt-4 mb-10">
+      <span class="caption-arrow">&#9650; </span>{{ content.caption }}
     </p>
     <v-dialog
       v-model="dialog"
-      max-width="1740"
+      :max-width="maxWidth"
     >
       <v-img
         :src="content.image.file.url + sizeSettingMax"
@@ -43,6 +48,10 @@
 <style lang="scss" scoped>
 .inline-image {
   cursor: pointer;
+}
+
+.caption-arrow {
+  color: $theme-yellow;
 }
 </style>
 

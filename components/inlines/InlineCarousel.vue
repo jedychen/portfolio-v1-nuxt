@@ -10,6 +10,7 @@
       hide-delimiters
       @ready="onReady"
       height="auto"
+      class="carousel"
     >
       <v-carousel-item
         v-for="(slide, i) in content.slides"
@@ -24,13 +25,26 @@
         />
       </v-carousel-item>
     </v-carousel>
-    <p class="mt-2 subheading font-italic">
-      {{ currentIndex + 1 }} / {{ content.slides.length }} {{ '&nbsp;&nbsp;&nbsp;&nbsp;' + currentDescription }}
+    <p class="text-h6 mt-4 mb-10">
+      <span class="carousel-count">{{ currentIndex + 1 }} / {{ content.slides.length }}</span> {{ '&nbsp;&nbsp;&nbsp;&nbsp;' + currentDescription }}
     </p>
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
+.carousel-count {
+  color: $theme-yellow;
+}
+
+.carousel {
+  .v-btn--round .v-btn__content .v-icon {
+    color: $copy-color;
+  }
+
+  .v-window__prev:hover, .v-window__next:hover {
+    background: $theme-yellow;
+  }
+}
 </style>
 
 <script>

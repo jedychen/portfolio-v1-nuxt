@@ -3,7 +3,7 @@
   <v-col
     cols="12"
     :md="width"
-    class="pa-6"
+    class="my-6"
   >
     <ContentComponent
       v-for="(item, i) in block.inlineItems"
