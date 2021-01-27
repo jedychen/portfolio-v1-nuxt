@@ -7,7 +7,7 @@
       cols="12"
       md="8"
     >
-      <h1 class="my-16 intro-section__title">
+      <h1 class="my-12 intro-section__title">
         {{ content.title }}
       </h1>
     </v-col>
@@ -18,7 +18,7 @@
       md="4"
       class="date-wrapper"
     >
-      <p class="text-h4 font-weight-light mx-4 mb-16 date-content">
+      <p class="text-h4 font-weight-light mx-4 mb-md-12 date-content">
         {{ content.date }}
       </p>
     </v-col>
@@ -73,7 +73,7 @@
 
 <style lang="scss" scoped>
 .intro-section__title {
-  font-family: 'Mayeka-Light', sans-serif;
+  font-family: 'Montserrat-Light', sans-serif;
   font-size: 84px;
   font-weight: 400;
   line-height: 1.0em;
@@ -86,6 +86,7 @@
 .date-content {
   position: absolute;
   bottom: 0;
+  color: $copy-color-med-grey;
 }
 
 .content__text {

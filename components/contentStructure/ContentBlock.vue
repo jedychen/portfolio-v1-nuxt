@@ -3,7 +3,7 @@
   <v-col
     cols="12"
     :md="width"
-    class="my-6"
+    class="mt-6"
   >
     <ContentComponent
       v-for="(item, i) in block.inlineItems"
@@ -34,12 +34,12 @@ export default {
 
   computed: {
     width() {
-      if (this.block.fullWidth == true)
+      if (this.block.fullWidth && this.block.fullWidth == true)
         return 12;
       return 8;
     },
     fullWidth() {
-      if (this.block.fullWidth == true)
+      if (this.block.fullWidth && this.block.fullWidth == true)
         return true;
       return false;
     }

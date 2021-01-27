@@ -9,7 +9,7 @@
     >
       <h1
         :id="section.slug.toLowerCase().trim().split(' ').join('-')"
-        class="text-h2 mt-16 font-weight-regular content-section__title"
+        class="text-h2 mt-16 font-weight-light content-section__title"
         :class="{
           'mb-10': !section.description,
           'mb-2': section.description,

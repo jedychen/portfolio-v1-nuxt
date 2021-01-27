@@ -26,16 +26,16 @@
         v-slot:default="{ hover }"
       >
         <v-card
-          :href="project.slug"
+          :href="'/work/'+project.slug"
           class="mt-4"
         >
           <v-img
             gradient="rgba(0, 0, 0, 0.3),
                         rgba(0, 0, 0, 0)"
             :aspect-ratio="3/2"
-            :src="project.coverImage.file.url"
-            :alt="project.coverImage.title"
-            :lazy-src="project.coverImage.description"
+            :src="getProjectImage(project).file.url"
+            :alt="getProjectImage(project).title"
+            :lazy-src="getProjectImage(project).description"
             class="up-next-section__image transition-swing"
             :class="{
               'up-next-section--selected': hover,
@@ -82,8 +82,8 @@
 }
 
 .up-next-section__sub-title {
-  font-family: 'Mayeka-Regular', sans-serif;
-  font-size: 40px;
+  font-family: 'Montserrat-Regular', sans-serif;
+  font-size: 48px;
   font-weight: 400;
   line-height: 1em;
 }
@@ -102,6 +102,15 @@ export default {
       default: null,
       type: Array,
     },
+  },
+
+  methods: {
+    getProjectImage(project) {
+      if (project.linkImage !=  null) {
+        return project.linkImage;
+      }
+      return project.coverImage;
+    }
   },
 }
 </script>

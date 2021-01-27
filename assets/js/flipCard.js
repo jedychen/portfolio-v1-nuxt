@@ -322,7 +322,7 @@ class FlipCard {
       // Desktop
       this.autoFlip_ = false;
       this.devicePixelRatio_ = 1;
-      this.DEVICE_ = DEVICE_.TABLET;
+      this.DEVICE_ = DEVICE_.DESKTOP;
       console.log("Device: Desktop");
     }
   }
@@ -390,22 +390,22 @@ class FlipCard {
       case clientWidth < BREAKPOINTS_.xs * this.devicePixelRatio_:
         this.projectColNum_ = 1;
         this.cameraZ_ = CAMERA_DISTANCE_.single / this.aspectRatio_;
-        console.log("Screen size: xs");
+        // console.log("Screen size: xs");
         break;
       case clientWidth < BREAKPOINTS_.sm * this.devicePixelRatio_:
         this.projectColNum_ = 2;
         this.cameraZ_ = CAMERA_DISTANCE_.double / this.aspectRatio_;
-        console.log("Screen size: sm");
+        // console.log("Screen size: sm");
         break;
       case clientWidth < BREAKPOINTS_.md * this.devicePixelRatio_:
-        this.projectColNum_ = 2;
-        this.cameraZ_ = CAMERA_DISTANCE_.double / this.aspectRatio_;
-        console.log("Screen size: md");
+        this.projectColNum_ = 3;
+        this.cameraZ_ = CAMERA_DISTANCE_.triple / this.aspectRatio_;
+        // console.log("Screen size: md");
         break;
       default:
         this.projectColNum_ = 3;
         this.cameraZ_ = CAMERA_DISTANCE_.triple / this.aspectRatio_;
-        console.log("Screen size: default");
+        // console.log("Screen size: default");
         break;
     }
   }

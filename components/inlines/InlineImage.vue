@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="mb-8">
     <v-img
       :src="content.image.file.url + sizeSetting"
       :alt="content.image.title"
@@ -7,9 +7,6 @@
       @load="onReady"
       @click.stop="dialog = true"
       class="inline-image"
-      :class="{
-        'mb-8': !content.caption,
-      }"
     >
       <template v-slot:placeholder>
         <v-row
@@ -26,8 +23,8 @@
     </v-img>
     <p
       v-if="content.caption"
-      class="text-h6 mt-4 mb-10">
-      <span class="caption-arrow">&#9650; </span>{{ content.caption }}
+      class="text-h6 mt-4 caption-text">
+      <span class="caption-arrow">&#9700; </span>{{ content.caption }}
     </p>
     <v-dialog
       v-model="dialog"
@@ -52,6 +49,10 @@
 
 .caption-arrow {
   color: $theme-yellow;
+}
+
+.caption-text {
+  color: $copy-color-light-grey;
 }
 </style>
 

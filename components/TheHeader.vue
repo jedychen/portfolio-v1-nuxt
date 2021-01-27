@@ -42,11 +42,6 @@
       </v-btn>
     </nuxt-link>
 
-    <!-- <v-divider
-      class="mx-4"
-      vertical
-    /> -->
-
     <nuxt-link
       to="/about"
       exact
@@ -79,7 +74,7 @@ a.header__link {
   letter-spacing: 0.1rem;
   margin-left: 20px;
   white-space: nowrap;
-  color: $copy-color;
+  color: $copy-color-light-grey;
 }
 
 .header-link {

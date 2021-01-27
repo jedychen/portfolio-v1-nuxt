@@ -31,17 +31,18 @@
           :key="block.title"
           cols="12"
           :md="4 + block.isBlock * 8"
-          class="mb-7"
+          :sm="6 + block.isBlock * 6"
+          class="mb-8"
         >
           <h5
-            class="text-h5 mb-5"
+            class="text-h4 mb-5 font-weight-light about-section_subtitle"
           >
             {{ block.title }}
           </h5>
           <p 
             v-for="item in block.contentItem"
             :key="item"
-            class="text-subtitle-1 font-weight-light mb-1"
+            class="text-subtitle-1 mb-1 about-section__content"
           >
             {{ item }}
           </p>
@@ -55,7 +56,14 @@
 <style lang="scss" scoped>
 .about-section__title {
   color: $theme-yellow;
-  text-decoration: underline;
+}
+
+.about-section_subtitle {
+  background-color: $copy-color-black-transparent;
+}
+
+.about-section__content {
+  color: $copy-color-med-grey;
 }
 </style>
 

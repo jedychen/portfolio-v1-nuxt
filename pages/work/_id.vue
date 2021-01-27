@@ -6,13 +6,13 @@
     <v-row
       v-scroll:#scrolling-content="onScroll"
       no-gutters
-      class="project-page"
+      class="project-page mt-12"
     >
-      <!-- Side Nav -->
+      <!-- Side Nav / Left Margin -->
       <v-col
         cols="1"
         lg="2"
-        class="side-nav-col hidden-md hidden-xs"
+        class="side-nav-col hidden-xs"
       >
         <SideNav
           :sections="contentSectionItems"
@@ -23,9 +23,8 @@
         v-resize="onResize"
         cols="12"
         sm="10"
-        md="12"
         lg="9"
-        class="page-content-col mt-12"
+        class="page-content-col"
       >
         <IntroSection
           :content="introSectionItem"
@@ -44,7 +43,7 @@
       <!-- Right Margin -->
       <v-col
         cols="1"
-        class="margin-col hidden-md hidden-xs"
+        class="margin-col hidden-xs"
       />
     </v-row>
   </v-container>
@@ -80,6 +79,12 @@ import UpNextSection from '@/components/UpNextSection'
 
 export default {
   middleware: ['password-protect'],
+
+  head() {
+    return {
+      title: this.introSectionItem.title,
+    }
+  },
 
   components: {
     SideNav,

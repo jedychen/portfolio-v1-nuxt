@@ -12,7 +12,7 @@
       >
         <v-list
           flat
-          class="side-nav__list mt-12"
+          class="side-nav__list"
         >
           <v-list-item-group
             color="primary"
@@ -76,11 +76,14 @@
 }
 
 .side-nav__list-item {
+  padding: 0;
+
   .side-nav__list-item-text {
     font-weight: 300;
-    color: $theme-grey;
-    animation: appear .5s ease-in 1.3s;
+    color: $copy-color-med-grey;
+    animation: appear 0.5s ease-in 1.3s;
     animation-fill-mode: both;
+    transition: color 0.2s ease-in-out;
   }
 
   &.side-nav__list-item-active {
@@ -157,7 +160,7 @@ export default {
       return {
         container: '#scrolling-content',
         duration: 300,
-        offset: 200,
+        offset: 100,
         easing: 'easeInOutCubic',
       }
     },

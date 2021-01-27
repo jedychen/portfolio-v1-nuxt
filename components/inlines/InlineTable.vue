@@ -1,6 +1,6 @@
 <template>
   <div
-    class="inline-table"
+    class="inline-table mb-8"
   >
     <v-simple-table>
       <template v-slot:default>
@@ -16,7 +16,7 @@
               :colspan="cell.colspan"
               :rowspan="cell.rowspan"
               :class="{ 
-                'text-subtitle-1 table-cell-first font-weight-medium': index === 0,
+                'text-h6 table-cell-first font-weight-light inline-table--title': index === 0,
                 'text-subtitle-1 font-weight-light': index !== 0,
               }"
             >
@@ -36,7 +36,7 @@
 .inline-table {
   border-width: 1px;
   border-style: solid;
-  border-color: $theme-grey;
+  border-color: $theme-orange;
 
   tbody {
     td {
@@ -55,6 +55,10 @@
       background-color: transparent !important;
     }
   }
+}
+
+.inline-table--title {
+  color: $copy-color-light-grey;
 }
 </style>
 

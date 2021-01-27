@@ -15,18 +15,17 @@
         align-content="center"
         justify="center"
       >
-        <v-col
-          class="subtitle-1 text-center loading__text"
-          cols="12"
-        >
-          Loading assets...
-        </v-col>
         <v-col cols="3">
-          <v-progress-linear
+          <v-progress-circular
             :value="loadingProgress"
-            background-color="grey darken-3"
-            color="grey lighten-5"
-          />
+            color="primary"
+            :rotate="-90"
+            :size="200"
+            :width="5"
+            class="subtitle-1 text-center loading__text"
+          >
+            Loading assets...
+          </v-progress-circular>
         </v-col>
       </v-row>
     </v-container>
@@ -89,6 +88,7 @@
     color: $copy-color;
     opacity: 1;
     transition: all 0.5s ease;
+    transition-delay: 0.3s;
   }
 }
 
@@ -106,6 +106,12 @@ import contentful from '@/plugins/contentful.js'
 import * as prettify from 'pretty-contentful'
 
 export default {
+  head() {
+    return {
+      title: 'Hi',
+    }
+  },
+
   data() {
     return {
       theme_class: "feature-work__container",

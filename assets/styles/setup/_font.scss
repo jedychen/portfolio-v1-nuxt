@@ -1,8 +1,8 @@
 @font-face {
   font-family: 'Mayeka-Thin';
-  src: url('~@/assets/fonts/MayekaThinDemo.otf') format('font-opentype'),
-  url('~@/assets/fonts/MayekaThinDemo.woff') format('woff'),
-  url('~@/assets/fonts/MayekaThinDemo.ttf') format('truetype');
+  src: url('~@/assets/fonts/MayekaLightDemo.otf') format('font-opentype'),
+  url('~@/assets/fonts/MayekaLightDemo.woff') format('woff'),
+  url('~@/assets/fonts/MayekaLightDemo.ttf') format('truetype');
 }
 
 @font-face {
@@ -14,7 +14,21 @@
 
 @font-face {
   font-family: 'Mayeka-Regular';
-  src: url('~@/assets/fonts/MayekaRegularDemo.otf') format('font-opentype'),
+  src: url('~@/assets/fonts/MayekaLightDemo.otf') format('font-opentype'),
   url('~@/assets/fonts/MayekaRegularDemo.woff') format('woff'),
   url('~@/assets/fonts/MayekaRegularDemo.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Montserrat-Light';
+  src: url('~@/assets/fonts/Montserrat-Light.otf') format('font-opentype'),
+  url('~@/assets/fonts/Montserrat-Light.woff') format('woff'),
+  url('~@/assets/fonts/Montserrat-Light.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Montserrat-Regular';
+  src: url('~@/assets/fonts/Montserrat-Regular.otf') format('font-opentype'),
+  url('~@/assets/fonts/Montserrat-Regular.woff') format('woff'),
+  url('~@/assets/fonts/Montserrat-Regular.ttf') format('truetype');
 }

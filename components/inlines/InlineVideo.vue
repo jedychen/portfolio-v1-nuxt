@@ -1,6 +1,6 @@
 <template>
   <div
-    class="video-wrapper"
+    class="video-wrapper mb-8"
   >
     <vimeo-player
       v-if="content != null"
@@ -12,34 +12,25 @@
       :player-width="1920"
       :loop="loop"
       class="video-player"
-      :class="{
-        'mb-8': !content.description,
-      }"
       @ready="onReady"
     />
     <p
-      v-if="content.caption"
-      class="text-h6 mt-4 mb-10"
+      v-if="content.description"
+      class="text-h6 mt-4 caption-text"
     >
-      {{ content.description }}
+      <span class="caption-arrow">&#9700; </span>{{ content.description }}
     </p>
   </div>
 </template>
 
 <style lang="scss" scoped>
-// .video-wrapper {
-//   position: relative;
-//   padding-bottom: 56.25%;
-//   background-color: $theme-grey;
-// }
+.caption-arrow {
+  color: $theme-yellow;
+}
 
-// .video-player {
-//   position: absolute;
-//   top: 0;
-//   left: 0;
-//   width: 100%;
-//   height: 100%;
-// }
+.caption-text {
+  color: $copy-color-light-grey;
+}
 </style>
 
 <script>

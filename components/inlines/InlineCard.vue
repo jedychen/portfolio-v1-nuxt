@@ -11,7 +11,7 @@
       :ripple="false"
       :to="content.link"
       target="_blank"
-      class="mx-auto transition-swing"
+      class="mx-auto transition-swing mb-6"
     >
       <v-img
         v-if="content.cover != null"
@@ -19,6 +19,10 @@
         :src="content.cover.file.url + sizeSetting"
         height="200px"
         @load="onReady"
+        class="inline-card-image transition-swing"
+        :class="{
+          'inline-card__image--hovered': hover
+        }"
       />
 
       <v-card-title>
@@ -54,6 +58,10 @@
 
 .inline-card__cta {
   color: $theme-yellow;
+}
+
+.inline-card__image--hovered {
+  filter: brightness(120%);
 }
 </style>
 

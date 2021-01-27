@@ -27,7 +27,7 @@
             md="5"
             class="py-6"
           >
-            <p class="text-h6 font-weight-regular text-md-right text-sm-left">
+            <p class="text-h6 font-weight-regular">
               {{ content.introduction }}
             </p>
           </v-col>
@@ -44,7 +44,7 @@
             class="py-6"
           >
             <h1 class="text-h3 intro__title">
-              <span class="primary">
+              <span class="intro__tag">
                 {{ content.title }}
               </span>
             </h1>
@@ -93,6 +93,10 @@
 </template>
 
 <style lang="scss" scoped>
+.intro__tag {
+  color: $theme-orange;
+}
+
 .intro__title {
   font-family: 'Mayeka-Regular', sans-serif;
   font-weight: 300;

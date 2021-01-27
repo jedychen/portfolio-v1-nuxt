@@ -1,10 +1,10 @@
 <template>
   <div
-    class="mb-2"
+    class="mb-8"
   >
     <v-carousel
       v-model="currentIndex"
-      cycle
+      :cycle="!(content.autoCycle == false)"
       continuous
       hide-delimiter-background
       hide-delimiters
@@ -25,7 +25,7 @@
         />
       </v-carousel-item>
     </v-carousel>
-    <p class="text-h6 mt-4 mb-10">
+    <p class="text-h6 mt-4 caption-text">
       <span class="carousel-count">{{ currentIndex + 1 }} / {{ content.slides.length }}</span> {{ '&nbsp;&nbsp;&nbsp;&nbsp;' + currentDescription }}
     </p>
   </div>
@@ -44,6 +44,10 @@
   .v-window__prev:hover, .v-window__next:hover {
     background: $theme-yellow;
   }
+}
+
+.caption-text {
+  color: $copy-color-light-grey;
 }
 </style>
 
@@ -81,7 +85,7 @@
         if (this.fullWidth == true)
           return '1740'
         return '960'
-      }
+      },
     },
 
     methods: {

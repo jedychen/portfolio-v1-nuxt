@@ -1,11 +1,34 @@
 import colors from 'vuetify/es5/util/colors'
 import minifyTheme from 'minify-css-string'
+import axios from 'axios'
+import { string } from 'mathjs'
 
 require('dotenv').config({ path: '.env' })
+const contentful = require('contentful')
 
 export default {
-  mode: 'spa',
+  ssr: false,
   target: 'static',
+  generate: {
+    crawler: true,
+    routes:() => {
+      const client = contentful.createClient({
+          space: process.env.CONTENTFUL_SPACE_ID,
+          accessToken: process.env.CONTENTFUL_ACCESS_TOKEN
+      });
+  
+      return client.getEntries({
+          content_type: 'projectConfiguration'
+      }).then((response) => {
+          return response.items.map(entry => {
+              return {
+                  route: '/work/' + entry.fields.slug,
+                  payload: entry
+              };
+          });
+      });
+    },
+  },
   /*
   ** Headers of the page
   */
