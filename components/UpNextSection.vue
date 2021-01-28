@@ -11,7 +11,7 @@
         class="accent"
       />
       <h2
-        class="mt-16 mb-4 text-h3 font-weight-bold up-next-title"
+        class="mt-16 mb-4 up-next-title"
       >
         Other work
       </h2>
@@ -66,6 +66,10 @@
 }
 
 .up-next-title {
+  font-family: 'CantataOne-Regular', serif;
+  font-size: 3rem;
+  font-weight: 500;
+  line-height: 1.0em;
   background: linear-gradient( rgba(183, 75, 65, 1) 10%, rgba(248, 136, 38, 1) 40%);
   background-clip: text;
   -webkit-text-fill-color: transparent;

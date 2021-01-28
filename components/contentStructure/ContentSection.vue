@@ -9,7 +9,7 @@
     >
       <h1
         :id="section.slug.toLowerCase().trim().split(' ').join('-')"
-        class="text-h2 mt-16 font-weight-light content-section__title"
+        class="mt-16 content-section__title"
         :class="{
           'mb-10': !section.description,
           'mb-2': section.description,
@@ -50,6 +50,12 @@
 </template>
 
 <style lang="scss" scoped>
+.content-section__title {
+  font-family: 'CantataOne-Regular', serif;
+  font-size: 3.5rem;
+  font-weight: 400;
+  line-height: 1.0em;
+}
 .content-section__subtitle {
   color: $theme-orange;
 }

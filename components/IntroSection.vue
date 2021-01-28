@@ -73,8 +73,8 @@
 
 <style lang="scss" scoped>
 .intro-section__title {
-  font-family: 'Montserrat-Light', sans-serif;
-  font-size: 84px;
+  font-family: 'CantataOne-Regular', serif;
+  font-size: 5rem;
   font-weight: 400;
   line-height: 1.0em;
 }
