@@ -42,7 +42,7 @@
             }"
           >
             <p
-              :style="'color:'+project.themeColor"
+              :style="'color:'+getProjectColor(project)"
               class="mx-4 my-4 up-next-section__sub-title"
             >
             {{ project.title }}
@@ -69,10 +69,13 @@
   font-family: 'CantataOne-Regular', serif;
   font-size: 3rem;
   font-weight: 500;
-  line-height: 1.0em;
+  line-height: 1.1em;
   background: linear-gradient( rgba(183, 75, 65, 1) 10%, rgba(248, 136, 38, 1) 40%);
   background-clip: text;
   -webkit-text-fill-color: transparent;
+  @include bp(sm){
+    font-size: 2.5rem;
+  }
 }
 
 .up-next-section--selected {
@@ -87,9 +90,9 @@
 
 .up-next-section__sub-title {
   font-family: 'Montserrat-Regular', sans-serif;
-  font-size: 48px;
+  font-size: 2.5rem;
   font-weight: 400;
-  line-height: 1em;
+  line-height: 1.1em;
 }
 
 .up-next-section__image .v-image__image {
@@ -114,6 +117,13 @@ export default {
         return project.linkImage;
       }
       return project.coverImage;
+    },
+
+    getProjectColor(project) {
+      if (project.linkColor !=  null) {
+        return project.linkColor;
+      }
+      return project.themeColor;
     }
   },
 }

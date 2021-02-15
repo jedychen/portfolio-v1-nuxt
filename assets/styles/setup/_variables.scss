@@ -8,3 +8,25 @@ $theme-orange: #b74b41;
 $theme-grey: #584e57;
 $background-color: #000;
 $icon-color: #fff;
+
+@mixin bp($point) {
+  
+  $bp-xs: "(max-width: 340px)";
+  $bp-sm: "(max-width: 540px)";
+  $bp-md: "(max-width: 800px - 24px)";
+  $bp-lg: "(max-width: 1280px - 24px)";
+
+  @if $point == xs {
+    @media #{$bp-xs} { @content; }
+  }
+  @else if $point == sm {
+    @media #{$bp-sm} { @content; }
+  }
+  @else if $point == md {
+    @media #{$bp-md}  { @content; }
+  }
+  @else if $point == lg {
+    @media #{$bp-lg}  { @content; }
+  }
+
+}

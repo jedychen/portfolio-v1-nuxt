@@ -3,7 +3,7 @@
   <v-col
     cols="12"
     :md="width"
-    class="mt-6"
+    class="mt-6 content-block"
   >
     <ContentComponent
       v-for="(item, i) in block.inlineItems"
@@ -14,6 +14,12 @@
     />
   </v-col>
 </template>
+
+<style lang="scss" scoped>
+.content-block {
+  cursor: default;
+}
+</style>
 
 <script>
 import ContentComponent from '@/components/contentStructure/ContentComponent';

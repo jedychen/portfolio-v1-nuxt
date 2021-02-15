@@ -31,6 +31,10 @@
     v-else-if="type == 'inlineTable'"
     :content="parsedTable"
   />
+  <InlineIframe
+    v-else-if="type == 'inlineIframe'"
+    :content="parsedIframe"
+  />
   <div v-else />
 </template>
 
@@ -47,6 +51,7 @@ import InlineCarousel from '@/components/inlines/InlineCarousel';
 import InlineImage from '@/components/inlines/InlineImage';
 import InlineTable from '@/components/inlines/InlineTable';
 import InlineVideo from '@/components/inlines/InlineVideo';
+import InlineIframe from '@/components/inlines/InlineIframe';
 
 export default {
   name: 'ContentComponent',
@@ -57,6 +62,7 @@ export default {
     InlineImage,
     InlineTable,
     InlineVideo,
+    InlineIframe,
   },
 
   props: {
@@ -79,6 +85,7 @@ export default {
       parsedSlides: null,
       parsedTable: null,
       parsedCard: null,
+      parsedIframe: null,
     }
   },
 
@@ -100,6 +107,8 @@ export default {
       this.parsedCard = this.component;
     } else if (this.type == "inlineTable") {
       this.parsedTable = this.component;
+    } else if (this.type == "inlineIframe") {
+      this.parsedIframe = this.component;
     }
   },
 

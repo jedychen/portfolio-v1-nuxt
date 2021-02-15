@@ -16,7 +16,7 @@
     <v-col
       cols="12"
       md="4"
-      class="date-wrapper"
+      class="date-wrapper mt-6"
     >
       <p class="text-h4 font-weight-light mx-4 mb-md-12 date-content">
         {{ content.date }}
@@ -76,7 +76,10 @@
   font-family: 'CantataOne-Regular', serif;
   font-size: 5rem;
   font-weight: 400;
-  line-height: 1.0em;
+  line-height: 1.1em;
+  @include bp(sm){
+    font-size: 3rem;
+  }
 }
 
 .date-wrapper {
