@@ -108,7 +108,14 @@ import * as prettify from 'pretty-contentful'
 export default {
   head() {
     return {
-      title: 'Hi',
+      title: 'Jedy Chen',
+      meta: [
+        {
+          hid: 'Home Page of JedyChen.com',
+          name: 'Home Page',
+          content: 'Entry to all my featured work.'
+        }
+      ]
     }
   },
 

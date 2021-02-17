@@ -21,27 +21,12 @@
           no-gutters
           class="mb-12"
         >
-          <!-- Introduction. -->
-          <v-col
-            cols="12"
-            md="5"
-            class="py-6"
-          >
-            <p class="text-h6 font-weight-regular">
-              {{ content.introduction }}
-            </p>
-          </v-col>
-          <v-col
-            cols="12"
-            md="1"
-            class="hidden-xs hidden-sm"
-          />
-
           <!-- Title and Subtitle. -->
           <v-col
             cols="12"
             md="6"
             class="py-6"
+            order="md-3"
           >
             <h1 class="text-h3 intro__title">
               <span class="intro__tag">
@@ -49,7 +34,7 @@
               </span>
             </h1>
 
-            <h2 class="text-h2 mb-8 intro__sub-title">
+            <h2 class="mb-8 intro__sub-title">
               {{ content.subtitle }}
             </h2>
 
@@ -75,7 +60,28 @@
             </v-tooltip>
             
           </v-col>
-        </v-row>
+
+          <v-col
+            cols="12"
+            md="1"
+            class="hidden-xs hidden-sm"
+            order="md-2"
+          />
+        
+          <!-- Introduction. -->
+          <v-col
+            cols="12"
+            md="5"
+            class="py-6"
+            order="md-1"
+          >
+            <p class="text-h6 font-weight-regular">
+              {{ content.introduction }}
+            </p>
+          </v-col>
+          
+
+        </v-row>  
 
         <AboutSection
           v-for="item in contentSectionItems"
@@ -98,13 +104,16 @@
 }
 
 .intro__title {
-  font-family: 'Mayeka-Regular', sans-serif;
-  font-weight: 300;
 }
 
 .intro__sub-title {
   font-family: 'Mayeka-Regular', sans-serif;
+  font-size: 4.5rem;
   font-weight: 400;
+  line-height: 1.1em;
+  @include bp(sm){
+    font-size: 3rem;
+  }
 }
 
 .page-enter-active, .page-leave-active {
@@ -124,6 +133,19 @@ import AboutSection from '@/components/AboutSection'
 export default {
   components: {
     AboutSection,
+  },
+
+  head() {
+    return {
+      title: 'About',
+      meta: [
+        {
+          hid: 'About Jedy Chen',
+          name: 'About Page',
+          content: 'About my experience and skills.'
+        }
+      ]
+    }
   },
 
   data() {

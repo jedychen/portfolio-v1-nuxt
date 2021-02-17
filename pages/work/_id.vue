@@ -83,6 +83,13 @@ export default {
   head() {
     return {
       title: this.introSectionItem.title,
+      meta: [
+        {
+          hid: 'Featured Work' + this.introSectionItem.title,
+          name: 'Work Page',
+          content: 'Details about the work' + this.introSectionItem.title
+        }
+      ]
     }
   },
 

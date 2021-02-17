@@ -9,7 +9,7 @@
       md="4"
       class="py-6"
     >
-      <h3 class="text-h3 font-weight-light text-md-right text-sm-left about-section__title">
+      <h3 class="text-md-right text-sm-left about-section__title">
         {{ section.title }}
       </h3>
     </v-col>
@@ -32,10 +32,10 @@
           cols="12"
           :md="4 + block.isBlock * 8"
           :sm="6 + block.isBlock * 6"
-          class="mb-8"
+          class="mb-4"
         >
           <h5
-            class="text-h4 mb-5 font-weight-light about-section_subtitle"
+            class="text-h5 mb-3 about-section_subtitle"
           >
             {{ block.title }}
           </h5>
@@ -56,6 +56,13 @@
 <style lang="scss" scoped>
 .about-section__title {
   color: $theme-yellow;
+  font-family: 'CantataOne-Regular', serif;
+  font-size: 2.5rem;
+  font-weight: 500;
+  line-height: 1.1em;
+  @include bp(sm){
+    font-size: 2.5rem;
+  }
 }
 
 .about-section_subtitle {
