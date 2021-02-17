@@ -7,6 +7,8 @@ require('dotenv').config({ path: '.env' })
 const contentful = require('contentful')
 
 export default {
+  ssr: false,
+  target: 'static',
   generate: {
     crawler: true,
     routes:() => {
@@ -80,6 +82,7 @@ export default {
     '@nuxtjs/dotenv',
     'nuxt-password-protect',
     '@nuxtjs/markdownit',
+    '@nuxtjs/sitemap',
   ],
   /*
   ** vuetify module configuration
@@ -115,6 +118,17 @@ export default {
       'markdown-it-div',
       'markdown-it-attrs'
     ]
+  },
+  // [optional] site maps
+  // See https://dev.to/andynoir/sitemap-for-dynamic-routes-in-nuxtjs-4b96
+  sitemap: {
+    hostname: 'https://jedychen.com',
+    gzip: true,
+    defaults: {
+      changefreq: 'daily',
+      priority: 1,
+      lastmod: new Date()
+    }
   },
   /*
   ** Build configuration

@@ -112,10 +112,11 @@ export default {
     }
   },
 
-  asyncData ({ params }) {
+  asyncData ({ params, payload }) {
     return Promise.all([
       // fetch all blog posts sorted by creation date
       contentful.getEntries({
+        'fields.slug': payload ? payload : params.id,
         'content_type': 'projectPage',
         include: 6,
       })
