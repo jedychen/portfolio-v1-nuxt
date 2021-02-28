@@ -17,7 +17,7 @@
       >
         <div class="loading-circle__container">
           <span 
-            id="loading-circle"
+            class="loading-circle"
             :style="{ backgroundImage: tweenedGradienceColor }"
           />
         </div>
@@ -39,8 +39,8 @@
   &.loading-completed {
     .loading__container {
       visibility: hidden;
-      
-      .loading__text {
+
+      .loading-circle {
         opacity: 0;
       }
     }
@@ -81,7 +81,7 @@
   transform: translate(-50%, -50%);
 }
 
-#loading-circle {
+.loading-circle {
   height: 100px;
   width: 100px;
   border-radius: 50%;
@@ -92,11 +92,10 @@
   position: fixed;
   visibility: hidden;
 
-  .loading__text {
-    color: $copy-color;
+  .loading-circle {
     opacity: 1;
     transition: all 0.5s ease;
-    transition-delay: 0.3s;
+    animation-delay: 0.3s;
   }
 }
 
@@ -169,8 +168,8 @@ export default {
   watch: {
     loadingProgress(value) {
       const firstPos = (100 - value) * 1 - 50
-      const secondPos = (100 - value) * 0.8 + 20
-      const thirdPos = (100 - value) * 0.4 + 60
+      const secondPos = (100 - value) * 1
+      const thirdPos = 100
       // Tween the gradience position to make the loading animation smoother
       gsap.to(this.$data, { duration: 1, loadingFirstPos: firstPos, loadingSecondPos: secondPos, loadingThirdPos: thirdPos });
       if (value >= 100) {
