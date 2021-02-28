@@ -15,18 +15,12 @@
         align-content="center"
         justify="center"
       >
-        <v-col cols="3">
-          <v-progress-circular
-            :value="loadingProgress"
-            color="primary"
-            :rotate="-90"
-            :size="200"
-            :width="5"
-            class="subtitle-1 text-center loading__text"
-          >
-            Loading assets...
-          </v-progress-circular>
-        </v-col>
+        <div class="loading-circle__container">
+          <span 
+            id="loading-circle"
+            :style="{ backgroundImage: tweenedGradienceColor }"
+          />
+        </div>
       </v-row>
     </v-container>
   </div>
@@ -80,6 +74,20 @@
   width: 100%;
 }
 
+.loading-circle__container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#loading-circle {
+  height: 100px;
+  width: 100px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
 .loading__container {
   position: fixed;
   visibility: hidden;
@@ -104,6 +112,7 @@
 <script>
 import contentful from '@/plugins/contentful.js'
 import * as prettify from 'pretty-contentful'
+import { gsap, Elastic, Power4 } from "gsap"
 
 export default {
   head() {
@@ -123,6 +132,9 @@ export default {
     return {
       theme_class: "feature-work__container",
       container: null,
+      loadingFirstPos: 100, // For loading gradience, grey
+      loadingSecondPos: 100,// For loading gradience, orange
+      loadingThirdPos: 100, // For loading gradience, yellow
     }
   },
 
@@ -148,11 +160,19 @@ export default {
     },
     clickedProject() {
       return this.$store.getters['flipCardStore/getClickedProject']
+    },
+    tweenedGradienceColor() {
+      return `linear-gradient(180deg, rgba(88, 78, 87, 1) ${this.loadingFirstPos}%, rgba(183, 75, 65, 1) ${this.loadingSecondPos}%, rgba(248, 136, 38, 1) ${this.loadingThirdPos}%)`;
     }
   },
 
   watch: {
     loadingProgress(value) {
+      const firstPos = (100 - value) * 1 - 50
+      const secondPos = (100 - value) * 0.8 + 20
+      const thirdPos = (100 - value) * 0.4 + 60
+      // Tween the gradience position to make the loading animation smoother
+      gsap.to(this.$data, { duration: 1, loadingFirstPos: firstPos, loadingSecondPos: secondPos, loadingThirdPos: thirdPos });
       if (value >= 100) {
         this.container.classList.remove("loading-in-progress")
         this.container.classList.add("loading-completed")
