@@ -1,10 +1,6 @@
 <template>
   <!-- Single Content Block -->
-  <v-col
-    cols="12"
-    :md="width"
-    class="mt-6 content-block"
-  >
+  <v-col cols="12" :md="width" class="pa-4 content-block">
     <ContentComponent
       v-for="(item, i) in block.inlineItems"
       :key="i"
@@ -22,31 +18,29 @@
 </style>
 
 <script>
-import ContentComponent from '@/components/contentStructure/ContentComponent';
+import ContentComponent from "@/components/contentStructure/ContentComponent";
 
 export default {
-  name: 'ContentBlock',
+  name: "ContentBlock",
 
   components: {
-    ContentComponent,
+    ContentComponent
   },
 
   props: {
     block: {
       default: null,
       type: Object
-    },
+    }
   },
 
   computed: {
     width() {
-      if (this.block.fullWidth && this.block.fullWidth == true)
-        return 12;
+      if (this.block.fullWidth && this.block.fullWidth == true) return 12;
       return 8;
     },
     fullWidth() {
-      if (this.block.fullWidth && this.block.fullWidth == true)
-        return true;
+      if (this.block.fullWidth && this.block.fullWidth == true) return true;
       return false;
     }
   },
@@ -55,6 +49,6 @@ export default {
     childReady() {
       this.$emit("ready");
     }
-  },
-}
+  }
+};
 </script>

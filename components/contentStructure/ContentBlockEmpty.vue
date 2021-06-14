@@ -1,17 +1,13 @@
 <template>
-  <v-col
-    cols="12"
-    md="4"
-    class="pa-6 hidden-sm-and-down"
-  />
+  <v-col cols="12" md="4" class="pa-0 d-none d-md-flex" />
 </template>
 
 <script>
 export default {
-  name: 'ContentBlockEmpty',
+  name: "ContentBlockEmpty",
 
-  data () {
-    return {}
-  },
-}
+  data() {
+    return {};
+  }
+};
 </script>

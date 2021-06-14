@@ -1,33 +1,30 @@
 <template>
-  <div class="mb-8 inline-iframe-container">
-    <v-card
-      class="aspect-ratio"
-    >
+  <div class="pb-4 inline-iframe-container">
+    <v-card class="aspect-ratio">
       <iframe
         style="width:100%"
         loading="lazy"
         :name="content.title"
-         height="300"
+        height="300"
         :src="content.url"
         class="inline-iframe"
       />
       <v-btn
         class="mx-2 my-2"
         dark
-        color="accent"
+        color="primary"
         :href="content.url"
         target="_blank"
       >
-        <v-icon
-          dark
-        >mdi-fullscreen</v-icon>
+        <v-icon dark>mdi-fullscreen</v-icon>
         &nbsp;Full Screen
       </v-btn>
     </v-card>
     <p
       v-if="content.caption"
-      class="text-h6 mt-4 caption-text">
-      <span class="caption-arrow">&#9700; </span>{{ content.caption }}
+      class="text-h6 mt-4 font-weight-light caption-text"
+    >
+      <span class="caption-arrow">&#11096; </span>{{ content.caption }}
     </p>
   </div>
 </template>
@@ -38,7 +35,7 @@
 }
 
 .inline-iframe {
-  border: 2px solid $theme-orange;
+  border: 2px solid $theme-grey;
 }
 
 /* This element defines the size the iframe will take.
@@ -60,11 +57,11 @@
 }
 
 .caption-arrow {
-  color: $theme-yellow;
+  color: $caption-symbol-color;
 }
 
 .caption-text {
-  color: $copy-color-light-grey;
+  color: $copy-caption;
 }
 </style>
 
@@ -80,13 +77,13 @@ export default {
     fullWidth: {
       default: true,
       type: Boolean
-    },
+    }
   },
 
   data() {
     return {
-      dialog: false,
-    }
+      dialog: false
+    };
   },
 
   methods: {
@@ -97,16 +94,15 @@ export default {
 
   computed: {
     sizeSetting() {
-      return '?w=' + this.maxWidth
+      return "?w=" + this.maxWidth;
     },
     sizeSettingMax() {
-      return '?w=1740'
+      return "?w=1740";
     },
     maxWidth() {
-      if (this.fullWidth == true)
-        return '1740'
-      return '960'
+      if (this.fullWidth == true) return "1740";
+      return "960";
     }
-  },
-}
+  }
+};
 </script>

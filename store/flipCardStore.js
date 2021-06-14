@@ -1,7 +1,7 @@
-import FlipCard from "~/assets/js/flipCard.js";
+import FlipCardManager from "~/assets/js/flipCardManager.js";
 
 export const state = () => ({
-  flipCard: new FlipCard(),
+  flipCard: new FlipCardManager(),
   transitionAwayTimer: null,
 })
 
@@ -12,9 +12,10 @@ export const getters = {
   getClickedProject(state) {
     return state.flipCard.getUrl();
   },
-  getPasswordProtectionState(state) {
-    return state.flipCard.getPasswordProtectionState();
-  },
+  // Jedy: Password Disabled
+  // getPasswordProtectionState(state) {
+  //   return state.flipCard.getPasswordProtectionState();
+  // },
 }
 
 export const mutations = {

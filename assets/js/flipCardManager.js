@@ -42,8 +42,8 @@ const DEVICE_ = {
   DESKTOP: 2,
 };
 
-// FlipCard Class for used in main.js.
-class FlipCard {
+// FlipCardManager Class for used in main.js.
+class FlipCardManager {
   constructor() {
     // Device configurations.
     this.autoFlip_ = false; // Automatically flip the cards.
@@ -69,7 +69,8 @@ class FlipCard {
     this.projectClicked_ = false;
     this.loadingProgress_ = 0;
     this.url_ = '';
-    this.passwordProtected_ = false;
+    // Jedy: Password Disabled
+    // this.passwordProtected_ = false;
     this.isRendering_ = true; // If the threeJS is rendering.
     this.container_ = null;
     this.aspectRatio_ = 1;
@@ -168,9 +169,10 @@ class FlipCard {
    * Get current state of password protection.
    * @public
    */
-  getPasswordProtectionState() {
-    return this.passwordProtected_;
-  }
+  // Jedy: Password Disabled
+  // getPasswordProtectionState() {
+  //   return this.passwordProtected_;
+  // }
 
   /**
    * Set if the canvas is rendering.
@@ -196,12 +198,13 @@ class FlipCard {
    */
   transitionBack() {
     this.isRendering_ = true;
+    this.flipCardRender.transitionBack();
     if (this.projectClicked_) {
-      this.flipCardRender.transitionBack();
       this.projectClicked_ = false;
     }
     this.url_ = '';
-    this.passwordProtected_ = false;
+    // Jedy: Password Disabled
+    // this.passwordProtected_ = false;
   }
 
   // Main functions
@@ -561,7 +564,8 @@ class FlipCard {
       this.intersectedObject_ = intersects[0].object;
       this.flipCardRender.transitionAway(this.intersectedObject_);
       this.url_ = this.flipCardRender.getUrl(this.intersectedObject_);
-      this.passwordProtected_ = this.flipCardRender.getPasswordProtectionState(this.intersectedObject_);
+      // Jedy: Password Disabled
+      // this.passwordProtected_ = this.flipCardRender.getPasswordProtectionState(this.intersectedObject_);
       this.projectClicked_ = true;
     }
   }
@@ -590,4 +594,4 @@ class FlipCard {
   }
 }
 
-export default FlipCard;
+export default FlipCardManager;

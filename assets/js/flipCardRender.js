@@ -22,7 +22,7 @@ const CONFIGURATION_ = {
   cardThickness: 5,
 };
 
-// Drawing functions for FlipCard.
+// Drawing functions for FlipCardManager.
 class FlipCardRender {
   /**
    * @param {boolean} autoFlip If auto flipping is on for device.
@@ -88,9 +88,10 @@ class FlipCardRender {
    * @return {boolean}
    * @public
    */
-  getPasswordProtectionState(element) {
-    return element.passwordProtected;
-  }
+  // Jedy: Password Disabled
+  // getPasswordProtectionState(element) {
+  //   return element.passwordProtected;
+  // }
 
   /**
    * Get a project's width value.
@@ -218,7 +219,8 @@ class FlipCardRender {
     });
 
     for (let i = 0; i < 6; i++) {
-      let horizontalFlip = projectConfig.cards[i].horizontalFlip;
+      // Jedy: Disabled horizontal flip
+      let horizontalFlip = false;//projectConfig.cards[i].horizontalFlip;
       let cardMaterial = [
         material, //left
         material, //right
@@ -232,7 +234,7 @@ class FlipCardRender {
         new THREE.MeshStandardMaterial({
           // back
           map: this.drawTextAsTexture_(
-            projectConfig.cards[i].text.split(","),
+            projectConfig.keyWords[i].split(","),
             projectConfig.themeColor,
             "normal",
             horizontalFlip,
@@ -248,7 +250,8 @@ class FlipCardRender {
       card.rotateDirection = Math.random() < 0.5 ? -Math.PI : Math.PI;
       card.rotateAxis = horizontalFlip ? "y" : "x";
       card.url = projectConfig.slug;
-      card.passwordProtected = projectConfig.passwordProtected;
+      // Jedy: Password Disabled
+      // card.passwordProtected = projectConfig.passwordProtected;
 
       this.setupCardPos_(card);
       this.addCardFlipAnimation_(card);
@@ -419,6 +422,7 @@ class FlipCardRender {
         duration: 2,
         z: 100,
       };
+
       config_ripple["delay"] =
         0.2 * calcDistance(card.gridPos, cardVisited.gridPos);
 
@@ -455,6 +459,9 @@ class FlipCardRender {
    * @private
    */
   transitionBack_() {
+    if (this.cardLastVisited_ == null) {
+      this.cardLastVisited_ = this.cards_[0];
+    }
     for (let card of this.cards_) {
       let config_fade = {
         ease: Power4.easeOut,

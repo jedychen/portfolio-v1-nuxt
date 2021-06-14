@@ -3,7 +3,7 @@
 // The variables you want to modify
 // $font-size-root: 20px;
 
-$theme-background-color: #000;
+$theme-background-color: #191919;
 
 .theme--dark.v-application {
   background-color: var(--v-background-base, $theme-background-color);
@@ -15,4 +15,15 @@ $theme-background-color: #000;
 
 .theme--dark.v-data-table {
   background-color: var(--v-background-base, $theme-background-color);
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap');
+$body-font-family: 'Open Sans';
+
+.v-application {
+  font-family: $body-font-family, 'Roboto', sans-serif !important; 
+}
+
+body {
+  overscroll-behavior-y: none;
 }

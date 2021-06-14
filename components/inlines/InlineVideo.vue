@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="video-wrapper mb-8"
-  >
+  <div class="video-wrapper pb-4">
     <vimeo-player
       v-if="content != null"
       ref="player"
@@ -16,20 +14,20 @@
     />
     <p
       v-if="content.description"
-      class="text-h6 mt-4 caption-text"
+      class="text-h6 mt-4 font-weight-light caption-text"
     >
-      <span class="caption-arrow">&#9700; </span>{{ content.description }}
+      <span class="caption-arrow mr-1">&#11096; </span>{{ content.description }}
     </p>
   </div>
 </template>
 
 <style lang="scss" scoped>
 .caption-arrow {
-  color: $theme-yellow;
+  color: $caption-symbol-color;
 }
 
 .caption-text {
-  color: $copy-color-light-grey;
+  color: $copy-caption;
 }
 </style>
 
@@ -46,25 +44,24 @@ export default {
 
   data() {
     return {
-      loaded: false,
-    }
+      loaded: false
+    };
   },
 
   computed: {
     loop() {
       if (this.content != null) {
-        if (this.content.loop == true)
-          return '1'
+        if (this.content.loop == true) return "1";
       }
-      return '0'
-    },
+      return "0";
+    }
   },
 
   methods: {
     onReady() {
-      this.loaded = true
-      this.$emit("ready")
+      this.loaded = true;
+      this.$emit("ready");
     }
   }
-}
+};
 </script>

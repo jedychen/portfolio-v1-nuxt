@@ -1,5 +1,5 @@
 <template>
-  <div class="mb-8">
+  <div class="pb-4">
     <v-img
       :src="content.image.file.url + sizeSetting"
       :alt="content.image.title"
@@ -9,27 +9,18 @@
       class="inline-image"
     >
       <template v-slot:placeholder>
-        <v-row
-          class="fill-height ma-0"
-          align="center"
-          justify="center"
-        >
-          <v-progress-circular
-            indeterminate
-            color="primary"
-          />
+        <v-row class="fill-height ma-0" align="center" justify="center">
+          <v-progress-circular indeterminate color="primary" />
         </v-row>
       </template>
     </v-img>
     <p
       v-if="content.caption"
-      class="text-h6 mt-4 caption-text">
-      <span class="caption-arrow">&#9700; </span>{{ content.caption }}
-    </p>
-    <v-dialog
-      v-model="dialog"
-      :max-width="maxWidth"
+      class="text-h6 mt-4 font-weight-light caption-text"
     >
+      <span class="caption-arrow mr-1">&#11096; </span>{{ content.caption }}
+    </p>
+    <v-dialog v-model="dialog" :max-width="maxWidth">
       <v-img
         :src="content.image.file.url + sizeSettingMax"
         :alt="content.image.title"
@@ -48,11 +39,11 @@
 }
 
 .caption-arrow {
-  color: $theme-yellow;
+  color: $caption-symbol-color;
 }
 
 .caption-text {
-  color: $copy-color-light-grey;
+  color: $copy-caption;
 }
 </style>
 
@@ -68,13 +59,13 @@ export default {
     fullWidth: {
       default: true,
       type: Boolean
-    },
+    }
   },
 
   data() {
     return {
-      dialog: false,
-    }
+      dialog: false
+    };
   },
 
   methods: {
@@ -85,16 +76,15 @@ export default {
 
   computed: {
     sizeSetting() {
-      return '?w=' + this.maxWidth
+      return "?w=" + this.maxWidth;
     },
     sizeSettingMax() {
-      return '?w=1740'
+      return "?w=1740";
     },
     maxWidth() {
-      if (this.fullWidth == true)
-        return '1740'
-      return '960'
+      if (this.fullWidth == true) return "1740";
+      return "960";
     }
-  },
-}
+  }
+};
 </script>

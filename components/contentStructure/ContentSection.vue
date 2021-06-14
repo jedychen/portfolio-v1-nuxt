@@ -1,35 +1,37 @@
 <template>
-  <v-row
-    no-gutters
-    class="mb-12"
-  >
+  <v-row class="mb-12">
     <!-- Render section's title and intro. -->
-    <v-col
-      cols="12"
-    >
+    <v-col cols="12">
       <h1
-        :id="section.slug.toLowerCase().trim().split(' ').join('-')"
+        :id="
+          section.slug
+            .toLowerCase()
+            .trim()
+            .split(' ')
+            .join('-')
+        "
         class="mt-16 content-section__title"
         :class="{
           'mb-10': !section.description,
-          'mb-2': section.description,
+          'mb-2': section.description
         }"
       >
         {{ section.title }}
       </h1>
+      <p v-if="section.description" class="text-h5 content-section__subtitle">
+        &#95;&#95;&#95;&#95;&#95;&#95;
+      </p>
       <p
         v-if="section.description"
-        class="text-h4 font-weight-light content-section__subtitle mb-10"
+        class="text-h5 content-section__subtitle mb-6"
       >
         {{ section.description }}
       </p>
     </v-col>
     <!-- Render content blocks. -->
-    <template
-      v-for="(block, index) in section.contentBlocks"
-    >
+    <template v-for="(block, index) in section.contentBlocks">
       <template v-if="block.alternateColumn && block.fullWidth == false">
-                <!-- 1. When the previous block is half width -->
+        <!-- 1. When the previous block is half width -->
         <!-- Add two empty blocks to alternate this block's column, -->
         <!-- and make this block have negative top margin. -->
         <!-- 2. When the previous block is full width -->
@@ -51,46 +53,47 @@
 
 <style lang="scss" scoped>
 .content-section__title {
-  font-family: 'CantataOne-Regular', serif;
-  font-size: 3.5rem;
+  font-family: "CantataOne-Regular", serif;
+  font-size: $font-size-md-screen-lg;
   font-weight: 400;
-  line-height: 1.1em;
-  @include bp(sm){
-    font-size: 2.5rem;
+  line-height: $line-height-sm;
+  @include bp(sm) {
+    font-size: $font-size-md-screen-sm;
   }
 }
 .content-section__subtitle {
   color: $theme-orange;
+  line-height: $line-height-md;
 }
 </style>
 
 <script>
-import ContentBlock from '@/components/contentStructure/ContentBlock';
-import ContentBlockEmpty from '@/components/contentStructure/ContentBlockEmpty';
+import ContentBlock from "@/components/contentStructure/ContentBlock";
+import ContentBlockEmpty from "@/components/contentStructure/ContentBlockEmpty";
 
 export default {
-  name: 'ContentSection',
+  name: "ContentSection",
 
   components: {
     ContentBlock,
-    ContentBlockEmpty,
+    ContentBlockEmpty
   },
 
   props: {
     section: {
       default: null,
       type: Object
-    },
+    }
   },
 
-  data () {
-    return {}
+  data() {
+    return {};
   },
 
   methods: {
     childReady() {
       this.$emit("ready");
     }
-  },
-}
+  }
+};
 </script>

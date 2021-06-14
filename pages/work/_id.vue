@@ -1,106 +1,102 @@
 <template>
-  <v-container
-    fluid
-    class="project-page__container"
-  >
-    <v-row
-      v-scroll:#scrolling-content="onScroll"
-      no-gutters
-      class="project-page mt-12"
-    >
-      <!-- Side Nav / Left Margin -->
-      <v-col
-        cols="1"
-        lg="2"
-        class="side-nav-col hidden-xs"
-      >
-        <SideNav
-          :sections="contentSectionItems"
-        />
+  <v-container fluid class="project-page__container">
+    <v-row no-gutters>
+      <v-col cols="12" order="2">
+        <v-row
+          v-scroll:#scrolling-content="onScroll"
+          class="project-page mt-12"
+        >
+          <!-- Page Content -->
+          <v-col
+            v-resize="onResize"
+            cols="12"
+            class="col-sm-10 offset-sm-1 col-md-9 offset-md-1 col-lg-8 offset-lg-2 page-content-col"
+          >
+            <ContentSection
+              v-for="item in contentSectionItems"
+              :key="item.title"
+              :section="item"
+              v-intersect="onIntersect"
+              class="content-section-container"
+              @ready="calcuPageLength"
+            />
+          </v-col>
+          <!-- Side Nav / Left Margin -->
+          <v-col cols="2" lg="2" class="side-nav-col d-none d-md-flex">
+            <SideNav :sections="contentSectionItems" />
+          </v-col>
+        </v-row>
       </v-col>
-      <!-- Page Content -->
-      <v-col
-        v-resize="onResize"
-        cols="12"
-        sm="10"
-        lg="9"
-        class="page-content-col"
-      >
-        <IntroSection
-          :content="introSectionItem"
-          @ready="calcuPageLength"
-        />
-        <ContentSection
-          v-for="item in contentSectionItems"
-          :key="item.title"
-          :section="item"
-          v-intersect="onIntersect"
-          class="content-section-container"
-          @ready="calcuPageLength"
-        />
+      <v-col cols="12" order="1" class="intro-section-col">
+        <IntroSection :content="introSectionItem" @ready="calcuPageLength" />
+      </v-col>
+      <v-col cols="12" order="3" class="up-next-section-col">
         <UpNextSection :content="upNextSectionItems" />
       </v-col>
-      <!-- Right Margin -->
-      <v-col
-        cols="1"
-        class="margin-col hidden-xs"
-      />
     </v-row>
   </v-container>
 </template>
 
 <style lang="scss" scoped>
-@keyframes appear {
-  from {opacity: 0;}
-  to {opacity: 1;}
+body::-webkit-scrollbar {
+  width: 1em;
+}
+
+.intro-section-col,
+.up-next-section-col {
+  background-color: $neutral-black;
+  position: relative;
 }
 
 .page-content-col {
-  animation: appear .5s ease-in 0.8s;
+  animation: appear 0.5s ease-in 0.8s;
   animation-fill-mode: both;
 }
 
-.page-enter-active, .page-leave-active {
-  transition: opacity .5s;
+.page-enter-active,
+.page-leave-active {
+  transition: opacity 0.5s;
 }
-.page-enter, .page-leave-to {
+.page-enter,
+.page-leave-to {
   opacity: 0;
 }
 </style>
 
 <script>
-import contentful from '@/plugins/contentful.js'
-import * as prettify from 'pretty-contentful'
-import debounce from 'lodash/debounce'
-import SideNav from '@/components/SideNav'
-import IntroSection from '@/components/IntroSection'
-import ContentSection from '@/components/contentStructure/ContentSection'
-import UpNextSection from '@/components/UpNextSection'
+import contentful from "@/plugins/contentful.js";
+import * as prettify from "pretty-contentful";
+import debounce from "lodash/debounce";
+import SideNav from "@/components/SideNav";
+import IntroSection from "@/components/sections/IntroSection";
+import ContentSection from "@/components/contentStructure/ContentSection";
+import UpNextSection from "@/components/sections/UpNextSection";
 
 export default {
-  middleware: ['password-protect'],
+  // Jedy: Password Disabled
+  // middleware: ["password-protect"],
 
   head() {
     return {
       title: this.introSectionItem.title,
       meta: [
         {
-          hid: 'Featured Work' + this.introSectionItem.title,
-          name: 'Work Page',
-          content: 'Details about the work' + this.introSectionItem.title
+          hid: "Featured Work" + this.introSectionItem.title,
+          name: "Work Page",
+          content: "Details about the work" + this.introSectionItem.title
         }
       ]
-    }
+    };
   },
 
   components: {
     SideNav,
     IntroSection,
     ContentSection,
-    UpNextSection,
+    UpNextSection
   },
 
-  data () {
+  data() {
     return {
       pageLength: 0, // Page's total length.
       scrollTop: 0, // Scrolling distance to top.
@@ -108,84 +104,92 @@ export default {
       contentSectionItems: [],
       upNextSectionItems: [],
       sideNavWaypointOffset: 50,
-      activeWaypointTitle: '',
-    }
+      activeWaypointTitle: ""
+    };
   },
 
-  asyncData ({ params, payload }) {
+  asyncData({ params, payload }) {
     return Promise.all([
       // fetch all blog posts sorted by creation date
       contentful.getEntries({
-        'fields.slug': payload ? payload : params.id,
-        'content_type': 'projectPage',
-        include: 6,
+        "fields.slug": payload ? payload : params.id,
+        content_type: "projectPage",
+        include: 6
       })
-    ]).then(([result]) => {
-      // return data that should be available
-      // in the template
-      return {
-        projects: result.items
-      }
-    }).catch(console.error)
+    ])
+      .then(([result]) => {
+        // return data that should be available
+        // in the template
+        return {
+          projects: result.items
+        };
+      })
+      .catch(console.error);
   },
 
   beforeMount() {
-    this.parseContentful()
+    this.parseContentful();
   },
 
   mounted() {
-    this.calcuPageLength()
+    this.calcuPageLength();
   },
 
   methods: {
-    onIntersect (entries, observer) {
+    onIntersect(entries, observer) {
       // More information about these options
       // is located here: https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API
-      const title = entries[0].target.querySelector('.content-section__title').id
+      const title = entries[0].target.querySelector(".content-section__title")
+        .id;
       if (entries[0].isIntersecting && title != this.activeWaypointTitle) {
-        this.activeWaypointTitle = title
-        this.$store.commit('waypointStore/setActiveWaypoint', title)
+        this.activeWaypointTitle = title;
+        this.$store.commit("waypointStore/setActiveWaypoint", title);
       }
     },
     calcuPageLength() {
-      const contentCol = document.querySelector(".page-content-col")
-      if (contentCol != null)
-        this.pageLength = contentCol.offsetHeight
-      this.calcuWaypointsPosition()
+      const contentCol = document.querySelector(".page-content-col");
+      if (contentCol != null) this.pageLength = contentCol.offsetHeight;
+      this.calcuWaypointsPosition();
     },
     calcuWaypointsPosition() {
-      const sections = document.querySelectorAll(".content-section-container")
+      const sections = document.querySelectorAll(".content-section-container");
+      let vhPrevPos = 0;
+      let minGap = 5; // 5 percent of
       sections.forEach((item, index) => {
-        let offsetTop = item.offsetTop
-        let vhPos = Math.min((offsetTop) * 100 / this.pageLength, 85)
-        this.$store.commit('waypointStore/setWaypoint', {index: index, vhPos: vhPos})
+        let offsetTop = item.offsetTop;
+        let vhPos = Math.min((offsetTop * 100) / this.pageLength, 85);
+        this.$store.commit("waypointStore/setWaypoint", {
+          index: index,
+          vhPos: Math.max(vhPos, vhPrevPos + minGap) //ensure two buttons' gap is more than min value
+        });
+        vhPrevPos = vhPos;
       });
     },
-    onResize: debounce(function(){
-      this.calcuPageLength()
+    onResize: debounce(function() {
+      this.calcuPageLength();
     }, 100),
     // Get the presentatge of current scrolling content.
     onScroll(e) {
       this.scrollTop = e.target.scrollTop;
-      let presentage = this.scrollTop / (this.pageLength - window.innerHeight)
-      presentage = this.clamp(presentage, 0, 1)
-      this.$store.commit('waypointStore/setScrollPresentage', presentage)
+      let presentage = this.scrollTop / (this.pageLength - window.innerHeight);
+      presentage = this.clamp(presentage, 0, 1);
+      this.$store.commit("waypointStore/setScrollPresentage", presentage);
     },
     clamp(num, min, max) {
-      return num <= min ? min : num >= max ? max : num
+      return num <= min ? min : num >= max ? max : num;
     },
     parseContentful() {
-      const flattenedData = prettify(this.projects)
+      const flattenedData = prettify(this.projects);
       // Divide the contentful response by data type
       for (let item of flattenedData) {
         if (item.slug == this.$route.params.id) {
-          this.introSectionItem = item.introSection
-          this.contentSectionItems = item.contentSections
-          this.upNextSectionItems = item.otherWork
+          this.introSectionItem = item.introSection;
+          this.contentSectionItems = item.contentSections;
+          this.upNextSectionItems = item.otherWork;
           break;
         }
       }
-    },
-  },
+    }
+  }
 };
 </script>

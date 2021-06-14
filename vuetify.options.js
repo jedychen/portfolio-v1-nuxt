@@ -12,7 +12,7 @@ export default {
       dark: {
         primary: '#f88826', //Yellow
         secondary: '#584e57', //grey-purple
-        accent: '#b74b41', //orange
+        accent: '#ff6a5c', //orange
         info: '#fff',
       }
     }

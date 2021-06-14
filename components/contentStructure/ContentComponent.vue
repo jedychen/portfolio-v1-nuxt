@@ -3,7 +3,7 @@
   <div
     v-if="type == 'text'"
     v-html="parsedHtml"
-    class="rich-text-content text-h6 font-weight-light content__text mb-6"
+    class="rich-text-content text-h6 font-weight-light content__text mb-4"
   />
   <InlineImage
     v-else-if="type == 'inlineImage'"
@@ -27,34 +27,28 @@
     :fullWidth="fullWidth"
     @ready="childReady"
   />
-  <InlineTable
-    v-else-if="type == 'inlineTable'"
-    :content="parsedTable"
-  />
-  <InlineIframe
-    v-else-if="type == 'inlineIframe'"
-    :content="parsedIframe"
-  />
+  <InlineTable v-else-if="type == 'inlineTable'" :content="parsedTable" />
+  <InlineIframe v-else-if="type == 'inlineIframe'" :content="parsedIframe" />
   <div v-else />
 </template>
 
 <style lang="scss" scoped>
 .content__text {
-  line-height: 1.6em;
+  line-height: $line-height-md;
 }
 </style>
 
 <script>
-import { documentToHtmlString } from '@contentful/rich-text-html-renderer';
-import InlineCard from '@/components/inlines/InlineCard';
-import InlineCarousel from '@/components/inlines/InlineCarousel';
-import InlineImage from '@/components/inlines/InlineImage';
-import InlineTable from '@/components/inlines/InlineTable';
-import InlineVideo from '@/components/inlines/InlineVideo';
-import InlineIframe from '@/components/inlines/InlineIframe';
+import { documentToHtmlString } from "@contentful/rich-text-html-renderer";
+import InlineCard from "@/components/inlines/InlineCard";
+import InlineCarousel from "@/components/inlines/InlineCarousel";
+import InlineImage from "@/components/inlines/InlineImage";
+import InlineTable from "@/components/inlines/InlineTable";
+import InlineVideo from "@/components/inlines/InlineVideo";
+import InlineIframe from "@/components/inlines/InlineIframe";
 
 export default {
-  name: 'ContentComponent',
+  name: "ContentComponent",
 
   components: {
     InlineCard,
@@ -62,7 +56,7 @@ export default {
     InlineImage,
     InlineTable,
     InlineVideo,
-    InlineIframe,
+    InlineIframe
   },
 
   props: {
@@ -73,20 +67,20 @@ export default {
     fullWidth: {
       default: true,
       type: Boolean
-    },
+    }
   },
 
-  data () {
+  data() {
     return {
-      type: '',
-      parsedHtml: '',
+      type: "",
+      parsedHtml: "",
       parsedImage: null,
       parsedVideo: null,
       parsedSlides: null,
       parsedTable: null,
       parsedCard: null,
-      parsedIframe: null,
-    }
+      parsedIframe: null
+    };
   },
 
   created() {
@@ -116,6 +110,6 @@ export default {
     childReady() {
       this.$emit("ready");
     }
-  },
-}
+  }
+};
 </script>

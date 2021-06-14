@@ -1,53 +1,47 @@
 <template>
-  <div
-    class="inline-table mb-8"
-  >
+  <div class="inline-table pb-4">
     <v-simple-table>
       <template v-slot:default>
         <tbody>
-          <tr
-            v-for="row in content.rows"
-            :key="row.summary"
-          >
+          <tr v-for="row in content.rows" :key="row.summary">
             <td
               v-for="(cell, index) in row.cells"
-              width='30%'
+              width="30%"
               :key="cell.content"
               :colspan="cell.colspan"
               :rowspan="cell.rowspan"
-              :class="{ 
-                'text-h6 table-cell-first font-weight-light inline-table--title': index === 0,
-                'text-subtitle-1 font-weight-light': index !== 0,
+              :class="{
+                'text-h6 table-cell-first font-weight-light inline-table--title':
+                  index === 0,
+                'text-subtitle-1 font-weight-light inline-table--content':
+                  index !== 0
               }"
             >
-              <div 
-                v-html="$md.render(cell.content)"
-                class="my-4"
-              />
+              <div v-html="$md.render(cell.content)" class="my-4" />
             </td>
           </tr>
         </tbody>
       </template>
     </v-simple-table>
-  </div>  
+  </div>
 </template>
 
 <style lang="scss">
 .inline-table {
-  border-width: 1px;
+  border-width: 2px;
   border-style: solid;
-  border-color: $theme-orange;
+  border-color: $theme-grey;
 
   tbody {
     td {
       width: 75%;
-      
+
       &.table-cell-first {
         width: 25%;
       }
 
       a {
-        color: $copy-color;
+        color: $neutral-grey-c;
       }
     }
 
@@ -58,19 +52,23 @@
 }
 
 .inline-table--title {
-  color: $copy-color-light-grey;
+  vertical-align: 0%;
+}
+
+.inline-table--content {
+  color: $neutral-grey-d;
 }
 </style>
 
 <script>
-  export default {
-    name: "InlineTable",
+export default {
+  name: "InlineTable",
 
-    props: {
-      content: {
-        default: null,
-        type: Object,
-      }
-    },
+  props: {
+    content: {
+      default: null,
+      type: Object
+    }
   }
+};
 </script>
