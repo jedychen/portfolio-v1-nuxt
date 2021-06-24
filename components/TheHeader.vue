@@ -8,7 +8,7 @@
     class="header-bar"
   >
     <v-row no-gutters>
-      <v-col cols="4" sm="6" md="4" align-self="center">
+      <v-col cols="6" sm="6" md="4" align-self="center">
         <nuxt-link to="/" class="header__link">
           <v-toolbar-title class="header__title d-none d-sm-flex">
             Jedy Chen
@@ -19,7 +19,7 @@
         </nuxt-link>
       </v-col>
       <v-col cols="2" sm="2" md="5" lg="6" class="d-none d-sm-flex" />
-      <v-col cols="8" sm="4" md="3" lg="2" align-self="center">
+      <v-col cols="6" sm="4" md="3" lg="2" align-self="center">
         <nuxt-link
           to="/about"
           exact

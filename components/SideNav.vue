@@ -18,7 +18,7 @@
                 @click="
                   $vuetify.goTo(scrollingTarget(section.slug), scrollingOptions)
                 "
-                class="side-nav__list-item-text text-right align-self-start subtitle-2 side-nav__button"
+                class="side-nav__list-item-text align-self-start subtitle-2 side-nav__button"
               >
                 {{ section.slug }}
               </v-btn>

@@ -419,9 +419,9 @@ class FlipCardManager {
    * @private
    */
   setupLights_(parent) {
-    let key_light = new THREE.DirectionalLight(this.LIGHT_COLOR, 1.2);
+    let key_light = new THREE.DirectionalLight(this.LIGHT_COLOR, 0.8);
     let ambient_light = new THREE.AmbientLight(this.LIGHT_COLOR, 0.8);
-    key_light.position.set(-this.WALL_SIZE, this.WALL_SIZE, this.WALL_SIZE);
+    key_light.position.set(-2 * this.WALL_SIZE, this.WALL_SIZE, this.WALL_SIZE);
     ambient_light.position.set(this.WALL_SIZE, this.WALL_SIZE, this.WALL_SIZE);
     parent.add(key_light).add(ambient_light);
   }

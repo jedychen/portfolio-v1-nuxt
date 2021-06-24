@@ -3,7 +3,7 @@
     <vimeo-player
       v-if="content != null"
       ref="player"
-      :options="{ responsive: true, muted: content.muted }"
+      :options="{ responsive: true, muted: content.muted, autopause: !content.autoPlay }"
       :video-id="content.videoId"
       :autoplay="content.autoPlay"
       :player-height="1080"

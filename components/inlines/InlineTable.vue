@@ -5,17 +5,19 @@
         <tbody>
           <tr v-for="row in content.rows" :key="row.summary">
             <td
-              v-for="(cell, index) in row.cells"
+              width="30%"
+              :key="row.summary"
+              class="text-h6 table-cell-first font-weight-light inline-table--title"
+            >
+              <div v-html="$md.render(row.summary)" class="my-4" />
+            </td>
+            <td
+              v-for="cell in row.cells"
               width="30%"
               :key="cell.content"
               :colspan="cell.colspan"
               :rowspan="cell.rowspan"
-              :class="{
-                'text-h6 table-cell-first font-weight-light inline-table--title':
-                  index === 0,
-                'text-subtitle-1 font-weight-light inline-table--content':
-                  index !== 0
-              }"
+              class="text-subtitle-1 font-weight-light inline-table--content"
             >
               <div v-html="$md.render(cell.content)" class="my-4" />
             </td>
