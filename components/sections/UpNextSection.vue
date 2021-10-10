@@ -17,9 +17,12 @@
                 gradient="rgba(0, 0, 0, 0.3),
                         rgba(0, 0, 0, 0)"
                 aspect-ratio="1.5"
-                :src="getProjectImage(project).file.url"
+                :src="
+                  require(`~/assets/images/${imgSrc(
+                    getProjectImage(project)
+                  )}?sqip`)
+                "
                 :alt="getProjectImage(project).title"
-                :lazy-src="getProjectImage(project).description"
                 class="up-next-section__image transition-swing"
                 :class="{
                   'up-next-section--selected': hover
@@ -108,6 +111,13 @@ export default {
         return project.linkColor;
       }
       return project.themeColor;
+    },
+
+    imgSrc(img) {
+      var url = img.file.url;
+      var id = url.replace("//images.ctfassets.net/", "");
+      var imageName = id.split("/")[1] + "." + url.split(".").pop();
+      return imageName;
     }
   }
 };

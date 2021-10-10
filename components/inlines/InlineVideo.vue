@@ -3,8 +3,12 @@
     <vimeo-player
       v-if="content != null"
       ref="player"
-      :options="{ responsive: true, muted: content.muted, autopause: !content.autoPlay }"
-      :video-id="content.videoId"
+      :options="{
+        responsive: true,
+        muted: content.muted,
+        autopause: !content.autoPlay
+      }"
+      :video-id="videoId"
       :autoplay="content.autoPlay"
       :player-height="1080"
       :player-width="1920"
@@ -51,9 +55,12 @@ export default {
   computed: {
     loop() {
       if (this.content != null) {
-        if (this.content.loop == true) return "1";
+        if (this.content.loop == true) return true;
       }
-      return "0";
+      return false;
+    },
+    videoId() {
+      return this.content.videoId.toString();
     }
   },
 

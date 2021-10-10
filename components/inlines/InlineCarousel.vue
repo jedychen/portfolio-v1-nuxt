@@ -17,9 +17,8 @@
       >
         <v-img
           :aspect-ratio="16 / 9"
-          :src="slide.file.url + sizeSetting"
+          :src="require(`~/assets/images/${imgSrc(slide)}?sqip`)"
           :alt="slide.title"
-          :lazy-src="slide.description"
         />
       </v-carousel-item>
     </v-carousel>
@@ -92,6 +91,12 @@ export default {
   methods: {
     onReady() {
       this.$emit("ready");
+    },
+    imgSrc(image) {
+      var url = image.file.url;
+      var id = url.replace("//images.ctfassets.net/", "");
+      var imageName = id.split("/")[1] + "." + url.split(".").pop();
+      return imageName;
     }
   }
 };

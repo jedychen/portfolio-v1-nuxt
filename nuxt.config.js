@@ -11,22 +11,21 @@ export default {
   target: 'static',
   generate: {
     crawler: true,
-    routes:() => {
+    routes:async () => {
       const client = contentful.createClient({
           space: process.env.CONTENTFUL_SPACE_ID,
           accessToken: process.env.CONTENTFUL_ACCESS_TOKEN
       });
   
-      return client.getEntries({
-          content_type: 'projectConfiguration'
-      }).then((response) => {
-          return response.items.map(entry => {
-              return {
-                  route: '/work/' + entry.fields.slug,
-                  payload: entry
-              };
-          });
-      });
+      const response = await client.getEntries({
+        content_type: 'projectConfiguration'
+      })
+      return response.items.map(entry => {
+        return {
+          route: '/work/' + entry.fields.slug,
+          payload: entry
+        }
+      })
     },
   },
   /*
@@ -68,7 +67,11 @@ export default {
   buildModules: [
     '@nuxtjs/vuetify',
     '@nuxtjs/style-resources',
+    '@aceforth/nuxt-optimized-images',
   ],
+  optimizedImages: {
+    optimizeImages: true
+  },
   /*
   ** Nuxt Style Resources modules
   */

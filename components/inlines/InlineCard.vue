@@ -14,7 +14,7 @@
       <v-img
         v-if="content.cover != null"
         :alt="content.cover.title"
-        :src="content.cover.file.url + sizeSetting"
+        :src="require(`~/assets/images/${imgSrc(content.cover)}?sqip`)"
         height="200px"
         @load="onReady"
         class="inline-card-image transition-swing"
@@ -71,6 +71,12 @@ export default {
   methods: {
     onReady() {
       this.$emit("ready");
+    },
+    imgSrc(image) {
+      var url = image.file.url;
+      var id = url.replace("//images.ctfassets.net/", "");
+      var imageName = id.split("/")[1] + "." + url.split(".").pop();
+      return imageName;
     }
   },
 

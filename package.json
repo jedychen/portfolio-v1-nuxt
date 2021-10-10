@@ -8,6 +8,9 @@
     "dev": "nuxt",
     "build": "nuxt build",
     "start": "nuxt start",
+    "fetch-all": "node contentful/fetch-images.js & node contentful/fetch-content.js",
+    "fetch-images": "node contentful/fetch-images.js",
+    "fetch-content": "node contentful/fetch-content.js",
     "generate": "nuxt generate",
     "test": "jest",
     "export": "nuxt build && nuxt export"
@@ -23,7 +26,12 @@
     "contentful": "^8.4.2",
     "contentful-resolve-response": "^1.2.2",
     "cookie": "^0.4.1",
+    "download": "^8.0.0",
+    "fs-extra": "^10.0.0",
     "gsap": "^3.5.1",
+    "imagemin-gifsicle": "^7.0.0",
+    "imagemin-mozjpeg": "^9.0.0",
+    "imagemin-pngquant": "^9.0.2",
     "markdown-it": "^11.0.1",
     "markdown-it-attrs": "^3.0.3",
     "markdown-it-container": "^3.0.0",
@@ -34,16 +42,20 @@
     "nuxt-password-protect": "^1.0.6",
     "pretty-contentful": "^1.0.1",
     "raw-loader": "^4.0.2",
+    "sqip": "^0.3.3",
     "three": "^0.129.0",
     "vue-vimeo-player": "^0.1.0"
   },
   "devDependencies": {
+    "@aceforth/nuxt-optimized-images": "^1.4.0",
     "@nuxtjs/vuetify": "^2.0.0-beta.2",
     "@vue/test-utils": "^1.1.0",
     "babel-jest": "^26.6.1",
     "jest": "^26.6.1",
     "node-sass": "^4.14.1",
+    "sass": "~1.32.12",
     "sass-loader": "^8.0.2",
+    "sqip-loader": "^1.0.0",
     "vue-jest": "^4.0.0-rc.0"
   }
 }

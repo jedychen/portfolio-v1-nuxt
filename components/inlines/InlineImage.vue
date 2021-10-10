@@ -1,9 +1,8 @@
 <template>
   <div class="pb-4">
     <v-img
-      :src="content.image.file.url + sizeSetting"
+      :src="require(`~/assets/images/${imgSrc(content.image)}?sqip`)"
       :alt="content.image.title"
-      :lazy-src="content.image.description"
       @load="onReady"
       @click.stop="dialog = true"
       class="inline-image"
@@ -22,9 +21,8 @@
     </p>
     <v-dialog v-model="dialog" :max-width="maxWidth">
       <v-img
-        :src="content.image.file.url + sizeSettingMax"
+        :src="require(`~/assets/images/${imgSrc(content.image)}?sqip`)"
         :alt="content.image.title"
-        :lazy-src="content.image.description"
         @load="onReady"
         @click.stop="dialog = false"
         class="inline-image"
@@ -71,6 +69,13 @@ export default {
   methods: {
     onReady() {
       this.$emit("ready");
+    },
+    imgSrc(image) {
+      //return url+sizeSettingMax();
+      var url = image.file.url;
+      var id = url.replace("//images.ctfassets.net/", "");
+      var imageName = id.split("/")[1] + "." + url.split(".").pop();
+      return imageName;
     }
   },
 

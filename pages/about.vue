@@ -6,9 +6,8 @@
         <v-row no-gutters class="mb-12">
           <v-col cols="12" md="5" class="py-8 d-none d-md-flex">
             <v-img
-              :src="content.photo.file.url"
+              :src="require(`~/assets/images/${imgSrc(content.photo)}?sqip`)"
               :alt="content.photo.title"
-              :lazy-src="content.photo.description"
             >
               <template v-slot:placeholder>
                 <v-row class="fill-height ma-0" align="center" justify="center">
@@ -170,6 +169,12 @@ export default {
         this.contentSectionItems = item.contentSections;
         break;
       }
+    },
+    imgSrc(image) {
+      var url = image.file.url;
+      var id = url.replace("//images.ctfassets.net/", "");
+      var imageName = id.split("/")[1] + "." + url.split(".").pop();
+      return imageName;
     }
   }
 };
