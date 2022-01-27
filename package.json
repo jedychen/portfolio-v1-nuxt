@@ -43,7 +43,7 @@
     "pretty-contentful": "^1.0.1",
     "raw-loader": "^4.0.2",
     "sqip": "^0.3.3",
-    "three": "^0.129.0",
+    "three": "^0.137.0",
     "vue-vimeo-player": "^0.1.0"
   },
   "devDependencies": {
