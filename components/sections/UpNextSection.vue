@@ -18,10 +18,9 @@
                         rgba(0, 0, 0, 0)"
                 aspect-ratio="1.5"
                 :src="
-                  require(`~/assets/images/${imgSrc(
-                    getProjectImage(project)
-                  )}?sqip`)
+                  require(`~/assets/images/${imgSrc(getProjectImage(project))}`)
                 "
+                :lazy-src="imgBase64(getProjectImage(project))"
                 :alt="getProjectImage(project).title"
                 class="up-next-section__image transition-swing"
                 :class="{
@@ -88,6 +87,8 @@
 </style>
 
 <script>
+import imageUtils from "../../assets/js/imageUtils";
+
 export default {
   name: "UpNextSection",
 
@@ -112,12 +113,11 @@ export default {
       }
       return project.themeColor;
     },
-
     imgSrc(img) {
-      var url = img.file.url;
-      var id = url.replace("//images.ctfassets.net/", "");
-      var imageName = id.split("/")[1] + "." + url.split(".").pop();
-      return imageName;
+      return imageUtils.imgSrc(img);
+    },
+    imgBase64(img) {
+      return imageUtils.imgBase64(img);
     }
   }
 };

@@ -26,7 +26,7 @@ export default {
   data() {
     return {
       pageNotFound: "Sorry, the page is not found.",
-      otherError: "Sorry, an error occurred."
+      otherError: "Sorry, something goes wrong..."
     };
   },
   head() {

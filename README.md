@@ -1,6 +1,6 @@
 # portfolio-v1-nuxt
 
-> Portfolio Website.
+> Jedy's Portfolio Website with Nuxt.
 
 ## Setup
 
@@ -33,6 +33,21 @@ $ npm run start
 # generate static project
 $ npm run generate
 ```
+Copy all the content generated in dist/ folder to a desired server.
+
+### Update Alibaba Server
+In Alibaba server, go to /var/www/html, keep the demo/ folder and google***.html.
+Copy all the content in the local dist/ folder and replace the rest files.
+
+## For Development
+
+All the contentful data is stored locally, including images. (in contentful/)
+
+Modify component in components/ folder.
+
+Modify Three.js landing page in assets/js/ folder or pages/index.vue.
 
 For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
 # portfolio-v1-nuxt
+
+

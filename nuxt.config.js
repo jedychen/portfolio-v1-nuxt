@@ -1,149 +1,142 @@
-import colors from 'vuetify/es5/util/colors'
-import minifyTheme from 'minify-css-string'
-import axios from 'axios'
-import { string } from 'mathjs'
+import colors from "vuetify/es5/util/colors";
+import minifyTheme from "minify-css-string";
+import axios from "axios";
+import { string } from "mathjs";
 
-require('dotenv').config({ path: '.env' })
-const contentful = require('contentful')
+require("dotenv").config({ path: ".env" });
+const contentful = require("contentful");
 
 export default {
   ssr: false,
-  target: 'static',
+  target: "static",
   generate: {
     crawler: true,
-    routes:async () => {
+    routes: async () => {
       const client = contentful.createClient({
-          space: process.env.CONTENTFUL_SPACE_ID,
-          accessToken: process.env.CONTENTFUL_ACCESS_TOKEN
+        space: process.env.CONTENTFUL_SPACE_ID,
+        accessToken: process.env.CONTENTFUL_ACCESS_TOKEN
       });
-  
+
       const response = await client.getEntries({
-        content_type: 'projectConfiguration'
-      })
+        content_type: "projectConfiguration"
+      });
       return response.items.map(entry => {
         return {
-          route: '/work/' + entry.fields.slug,
+          route: "/work/" + entry.fields.slug,
           payload: entry
-        }
-      })
-    },
+        };
+      });
+    }
   },
   /*
-  ** Headers of the page
-  */
+   ** Headers of the page
+   */
   head: {
-    titleTemplate: '%s',
-    title: process.env.npm_package_name || '',
+    titleTemplate: "%s",
+    title: process.env.npm_package_name || "",
     meta: [
-      { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: process.env.npm_package_description || '' }
+      { charset: "utf-8" },
+      { name: "viewport", content: "width=device-width, initial-scale=1" },
+      {
+        hid: "description",
+        name: "description",
+        content: process.env.npm_package_description || ""
+      }
     ],
-    link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
-    ]
+    link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }]
   },
   /*
-  ** Customize the progress-bar color
-  */
-  loading: { color: '#fff' },
+   ** Customize the progress-bar color
+   */
+  loading: { color: "#fff" },
   /*
-  ** Global CSS
-  */
-  css: [
-    '@/assets/styles/_global.scss',
-  ],
+   ** Global CSS
+   */
+  css: ["@/assets/styles/_global.scss"],
   /*
-  ** Plugins to load before mounting the App
-  */
+   ** Plugins to load before mounting the App
+   */
   plugins: [
-    '~/plugins/vue-vimeo-player',
-    '~/plugins/contentful',
-    '~/plugins/route',
+    "~/plugins/vue-vimeo-player",
+    "~/plugins/contentful",
+    "~/plugins/route"
   ],
   /*
-  ** Nuxt.js dev-modules
-  */
-  buildModules: [
-    '@nuxtjs/vuetify',
-    '@nuxtjs/style-resources',
-    '@aceforth/nuxt-optimized-images',
-  ],
+   ** Nuxt.js dev-modules
+   */
+  buildModules: ["@nuxtjs/vuetify", "@nuxtjs/style-resources"],
   optimizedImages: {
     optimizeImages: true
   },
   /*
-  ** Nuxt Style Resources modules
-  */
+   ** Nuxt Style Resources modules
+   */
   styleResources: {
-    scss: '@/assets/styles/setup/_variables.scss',
+    scss: "@/assets/styles/setup/_variables.scss"
   },
   /*
-  ** Nuxt.js modules
-  */
+   ** Nuxt.js modules
+   */
   modules: [
-    '@nuxtjs/dotenv',
-    'nuxt-password-protect',
-    '@nuxtjs/markdownit',
-    '@nuxtjs/sitemap',
+    "@nuxtjs/dotenv",
+    "nuxt-password-protect",
+    "@nuxtjs/markdownit",
+    "@nuxtjs/sitemap"
   ],
   /*
-  ** vuetify module configuration
-  ** https://github.com/nuxt-community/vuetify-module
-  */
+   ** vuetify module configuration
+   ** https://github.com/nuxt-community/vuetify-module
+   */
   vuetify: {
     treeShake: true,
-    customVariables: ['~/assets/styles/_vuetifyvariables.scss'],
-    frameworkOptions: "./vuetify.options.js",
+    customVariables: ["~/assets/styles/_vuetifyvariables.scss"],
+    frameworkOptions: "./vuetify.options.js"
   },
   /*
-  ** password page protection configuration
-  ** https://github.com/stephenkr/nuxt-password-protect
-  */
+   ** password page protection configuration
+   ** https://github.com/stephenkr/nuxt-password-protect
+   */
   passwordProtect: {
-    formPath: '/password',
-    password: 'jedy',
+    formPath: "/password",
+    password: "jedy",
     tokenSeed: 10110011110,
-    cookieName: '_password',
+    cookieName: "_password",
     cookie: {
-      prefix: '',
+      prefix: "",
       expires: 5
     }
   },
   // [optional] markdownit options
   // See https://github.com/markdown-it/markdown-it
   markdownit: {
-    preset: 'default',
+    preset: "default",
     linkify: true,
     breaks: true,
     injected: true,
-    use: [
-      'markdown-it-div',
-      'markdown-it-attrs'
-    ]
+    use: ["markdown-it-div", "markdown-it-attrs"]
   },
   // [optional] site maps
   // See https://dev.to/andynoir/sitemap-for-dynamic-routes-in-nuxtjs-4b96
   sitemap: {
-    hostname: 'https://jedychen.com',
+    hostname: "https://jedychen.com",
     gzip: true,
     defaults: {
-      changefreq: 'daily',
+      changefreq: "daily",
       priority: 1,
       lastmod: new Date()
     }
   },
   /*
-  ** Build configuration
-  */
+   ** Build configuration
+   */
   build: {
     /*
-    ** You can extend webpack config here
-    */
-    extend (config, { isDev, isClient }) {
+     ** You can extend webpack config here
+     */
+    extend(config, { isDev, isClient }) {
       config.node = {
-        fs: 'empty'
-      }
+        fs: "empty"
+      };
     }
   }
-}
+};

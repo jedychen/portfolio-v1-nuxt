@@ -17,7 +17,8 @@
       >
         <v-img
           :aspect-ratio="16 / 9"
-          :src="require(`~/assets/images/${imgSrc(slide)}?sqip`)"
+          :src="require(`~/assets/images/${imgSrc(slide)}`)"
+          :lazy-src="imgBase64(slide)"
           :alt="slide.title"
         />
       </v-carousel-item>
@@ -53,6 +54,8 @@
 </style>
 
 <script>
+import imageUtils from "../../assets/js/imageUtils";
+
 export default {
   name: "InlineCarousel",
 
@@ -93,10 +96,10 @@ export default {
       this.$emit("ready");
     },
     imgSrc(image) {
-      var url = image.file.url;
-      var id = url.replace("//images.ctfassets.net/", "");
-      var imageName = id.split("/")[1] + "." + url.split(".").pop();
-      return imageName;
+      return imageUtils.imgSrc(image);
+    },
+    imgBase64(image) {
+      return imageUtils.imgBase64(image);
     }
   }
 };

@@ -19,7 +19,7 @@ const CONFIGURATION_ = {
   fontSize: 22, // Text at the back of cards.
   lineHeight: 40, // Text at the back of cards.
   cardName: "card",
-  cardThickness: 5,
+  cardThickness: 5
 };
 
 // Drawing functions for FlipCardManager.
@@ -145,12 +145,9 @@ class FlipCardRender {
    */
   holdFlip(element) {
     if (element.flip.progress() >= 0.5) {
-      element.flip.tweenTo(
-        2,
-        {
-          ease: Power4.easeOut,
-        }
-      )
+      element.flip.tweenTo(2, {
+        ease: Power4.easeOut
+      });
     }
   }
 
@@ -180,7 +177,9 @@ class FlipCardRender {
       this.CARD_SIZE,
       CONFIGURATION_.cardThickness
     );
-    for (let [index, projectConfig] of this.enumerate(projectsConfig.projects)) {
+    for (let [index, projectConfig] of this.enumerate(
+      projectsConfig.projects
+    )) {
       this.setupSingleProject_(index, projectConfig, cardImages, geometry);
     }
     this.isInitialized_ = true;
@@ -215,12 +214,12 @@ class FlipCardRender {
     const projectIndex = index;
     const material = new THREE.MeshBasicMaterial({
       color: projectConfig.themeColor,
-      transparent: true,
+      transparent: true
     });
 
     for (let i = 0; i < 6; i++) {
       // Jedy: Disabled horizontal flip
-      let horizontalFlip = false;//projectConfig.cards[i].horizontalFlip;
+      let horizontalFlip = false; //projectConfig.cards[i].horizontalFlip;
       let cardMaterial = [
         material, //left
         material, //right
@@ -229,7 +228,7 @@ class FlipCardRender {
         new THREE.MeshBasicMaterial({
           // front
           map: cardImages[i + projectIndex * 6],
-          transparent: true,
+          transparent: true
         }),
         new THREE.MeshStandardMaterial({
           // back
@@ -237,10 +236,10 @@ class FlipCardRender {
             projectConfig.keyWords[i].split(","),
             projectConfig.themeColor,
             "normal",
-            horizontalFlip,
+            horizontalFlip
           ),
-          transparent: true,
-        }),
+          transparent: true
+        })
       ];
 
       let card = new THREE.Mesh(geometry, cardMaterial);
@@ -281,11 +280,11 @@ class FlipCardRender {
     // Card at the top-left corner is (0, 0), and the next card on the right is (1, 0).
     var projOriginPos = {
       x: (projectIndex % this.projectColNum_) * this.CARD_COL_NUM,
-      y: Math.floor(projectIndex / this.projectColNum_) * this.CARD_ROW_NUM,
+      y: Math.floor(projectIndex / this.projectColNum_) * this.CARD_ROW_NUM
     };
     card.gridPos = {
       x: projOriginPos.x + (cardIndex % this.CARD_COL_NUM),
-      y: projOriginPos.y + Math.floor(cardIndex / this.CARD_COL_NUM),
+      y: projOriginPos.y + Math.floor(cardIndex / this.CARD_COL_NUM)
     };
   }
 
@@ -304,7 +303,7 @@ class FlipCardRender {
         this.SINGLE_PROJECT_HEIGHT;
     return {
       x: xOrigin + this.CARD_SIZE * 0.5,
-      y: yOrigin + this.CARD_SIZE * 0.5,
+      y: yOrigin + this.CARD_SIZE * 0.5
     };
   }
 
@@ -373,14 +372,14 @@ class FlipCardRender {
     var config_flip = {
       ease: Elastic.easeOut,
       duration: duration,
-      delay: delay,
+      delay: delay
     };
 
     // Flip back when mouse moving away.
     var config_reverse = {
       ease: Elastic.easeOut,
       duration: duration,
-      delay: 0.1, // To avoid jumpping when holding the flipping animation.
+      delay: 0.1 // To avoid jumpping when holding the flipping animation.
     };
 
     config_flip[card.rotateAxis] = card.rotateDirection;
@@ -389,7 +388,7 @@ class FlipCardRender {
     card.flip = gsap
       .timeline({
         paused: pause,
-        repeat: repeat,
+        repeat: repeat
       })
       .to(card.rotation, config_flip, "flip")
       .to(card.rotation, config_reverse, "reverse");
@@ -403,12 +402,11 @@ class FlipCardRender {
   transitionAway(cardVisited) {
     this.cardLastVisited_ = cardVisited;
     for (let card of this.cards_) {
-      
       // Flips back the cards that are turned around.
       if (card.flip.progress != 1.0) {
         let config_flip_back = {
           ease: Power4.easeOut,
-          duration: 0.5,
+          duration: 0.5
         };
         config_flip_back[card.rotateAxis] = 0;
         gsap.to(card.rotation, config_flip_back);
@@ -420,7 +418,7 @@ class FlipCardRender {
       let config_ripple = {
         ease: Elastic.easeOut,
         duration: 2,
-        z: 100,
+        z: 100
       };
 
       config_ripple["delay"] =
@@ -429,11 +427,11 @@ class FlipCardRender {
       let config_fade = {
         ease: Power4.easeOut,
         duration: 1,
-        opacity: 0,
+        opacity: 0
       };
       config_fade["delay"] =
         config_ripple["delay"] + config_ripple["duration"] - 1.2;
-      
+
       // Moves the cards up on z axis.
       gsap.to(card.position, config_ripple);
       // Add fading animation to the all sides of the cards
@@ -466,7 +464,7 @@ class FlipCardRender {
       let config_fade = {
         ease: Power4.easeOut,
         duration: 1,
-        opacity: 1,
+        opacity: 1
       };
       config_fade["delay"] =
         0.2 * calcDistance(card.gridPos, this.cardLastVisited_.gridPos);
@@ -474,7 +472,7 @@ class FlipCardRender {
       let config_ripple = {
         ease: Elastic.easeOut,
         duration: 2,
-        z: 0,
+        z: 0
       };
       config_ripple["delay"] =
         config_fade["delay"] + config_fade["duration"] - 1.2;
@@ -501,8 +499,8 @@ class FlipCardRender {
     let i = 0;
 
     for (const x of iterable) {
-        yield [i, x];
-        i++;
+      yield [i, x];
+      i++;
     }
   }
 }

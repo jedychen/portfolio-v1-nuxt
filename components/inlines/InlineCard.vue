@@ -14,7 +14,8 @@
       <v-img
         v-if="content.cover != null"
         :alt="content.cover.title"
-        :src="require(`~/assets/images/${imgSrc(content.cover)}?sqip`)"
+        :src="require(`~/assets/images/${imgSrc(content.cover)}`)"
+        :lazy-src="imgBase64(content.cover)"
         height="200px"
         @load="onReady"
         class="inline-card-image transition-swing"
@@ -58,6 +59,8 @@
 </style>
 
 <script>
+import imageUtils from "../../assets/js/imageUtils";
+
 export default {
   name: "InlineCard",
 
@@ -73,10 +76,10 @@ export default {
       this.$emit("ready");
     },
     imgSrc(image) {
-      var url = image.file.url;
-      var id = url.replace("//images.ctfassets.net/", "");
-      var imageName = id.split("/")[1] + "." + url.split(".").pop();
-      return imageName;
+      return imageUtils.imgSrc(image);
+    },
+    imgBase64(image) {
+      return imageUtils.imgBase64(image);
     }
   },
 

@@ -6,7 +6,7 @@
         <v-row no-gutters class="mb-12">
           <v-col cols="12" md="5" class="py-8 d-none d-md-flex">
             <v-img
-              :src="require(`~/assets/images/${imgSrc(content.photo)}?sqip`)"
+              :src="require(`~/assets/images/${imgSrc(content.photo)}`)"
               :alt="content.photo.title"
             >
               <template v-slot:placeholder>
@@ -175,6 +175,15 @@ export default {
       var id = url.replace("//images.ctfassets.net/", "");
       var imageName = id.split("/")[1] + "." + url.split(".").pop();
       return imageName;
+    },
+    imgBase64(image) {
+      //return url+sizeSettingMax();
+      var fileName = this.imgSrc(image);
+      var imageMetadata = this.base64.content.some(
+        item => item.name === fileName
+      );
+      var imageBase64 = imageMetadata.data;
+      return imageBase64;
     }
   }
 };

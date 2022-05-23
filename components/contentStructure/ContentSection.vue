@@ -29,7 +29,7 @@
       </p>
     </v-col>
     <!-- Render content blocks. -->
-    <template v-for="(block, index) in section.contentBlocks">
+    <template v-for="(block, index) in section.contents">
       <template v-if="block.alternateColumn && block.fullWidth == false">
         <!-- 1. When the previous block is half width -->
         <!-- Add two empty blocks to alternate this block's column, -->
@@ -37,13 +37,18 @@
         <!-- 2. When the previous block is full width -->
         <!-- Add one empty blocks to alternate this block's column -->
         <!-- and no need to add negative top margin. -->
-        <ContentBlockEmpty :key="block.summary + ' empty block 1'" />
-        <template v-if="section.contentBlocks[index - 1].fullWidth == false">
-          <ContentBlockEmpty :key="block.summary + ' empty block 2'" />
+        <ContentBlockEmpty :key="block.title + ' empty block 1'" />
+        <template
+          v-if="
+            !section.contents[index - 1].alternateColumn &&
+              section.contents[index - 1].fullWidth == false
+          "
+        >
+          <ContentBlockEmpty :key="block.title + ' empty block 2'" />
         </template>
       </template>
       <ContentBlock
-        :key="block.summary + ' block' + index"
+        :key="block.title + ' block' + index"
         :block="block"
         @ready="childReady"
       />

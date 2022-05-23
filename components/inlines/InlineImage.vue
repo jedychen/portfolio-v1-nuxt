@@ -1,8 +1,9 @@
 <template>
   <div class="pb-4">
     <v-img
-      :src="require(`~/assets/images/${imgSrc(content.image)}?sqip`)"
+      :src="require(`~/assets/images/${imgSrc(content.image)}`)"
       :alt="content.image.title"
+      :lazy-src="imgBase64(content.image)"
       @load="onReady"
       @click.stop="dialog = true"
       class="inline-image"
@@ -17,12 +18,14 @@
       v-if="content.caption"
       class="text-h6 mt-4 font-weight-light caption-text"
     >
-      <span class="caption-arrow mr-1">&#11096; </span>{{ content.caption }}
+      <span class="caption-arrow mr-1">&#11096; </span
+      >{{ content.image.description }}
     </p>
     <v-dialog v-model="dialog" :max-width="maxWidth">
       <v-img
-        :src="require(`~/assets/images/${imgSrc(content.image)}?sqip`)"
+        :src="require(`~/assets/images/${imgSrc(content.image)}`)"
         :alt="content.image.title"
+        :lazy-src="imgBase64(content.image)"
         @load="onReady"
         @click.stop="dialog = false"
         class="inline-image"
@@ -46,6 +49,8 @@
 </style>
 
 <script>
+import imageUtils from "../../assets/js/imageUtils";
+
 export default {
   name: "InlineImage",
 
@@ -71,11 +76,10 @@ export default {
       this.$emit("ready");
     },
     imgSrc(image) {
-      //return url+sizeSettingMax();
-      var url = image.file.url;
-      var id = url.replace("//images.ctfassets.net/", "");
-      var imageName = id.split("/")[1] + "." + url.split(".").pop();
-      return imageName;
+      return imageUtils.imgSrc(image);
+    },
+    imgBase64(image) {
+      return imageUtils.imgBase64(image);
     }
   },
 

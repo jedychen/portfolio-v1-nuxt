@@ -2,9 +2,7 @@
   <!-- Single Content Block -->
   <v-col cols="12" :md="width" class="pa-4 content-block">
     <ContentComponent
-      v-for="(item, i) in block.inlineItems"
-      :key="i"
-      :component="item"
+      :component="block"
       :fullWidth="fullWidth"
       @ready="childReady"
     />
