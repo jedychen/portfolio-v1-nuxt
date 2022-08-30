@@ -1,5 +1,5 @@
 <template>
-  <div class="video-wrapper pb-4">
+  <div class="video-wrapper pb-0">
     <vimeo-player
       v-if="content != null"
       ref="player"

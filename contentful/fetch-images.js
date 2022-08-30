@@ -6,7 +6,7 @@ const fs = require("fs");
 const { sqip } = require("sqip");
 require("dotenv").config({ path: ".env" });
 
-const RESET_ALL_BASE64_DATA = true; // Change this if want to reset all base64
+const RESET_ALL_BASE64_DATA = false; // Change this if want to reset all base64
 
 const CLIENT = contentful.createClient({
   space: process.env.CONTENTFUL_SPACE_ID,
@@ -69,6 +69,7 @@ async function sqipItems() {
 
   const base64Results = require(BASE64_PATH);
   const base64Array = base64Results.content;
+  let finishedNumber = 0;
   await Promise.all(
     images.map(async ({ id, filename, filetype }, index) => {
       if (
@@ -100,7 +101,8 @@ async function sqipItems() {
       // Debug Info Start: This line below might cause issue. Can remove if needed
       process.stdout.clearLine(); // clear current text
       process.stdout.cursorTo(0); // move cursor to beginning of line
-      process.stdout.write(`[${index + 1}/${images.length}] ${filename}`);
+      finishedNumber += 1;
+      process.stdout.write(`[${finishedNumber}/${images.length}] ${filename}`);
       // Debug Info End
       base64Array.push({
         name: filename,

@@ -1,5 +1,5 @@
 <template>
-  <div class="inline-table pb-4">
+  <div class="inline-table pb-0">
     <v-simple-table>
       <template v-slot:default>
         <tbody>

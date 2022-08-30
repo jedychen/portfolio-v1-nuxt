@@ -8,6 +8,7 @@
             <v-img
               :src="require(`~/assets/images/${imgSrc(content.photo)}`)"
               :alt="content.photo.title"
+              :lazy-src="imgBase64(content.photo)"
             >
               <template v-slot:placeholder>
                 <v-row class="fill-height ma-0" align="center" justify="center">
@@ -110,6 +111,7 @@
 import contentful from "@/plugins/contentful.js";
 import * as prettify from "pretty-contentful";
 import AboutSection from "@/components/sections/AboutSection";
+import imageUtils from "../assets/js/imageUtils";
 
 export default {
   components: {
@@ -171,19 +173,10 @@ export default {
       }
     },
     imgSrc(image) {
-      var url = image.file.url;
-      var id = url.replace("//images.ctfassets.net/", "");
-      var imageName = id.split("/")[1] + "." + url.split(".").pop();
-      return imageName;
+      return imageUtils.imgSrc(image);
     },
     imgBase64(image) {
-      //return url+sizeSettingMax();
-      var fileName = this.imgSrc(image);
-      var imageMetadata = this.base64.content.some(
-        item => item.name === fileName
-      );
-      var imageBase64 = imageMetadata.data;
-      return imageBase64;
+      return imageUtils.imgBase64(image);
     }
   }
 };

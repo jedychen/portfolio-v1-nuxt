@@ -1,5 +1,5 @@
 <template>
-  <div class="pb-4">
+  <div class="pb-0">
     <v-carousel
       v-model="currentIndex"
       :cycle="!(content.autoCycle == false)"
@@ -23,7 +23,10 @@
         />
       </v-carousel-item>
     </v-carousel>
-    <p class="text-h6 mt-4 font-weight-light caption-text">
+    <p
+      v-if="content.captions"
+      class="text-h6 mt-4 font-weight-light caption-text"
+    >
       <span class="carousel-count font-weight-regular"
         >{{ currentIndex + 1 }} / {{ content.slides.length }}</span
       >
@@ -50,6 +53,10 @@
 
 .caption-text {
   color: $copy-caption;
+  max-lines: 1;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 </style>
 

@@ -2,14 +2,13 @@
   <v-hover v-slot:default="{ hover }">
     <v-card
       :light="hover ? true : false"
-      max-width="344"
       outlined
       nuxt
       shaped
       :ripple="false"
       :to="content.link"
       target="_blank"
-      class="mx-auto transition-swing pb-4"
+      class="mx-auto transition-swing pb-0"
     >
       <v-img
         v-if="content.cover != null"

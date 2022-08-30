@@ -42,6 +42,10 @@ body::-webkit-scrollbar {
   width: 1em;
 }
 
+.project-page__container {
+  // padding: 0;
+}
+
 .intro-section-col,
 .up-next-section-col {
   background-color: $neutral-black;

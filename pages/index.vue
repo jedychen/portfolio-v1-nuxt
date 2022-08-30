@@ -1,5 +1,12 @@
 <template>
-  <div class="feature-work__container">
+  <div
+    class="feature-work__container"
+    ref="container"
+    :class="{
+      'loading-in-progress': loadingProgress < 100,
+      'loading-completed': loadingProgress >= 100
+    }"
+  >
     <div
       id="threejs-container"
       v-touch="{
@@ -200,12 +207,6 @@ export default {
         loadingSecondPos: secondPos,
         loadingThirdPos: thirdPos
       });
-      if (value >= 100) {
-        this.container.classList.remove("loading-in-progress");
-        this.container.classList.add("loading-completed");
-      } else {
-        this.container.classList.add("loading-in-progress");
-      }
     },
     clickedProject(value) {
       if (value != "") {
@@ -236,9 +237,6 @@ export default {
       "flipCardStore/init",
       document.querySelector("#threejs-container")
     );
-    if (this.loadingProgress >= 100) {
-      this.container.classList.add("loading-completed");
-    }
   },
 
   methods: {

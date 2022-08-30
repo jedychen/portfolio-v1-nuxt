@@ -31,7 +31,8 @@
     <!-- Render content blocks. -->
     <template v-for="(block, index) in section.contents">
       <template v-if="block.alternateColumn && block.fullWidth == false">
-        <!-- 1. When the previous block is half width -->
+        <!-- Alternative column = in the second column -->
+        <!-- 1. When the previous block is half width and on the left -->
         <!-- Add two empty blocks to alternate this block's column, -->
         <!-- and make this block have negative top margin. -->
         <!-- 2. When the previous block is full width -->
@@ -40,8 +41,9 @@
         <ContentBlockEmpty :key="block.title + ' empty block 1'" />
         <template
           v-if="
-            !section.contents[index - 1].alternateColumn &&
-              section.contents[index - 1].fullWidth == false
+            !section.contents[index - 1] ||
+              (!section.contents[index - 1].alternateColumn &&
+                section.contents[index - 1].fullWidth == false)
           "
         >
           <ContentBlockEmpty :key="block.title + ' empty block 2'" />

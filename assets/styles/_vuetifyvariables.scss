@@ -21,11 +21,13 @@ $theme-background-color: #191919;
 $body-font-family: 'Open Sans';
 
 .v-application {
-  font-family: $body-font-family, 'Roboto', sans-serif !important; 
+  font-family: $body-font-family, 'Roboto', sans-serif !important;
+  overflow: hidden; 
 }
 
 body {
   overscroll-behavior-y: none;
+  background-color: $theme-background-color;
 }
 
 .img-preload-filter {

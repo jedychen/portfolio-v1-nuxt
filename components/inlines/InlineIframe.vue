@@ -1,5 +1,5 @@
 <template>
-  <div class="pb-4 inline-iframe-container">
+  <div class="pb-0 inline-iframe-container">
     <v-card class="aspect-ratio">
       <iframe
         style="width:100%"

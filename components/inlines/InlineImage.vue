@@ -1,5 +1,5 @@
 <template>
-  <div class="pb-4">
+  <div class="pb-0">
     <v-img
       :src="require(`~/assets/images/${imgSrc(content.image)}`)"
       :alt="content.image.title"
@@ -15,7 +15,7 @@
       </template>
     </v-img>
     <p
-      v-if="content.caption"
+      v-if="content.image.description"
       class="text-h6 mt-4 font-weight-light caption-text"
     >
       <span class="caption-arrow mr-1">&#11096; </span
