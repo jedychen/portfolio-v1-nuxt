@@ -53,10 +53,13 @@
 
 .caption-text {
   color: $copy-caption;
-  max-lines: 1;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
+
+  @include bp(sm) {
+    max-lines: 1;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
 }
 </style>
 

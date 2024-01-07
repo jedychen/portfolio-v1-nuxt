@@ -29,6 +29,7 @@ $ npm run start
 ```
 ## Generate and Export
 
+Please use node 12.14.0
 ```
 # generate static project
 $ npm run generate

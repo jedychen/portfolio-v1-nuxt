@@ -1,5 +1,10 @@
 <template>
-  <div class="video-wrapper pb-0">
+  <div
+    :class="{
+      'video-wrapper pb-0': !content.smaller,
+      'video-wrapper-minified pb-0': content.smaller
+    }"
+  >
     <vimeo-player
       v-if="content != null"
       ref="player"
@@ -26,6 +31,10 @@
 </template>
 
 <style lang="scss" scoped>
+.video-wrapper-minified {
+  width: 50%;
+  margin-left: 25%;
+}
 .caption-arrow {
   color: $caption-symbol-color;
 }
