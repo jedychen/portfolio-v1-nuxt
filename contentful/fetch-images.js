@@ -106,7 +106,7 @@ async function sqipItems() {
       // Debug Info End
       base64Array.push({
         name: filename,
-        data: svgData.metadata?.dataURIBase64
+        data: svgData.metadata.dataURIBase64
       });
       return;
     })

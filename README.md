@@ -6,21 +6,26 @@
 
 ```bash
 # install dependencies
+$ nvm use 18
 $ npm install
 ```
 ## Development
 
 ```
 # get images only from contentful
+$ nvm use 18
 $ npm run fetch-images
 
 # get content (text and page structure) only from contentful
+$ nvm use 18
 $ npm run fetch-content
 
 # get all contents from contentful
+$ nvm use 18
 $ npm run fetch-all
 
 # serve with hot reload at localhost:3000
+$ nvm use 12
 $ npm run dev
 
 # build for production and launch server
@@ -32,6 +37,7 @@ $ npm run start
 Please use node 12.14.0
 ```
 # generate static project
+$ nvm use 12
 $ npm run generate
 ```
 Copy all the content generated in dist/ folder to a desired server.
