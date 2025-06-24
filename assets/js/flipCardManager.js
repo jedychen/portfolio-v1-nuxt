@@ -11,7 +11,7 @@ const BREAKPOINTS_ = {
   xs: 600,
   sm: 960,
   md: 1264,
-  lg: 1904,
+  lg: 1904
 };
 
 /**
@@ -21,7 +21,7 @@ const BREAKPOINTS_ = {
 const CAMERA_DISTANCE_ = {
   single: 360, // one cards in a row.
   double: 720, // two cards in a row.
-  triple: 1090, // three cards in a row.
+  triple: 1090 // three cards in a row.
 };
 
 /**
@@ -29,7 +29,7 @@ const CAMERA_DISTANCE_ = {
  * @private
  */
 const CONFIGURATION_ = {
-  swipeSpeed: 400, // Speed of vertically swipping screen on mobile.
+  swipeSpeed: 400 // Speed of vertically swipping screen on mobile.
 };
 
 /**
@@ -39,7 +39,7 @@ const CONFIGURATION_ = {
 const DEVICE_ = {
   MOBILE: 0,
   TABLET: 1,
-  DESKTOP: 2,
+  DESKTOP: 2
 };
 
 // FlipCardManager Class for used in main.js.
@@ -60,7 +60,7 @@ class FlipCardManager {
     this.PROJECT_WIDTH = this.flipCardRender.getProjectWidth();
     this.PROJECT_HEIGHT = this.flipCardRender.getProjectHeight();
     this.LIGHT_COLOR = 0xffffff;
-    this.BACKGROUND_COLOR = 0x000000;
+    this.BACKGROUND_COLOR = 0x161719;
 
     this.isInitialized_ = false;
     this.cameraY_ = 0;
@@ -68,7 +68,7 @@ class FlipCardManager {
     this.intersectedObject_ = null; // Intersected object with raycaster.
     this.projectClicked_ = false;
     this.loadingProgress_ = 0;
-    this.url_ = '';
+    this.url_ = "";
     // Jedy: Password Disabled
     // this.passwordProtected_ = false;
     this.isRendering_ = true; // If the threeJS is rendering.
@@ -105,7 +105,7 @@ class FlipCardManager {
     // Initialize Three.js configurations.
     this.renderer_ = new THREE.WebGLRenderer({ antialias: true });
     this.camera_ = new THREE.PerspectiveCamera(
-      45,
+      48,
       this.container_.clientWidth / this.container_.clientHeight,
       0.1,
       2000
@@ -121,8 +121,7 @@ class FlipCardManager {
     this.raycaster_ = new THREE.Raycaster();
 
     while (this.projectsConfig_ == null) {}
-    
- 
+
     this.projectNum_ = this.projectsConfig_.projects.length;
 
     this.loadCoverImages_();
@@ -202,7 +201,7 @@ class FlipCardManager {
     if (this.projectClicked_) {
       this.projectClicked_ = false;
     }
-    this.url_ = '';
+    this.url_ = "";
     // Jedy: Password Disabled
     // this.passwordProtected_ = false;
   }
@@ -241,21 +240,23 @@ class FlipCardManager {
           this.flipCardRender.startFlip(intersects[0].object);
         }
         this.intersectedObject_ = intersects[0].object;
-      } 
+      }
       // 1.2. When the mouse is focusing on one single card.
       else if (this.flipCardRender.isCard(this.intersectedObject_)) {
         // The current card holds on the flipped status (text canvas).
         intersectCard = true;
         this.flipCardRender.holdFlip(this.intersectedObject_);
-      } 
+      }
       // 1.3. Else omitted... When the mouse is focusing on a none card, do nothing.
-    } 
+    }
     // 2. When no intersection, the current card just continues its flipping animation.
     else if (this.flipCardRender.isCard(this.intersectedObject_)) {
       this.flipCardRender.continueFlip(this.intersectedObject_);
     }
 
-    document.documentElement.style.cursor = intersectCard ? "pointer" : "default";
+    document.documentElement.style.cursor = intersectCard
+      ? "pointer"
+      : "default";
 
     this.renderer_.render(this.scene_, this.camera_);
   }
@@ -275,13 +276,15 @@ class FlipCardManager {
       { x: 0.666, y: 0.5 },
       { x: 0, y: 0 },
       { x: 0.333, y: 0 },
-      { x: 0.666, y: 0 },
-    ];
+      { x: 0.666, y: 0 }
+    ]; // Cordinate's origin is at left bottom corner
 
     for (let i = 0; i < this.projectNum_; i++) {
       // 6 cards per project.
       for (let j = 0; j < 6; j++) {
-        let cardImage = imageLoader.load(this.projectsConfig_.projects[i].coverImage.file.url);
+        let cardImage = imageLoader.load(
+          this.projectsConfig_.projects[i].coverImage.file.url
+        );
         cardImage.repeat.set(0.333, 0.5);
         cardImage.offset.set(imageOffsets[j].x, imageOffsets[j].y);
         this.cardImages_.push(cardImage);
@@ -376,7 +379,7 @@ class FlipCardManager {
 
     this.group_.position.y =
       (this.projectColNum_ * this.PROJECT_WIDTH * 0.5) / this.aspectRatio_ -
-      135;
+      142;
   }
 
   /**
@@ -515,7 +518,7 @@ class FlipCardManager {
     this.hammerSwipe = gsap.to(this.camera_.position, {
       duration: 0.5,
       ease: "power1.out",
-      y: changedPosY,
+      y: changedPosY
     });
   }
 
@@ -529,7 +532,7 @@ class FlipCardManager {
     this.hammerSwipe = gsap.to(this.camera_.position, {
       duration: 0.5,
       ease: "power1.out",
-      y: changedPosY,
+      y: changedPosY
     });
   }
 

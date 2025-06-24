@@ -16,10 +16,10 @@ import { randomInRange, calcDistance } from "./utils.js";
 
 /** @private */
 const CONFIGURATION_ = {
-  fontSize: 22, // Text at the back of cards.
+  fontSize: 18, // Text at the back of cards.
   lineHeight: 40, // Text at the back of cards.
   cardName: "card",
-  cardThickness: 5
+  cardThickness: 100
 };
 
 // Drawing functions for FlipCardManager.
@@ -212,34 +212,120 @@ class FlipCardRender {
    */
   setupSingleProject_(index, projectConfig, cardImages, geometry) {
     const projectIndex = index;
-    const material = new THREE.MeshBasicMaterial({
-      color: projectConfig.themeColor,
-      transparent: true
-    });
 
     for (let i = 0; i < 6; i++) {
       // Jedy: Disabled horizontal flip
       let horizontalFlip = false; //projectConfig.cards[i].horizontalFlip;
+
+      const imageMaterial = new THREE.MeshBasicMaterial({
+        // front
+        map: cardImages[i + projectIndex * 6],
+        transparent: false,
+        side: THREE.DoubleSide
+      });
+
+      const sideImage = cardImages[i + projectIndex * 6].clone();
+      sideImage.rotation = Math.PI; //Use a row of pixels of the original image
+      const imageOffsets = [
+        { x: 0.333, y: 1.5 },
+        { x: 0.666, y: 1.5 },
+        { x: 0.999, y: 1.5 },
+        { x: 0.333, y: -0.5 },
+        { x: 0.666, y: -0.5 },
+        { x: 0.999, y: -0.5 }
+      ];
+      sideImage.offset.set(imageOffsets[i].x, imageOffsets[i].y);
+      const sideImageMaterial = new THREE.MeshBasicMaterial({
+        map: sideImage,
+        transparent: false,
+        side: THREE.DoubleSide
+      });
+      sideImageMaterial.map.needsUpdate = true;
+
+      const textImage = this.drawTextAsTexture_(
+        projectConfig.keyWords[i].split(","),
+        projectConfig.themeColor,
+        "normal",
+        horizontalFlip
+      );
+
+      var pitchMaterialParams = {
+        uniforms: THREE.UniformsUtils.merge([
+          {
+            texture1: null,
+            texture2: null,
+            xscale: 1,
+            yscale: 1,
+            xoffset: 0,
+            yoffset: 0,
+            darkenbg: false
+          }
+        ]),
+        vertexShader: `
+    
+           precision highp float;
+           precision highp int;
+           varying vec2 vUv;
+    
+           void main() {
+             vUv = uv;
+             gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+           }
+    
+         `,
+        fragmentShader: `
+    
+           precision mediump float;
+           uniform sampler2D texture1;
+           uniform sampler2D texture2;
+           uniform float xscale;
+           uniform float yscale;
+           uniform float xoffset;
+           uniform float yoffset;
+           uniform bool darkenbg;
+           varying vec2 vUv;
+    
+           void main() {
+             vec2 newvUv = vec2(vUv.x * xscale + xoffset, vUv.y * yscale + yoffset);
+    
+             vec4 col1 = texture2D(texture1, newvUv);
+             float brightness = darkenbg ? 0.9 : 1.0;
+             vec4 col2 = texture2D(texture2, vUv);
+             gl_FragColor = col2.a > 0.5 ? col2 : col1 * brightness;
+             // gl_FragColor = mix( col1, col2, 0.25 );
+           }
+    
+         `
+      };
+
+      // Dummy box for reference.
+      //scene.add( new THREE.Mesh(new THREE.BoxGeometry(), new THREE.MeshStandardMaterial({color:0xff0000})) );
+      const shaderOffsets = [
+        { x: 0.0, y: 1.5 },
+        { x: 0.333, y: 1.5 },
+        { x: 0.666, y: 1.5 },
+        { x: 0.0, y: -0.5 },
+        { x: 0.333, y: -0.5 },
+        { x: 0.666, y: -0.5 }
+      ];
+      const textCombinedMaterial = new THREE.ShaderMaterial(
+        pitchMaterialParams
+      );
+      textCombinedMaterial.uniforms.texture1.value = sideImage;
+      textCombinedMaterial.uniforms.texture2.value = textImage;
+      textCombinedMaterial.uniforms.xscale.value = 0.333;
+      textCombinedMaterial.uniforms.yscale.value = 0.5;
+      textCombinedMaterial.uniforms.xoffset.value = shaderOffsets[i].x;
+      textCombinedMaterial.uniforms.yoffset.value = shaderOffsets[i].y;
+      textCombinedMaterial.uniforms.darkenbg.value = true;
+
       let cardMaterial = [
-        material, //left
-        material, //right
-        material, // top
-        material, // bottom
-        new THREE.MeshBasicMaterial({
-          // front
-          map: cardImages[i + projectIndex * 6],
-          transparent: true
-        }),
-        new THREE.MeshStandardMaterial({
-          // back
-          map: this.drawTextAsTexture_(
-            projectConfig.keyWords[i].split(","),
-            projectConfig.themeColor,
-            "normal",
-            horizontalFlip
-          ),
-          transparent: true
-        })
+        sideImageMaterial, //left
+        sideImageMaterial, //right
+        sideImageMaterial, // top
+        sideImageMaterial, // bottom
+        imageMaterial, //Front
+        textCombinedMaterial // Back
       ];
 
       let card = new THREE.Mesh(geometry, cardMaterial);
@@ -324,7 +410,8 @@ class FlipCardRender {
     context.font =
       fontWeight + " " + CONFIGURATION_.fontSize.toString() + "pt Helvetica";
     context.textAlign = "left";
-    context.fillStyle = color;
+    // context.fillStyle = "white";
+    context.fillStyle = "rgba(255, 255, 255, 0)";
 
     // Rotates canvas if the card is not flipping horizontally.
     var flip = 1;
@@ -337,7 +424,7 @@ class FlipCardRender {
     // Draw texts
     var x = (flip * canvas.width) / 2 - 110;
     var y = (flip * canvas.height) / 2 - 70;
-    context.fillStyle = "black";
+    context.fillStyle = "white";
     for (const text of textArray) {
       context.fillText(text, x, y);
       y += CONFIGURATION_.lineHeight;
@@ -345,7 +432,6 @@ class FlipCardRender {
 
     var texture = new THREE.Texture(canvas);
     texture.needsUpdate = true;
-
     return texture;
   }
 

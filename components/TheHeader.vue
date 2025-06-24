@@ -1,11 +1,8 @@
 <template>
   <v-app-bar
     absolute
-    color="white"
-    hide-on-scroll
-    short
     :scroll-target="contentId"
-    class="header-bar"
+    class="header-bar header-bar__bg"
   >
     <v-row no-gutters>
       <v-col cols="6" sm="6" md="4" align-self="center">
@@ -49,12 +46,17 @@
 </template>
 
 <style lang="scss" scoped>
+.header-bar.header-bar__bg.v-toolbar.v-sheet {
+  background-color: rgba($color: $neutral-black, $alpha: 0.95);
+}
+
 a.header__link {
   text-decoration: none;
 
   &:hover {
     text-decoration: underline;
     text-decoration-thickness: 1px;
+    text-decoration-color: $neutral-white;
   }
 }
 
@@ -68,7 +70,7 @@ a.header__link {
   letter-spacing: 0.2rem;
   margin-left: 20px;
   white-space: nowrap;
-  color: $neutral-grey-a;
+  color: $neutral-white;
 
   @include bp(xs) {
     font-size: 16px;
@@ -76,15 +78,15 @@ a.header__link {
 }
 
 .header-link {
-  color: rgba($color: $neutral-black, $alpha: 0);
+  color: rgba($color: $neutral-white, $alpha: 0);
   transition: color 0.3s;
 
   &.header-link--active {
-    color: $theme-yellow;
+    color: $neutral-white;
   }
 
   .v-btn {
-    color: $neutral-black;
+    color: $neutral-white;
   }
 }
 </style>
