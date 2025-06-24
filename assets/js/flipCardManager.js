@@ -270,25 +270,16 @@ class FlipCardManager {
     let loadManager = new THREE.LoadingManager();
     let imageLoader = new THREE.TextureLoader(loadManager);
 
-    const imageOffsets = [
-      { x: 0, y: 0.5 },
-      { x: 0.333, y: 0.5 },
-      { x: 0.666, y: 0.5 },
-      { x: 0, y: 0 },
-      { x: 0.333, y: 0 },
-      { x: 0.666, y: 0 }
-    ]; // Cordinate's origin is at left bottom corner
-
     for (let i = 0; i < this.projectNum_; i++) {
       // 6 cards per project.
-      for (let j = 0; j < 6; j++) {
-        let cardImage = imageLoader.load(
-          this.projectsConfig_.projects[i].coverImage.file.url
-        );
-        cardImage.repeat.set(0.333, 0.5);
-        cardImage.offset.set(imageOffsets[j].x, imageOffsets[j].y);
-        this.cardImages_.push(cardImage);
-      }
+      // for (let j = 0; j < 6; j++) {
+      let cardImage = imageLoader.load(
+        this.projectsConfig_.projects[i].coverImage.file.url
+      );
+      cardImage.repeat.set(0.333, 0.5);
+      // cardImage.offset.set(imageOffsets[j].x, imageOffsets[j].y);
+      this.cardImages_.push(cardImage);
+      // }
     }
 
     loadManager.onLoad = () => {

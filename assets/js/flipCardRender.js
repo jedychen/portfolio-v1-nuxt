@@ -213,20 +213,31 @@ class FlipCardRender {
   setupSingleProject_(index, projectConfig, cardImages, geometry) {
     const projectIndex = index;
 
+    const imageOffsets = [
+      { x: 0, y: 0.5 },
+      { x: 0.333, y: 0.5 },
+      { x: 0.666, y: 0.5 },
+      { x: 0, y: 0 },
+      { x: 0.333, y: 0 },
+      { x: 0.666, y: 0 }
+    ]; // Cordinate's origin is at left bottom corner
+
     for (let i = 0; i < 6; i++) {
       // Jedy: Disabled horizontal flip
       let horizontalFlip = false; //projectConfig.cards[i].horizontalFlip;
-
-      const imageMaterial = new THREE.MeshBasicMaterial({
+      const cardImage = cardImages[projectIndex].clone();
+      cardImage.offset.set(imageOffsets[i].x, imageOffsets[i].y);
+      const frontImageMaterial = new THREE.MeshBasicMaterial({
         // front
-        map: cardImages[i + projectIndex * 6],
+        map: cardImage,
         transparent: false,
-        side: THREE.DoubleSide
+        side: THREE.FrontSide
       });
+      frontImageMaterial.map.needsUpdate = true;
 
-      const sideImage = cardImages[i + projectIndex * 6].clone();
+      const sideImage = cardImage.clone();
       sideImage.rotation = Math.PI; //Use a row of pixels of the original image
-      const imageOffsets = [
+      const sideImageOffsets = [
         { x: 0.333, y: 1.5 },
         { x: 0.666, y: 1.5 },
         { x: 0.999, y: 1.5 },
@@ -234,7 +245,7 @@ class FlipCardRender {
         { x: 0.666, y: -0.5 },
         { x: 0.999, y: -0.5 }
       ];
-      sideImage.offset.set(imageOffsets[i].x, imageOffsets[i].y);
+      sideImage.offset.set(sideImageOffsets[i].x, sideImageOffsets[i].y);
       const sideImageMaterial = new THREE.MeshBasicMaterial({
         map: sideImage,
         transparent: false,
@@ -257,8 +268,7 @@ class FlipCardRender {
             xscale: 1,
             yscale: 1,
             xoffset: 0,
-            yoffset: 0,
-            darkenbg: false
+            yoffset: 0
           }
         ]),
         vertexShader: `
@@ -282,19 +292,24 @@ class FlipCardRender {
            uniform float yscale;
            uniform float xoffset;
            uniform float yoffset;
-           uniform bool darkenbg;
            varying vec2 vUv;
     
+           float map(float value, float min1, float max1, float min2, float max2) {
+            return min2 + (value - min1) * (max2 - min2) / (max1 - min1);
+           }
+
            void main() {
              vec2 newvUv = vec2(vUv.x * xscale + xoffset, vUv.y * yscale + yoffset);
-    
              vec4 col1 = texture2D(texture1, newvUv);
-             float brightness = darkenbg ? 0.9 : 1.0;
              vec4 col2 = texture2D(texture2, vUv);
+             float level = col1.r + col1.g + col1.b;
+             float brightness = map(level, 2.1, 3.0, 1.0, 0.8);
+             if (brightness > 1.0) {
+               brightness = 1.0;
+             }
              gl_FragColor = col2.a > 0.5 ? col2 : col1 * brightness;
              // gl_FragColor = mix( col1, col2, 0.25 );
            }
-    
          `
       };
 
@@ -317,14 +332,13 @@ class FlipCardRender {
       textCombinedMaterial.uniforms.yscale.value = 0.5;
       textCombinedMaterial.uniforms.xoffset.value = shaderOffsets[i].x;
       textCombinedMaterial.uniforms.yoffset.value = shaderOffsets[i].y;
-      textCombinedMaterial.uniforms.darkenbg.value = true;
 
       let cardMaterial = [
         sideImageMaterial, //left
         sideImageMaterial, //right
         sideImageMaterial, // top
         sideImageMaterial, // bottom
-        imageMaterial, //Front
+        frontImageMaterial, //Front
         textCombinedMaterial // Back
       ];
 
