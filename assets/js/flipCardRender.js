@@ -236,14 +236,13 @@ class FlipCardRender {
       frontImageMaterial.map.needsUpdate = true;
 
       const sideImage = cardImage.clone();
-      sideImage.rotation = Math.PI; //Use a row of pixels of the original image
       const sideImageOffsets = [
+        { x: 0.0, y: 1.5 },
         { x: 0.333, y: 1.5 },
         { x: 0.666, y: 1.5 },
-        { x: 0.999, y: 1.5 },
+        { x: 0.0, y: -0.5 },
         { x: 0.333, y: -0.5 },
-        { x: 0.666, y: -0.5 },
-        { x: 0.999, y: -0.5 }
+        { x: 0.666, y: -0.5 }
       ];
       sideImage.offset.set(sideImageOffsets[i].x, sideImageOffsets[i].y);
       const sideImageMaterial = new THREE.MeshBasicMaterial({
@@ -299,7 +298,7 @@ class FlipCardRender {
            }
 
            void main() {
-             vec2 newvUv = vec2(vUv.x * xscale + xoffset, vUv.y * yscale + yoffset);
+             vec2 newvUv = vec2((1.0-vUv.x) * xscale + xoffset, vUv.y * yscale + yoffset);
              vec4 col1 = texture2D(texture1, newvUv);
              vec4 col2 = texture2D(texture2, vUv);
              float level = col1.r + col1.g + col1.b;
