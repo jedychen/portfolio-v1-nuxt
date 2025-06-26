@@ -30,13 +30,12 @@
 
 <style lang="scss">
 .inline-table {
-  border-width: 2px;
-  border-style: solid;
-  border-color: $theme-grey;
+  border-width: 0;
 
   tbody {
     td {
       width: 75%;
+      background-color: rgba($theme-grey, 0.2);
 
       &.table-cell-first {
         width: 25%;

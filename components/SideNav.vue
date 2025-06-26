@@ -11,14 +11,14 @@
             class="side-nav__list-item"
             :class="'waypoint-' + sectionId(section.slug)"
           >
-            <v-list-item-content>
+            <v-list-item-content class="align-self-end">
               <v-btn
                 :ripple="false"
                 text
                 @click="
                   $vuetify.goTo(scrollingTarget(section.slug), scrollingOptions)
                 "
-                class="side-nav__list-item-text align-self-start subtitle-2 side-nav__button"
+                class="side-nav__list-item-text align-self-end subtitle-2 side-nav__button"
               >
                 {{ section.slug }}
               </v-btn>
@@ -34,10 +34,12 @@
 <style lang="scss" scoped>
 .side-nav__container {
   width: 100%;
+  pointer-events: none;
 }
 
 .side-nav__list {
   padding: 0;
+  pointer-events: none;
 }
 
 .side-nav__list-wrapper {
@@ -45,23 +47,29 @@
   top: 0;
   right: 0;
   height: 100vh;
+  pointer-events: none;
 }
 
 .side-nav__list-item {
-  padding: 0 $side-nav-bar-width 0 0;
+  padding: 0;
+  pointer-events: auto;
 
   .side-nav__list-item-text {
     font-weight: 300;
-    color: $copy-side-nav;
+    color: rgba($copy-side-nav, 0.3);
     animation: appear 0.5s ease-in 1.3s;
     animation-fill-mode: both;
     transition: color 0.2s ease-in-out;
+
+    :hover {
+      color: rgba($copy-side-nav, 0.7);
+    }
   }
 
   &.side-nav__list-item-active {
     .side-nav__list-item-text {
       font-weight: 500;
-      color: $neutral-white;
+      color: rgba($copy-side-nav, 1);
     }
   }
 
@@ -80,7 +88,7 @@
     $theme-yellow 100%
   );
   position: absolute;
-  right: calc(1em - 1px);
+  right: 0;
   width: $side-nav-bar-width;
   animation: appear 0.5s ease-in 0.8s;
   animation-fill-mode: both;
@@ -161,8 +169,8 @@ export default {
   mounted() {
     let nav_list_wrapper = document.querySelector(this.selector.list);
     let nav_list_col = document.querySelector(this.selector.container);
-    nav_list_wrapper.style.width =
-      nav_list_col.getBoundingClientRect().width + "px";
+    // nav_list_wrapper.style.width =
+    //   nav_list_col.getBoundingClientRect().width + "px";
     this.setWaypointsStyle();
     this.setFirstWaypointStyle();
     this.calcuTotalHeight();
@@ -186,7 +194,8 @@ export default {
         );
         // Set side nav list items' positions.
         nav_item.style.position = "absolute";
-        nav_item.style.width = "100%";
+        nav_item.style.right = "12px";
+        // nav_item.style.width = "100%";
         nav_item.style.top = this.waypointPosList[i] + "vh";
       }
     },

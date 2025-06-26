@@ -4,14 +4,10 @@
       <v-col cols="12" order="2">
         <v-row
           v-scroll:#scrolling-content="onScroll"
-          class="project-page mt-12"
+          class="project-page mt-12 mx-lg-16 mx-md-4 mx-sm-2"
         >
           <!-- Page Content -->
-          <v-col
-            v-resize="onResize"
-            cols="12"
-            class="col-sm-10 offset-sm-1 col-md-9 offset-md-1 col-lg-8 offset-lg-2 page-content-col"
-          >
+          <v-col v-resize="onResize" cols="12" class="page-content-col">
             <ContentSection
               v-for="item in contentSectionItems"
               :key="item.title"
@@ -22,7 +18,7 @@
             />
           </v-col>
           <!-- Side Nav / Left Margin -->
-          <v-col cols="2" lg="2" class="side-nav-col d-none d-md-flex">
+          <v-col cols="1" class="side-nav-col d-none d-md-flex">
             <SideNav :sections="contentSectionItems" />
           </v-col>
         </v-row>

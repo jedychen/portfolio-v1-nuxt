@@ -3,11 +3,11 @@
     <v-col cols="12">
       <v-divider class="secondary" />
     </v-col>
-    <v-col cols="12" sm="10" class="offset-sm-1">
-      <v-row>
+    <v-col cols="12">
+      <v-row class="mx-lg-16 mx-md-4 mx-sm-2">
         <v-col cols="12">
           <h2 class="mt-8 mb-4 up-next-title">
-            Other work
+            Work
           </h2>
         </v-col>
         <v-col v-for="project in content" :key="project.title" cols="12" md="4">

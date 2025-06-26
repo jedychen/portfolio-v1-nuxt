@@ -16,6 +16,7 @@ import { randomInRange, calcDistance } from "./utils.js";
 
 /** @private */
 const CONFIGURATION_ = {
+  boldFontSize: 12,
   fontSize: 18, // Text at the back of cards.
   lineHeight: 40, // Text at the back of cards.
   cardName: "card",
@@ -252,8 +253,16 @@ class FlipCardRender {
       });
       sideImageMaterial.map.needsUpdate = true;
 
+      const titleArray = projectConfig.keyWords[i].split(":");
+      let title = "";
+      let description = projectConfig.keyWords[i];
+      if (titleArray.length > 1) {
+        title = titleArray[0];
+        description = titleArray[1];
+      }
       const textImage = this.drawTextAsTexture_(
-        projectConfig.keyWords[i].split(","),
+        title,
+        description.split(","),
         projectConfig.themeColor,
         "normal",
         horizontalFlip
@@ -414,18 +423,14 @@ class FlipCardRender {
    * @param {boolean} horizontalFlip If the card is flipping horizontally.
    * @private
    */
-  drawTextAsTexture_(textArray, color, fontWeight, horizontalFlip) {
+  drawTextAsTexture_(title, textArray, color, fontWeight, horizontalFlip) {
     var canvas = document.createElement("canvas");
     canvas.width = 256;
     canvas.height = 256;
 
     var context = canvas.getContext("2d");
-    context.font =
-      fontWeight + " " + CONFIGURATION_.fontSize.toString() + "pt Helvetica";
-    context.textAlign = "left";
     // context.fillStyle = "white";
     context.fillStyle = "rgba(255, 255, 255, 0)";
-
     // Rotates canvas if the card is not flipping horizontally.
     var flip = 1;
     if (!horizontalFlip) {
@@ -438,6 +443,18 @@ class FlipCardRender {
     var x = (flip * canvas.width) / 2 - 110;
     var y = (flip * canvas.height) / 2 - 70;
     context.fillStyle = "white";
+    context.textAlign = "left";
+    context.font =
+      fontWeight +
+      " " +
+      CONFIGURATION_.boldFontSize.toString() +
+      "pt Helvetica";
+    if (title != "") {
+      context.fillText(title, x, y);
+      y += CONFIGURATION_.lineHeight;
+    }
+    context.font =
+      fontWeight + " " + CONFIGURATION_.fontSize.toString() + "pt Helvetica";
     for (const text of textArray) {
       context.fillText(text, x, y);
       y += CONFIGURATION_.lineHeight;

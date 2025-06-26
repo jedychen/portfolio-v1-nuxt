@@ -1,8 +1,8 @@
 <template>
   <v-row class="mt-12 intro-section">
     <!-- title -->
-    <v-col cols="12" sm="10" class="offset-sm-1">
-      <v-row>
+    <v-col cols="12">
+      <v-row class="mx-lg-16 mx-md-4 mx-sm-2">
         <v-col cols="12">
           <p
             v-if="content.subtitle"
