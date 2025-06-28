@@ -1,6 +1,6 @@
 <template>
   <!-- Single Content Block -->
-  <v-col cols="12" :md="width" class="pa-4 content-block">
+  <v-col cols="6" :md="width" class="pa-4 content-block">
     <ContentComponent
       :component="block"
       :fullWidth="fullWidth"

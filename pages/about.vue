@@ -1,8 +1,8 @@
 <template>
   <v-container fluid class="about__container">
-    <v-row no-gutters class="about-page">
+    <v-row no-gutters class="about-page mx-lg-16 mx-md-4 mx-sm-2">
       <!-- Page Content -->
-      <v-col cols="10" class="page-content-col mt-12 offset-1">
+      <v-col cols="12" class="page-content-col mt-12">
         <v-row no-gutters class="mb-12">
           <v-col cols="12" md="5" class="py-8 d-none d-md-flex">
             <v-img
@@ -55,7 +55,7 @@
 
             <!-- Introduction. -->
             <div class="py-6">
-              <div class="text-h6 font-weight-light text-justify">
+              <div class="text-h8 font-weight-light text-justify">
                 {{ content.introduction }}
               </div>
             </div>
@@ -79,7 +79,7 @@
 
 .intro__title,
 .intro__sub-title {
-  font-family: "CantataOne-Regular", serif;
+  font-family: "Futura-Book", sans-serif;
   font-size: $font-size-xl-screen-lg;
   font-weight: 500;
   line-height: $line-height-sm;
@@ -93,7 +93,7 @@
 }
 
 .intro__sub-title {
-  font-family: "CantataOne-Regular", serif;
+  font-family: "Futura-Book", sans-serif;
 }
 
 .page-enter-active,

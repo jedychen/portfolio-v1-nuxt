@@ -311,12 +311,12 @@ class FlipCardRender {
              vec4 col1 = texture2D(texture1, newvUv);
              vec4 col2 = texture2D(texture2, vUv);
              float level = col1.r + col1.g + col1.b;
-             float brightness = map(level, 2.1, 3.0, 1.0, 0.8);
-             if (brightness > 1.0) {
-               brightness = 1.0;
-             }
+             float brightness = 1.0;
+            //  float brightness = map(level, 2.1, 3.0, 1.0, 0.8);
+            //  if (brightness > 1.0) {
+            //    brightness = 1.0;
+            //  }
              gl_FragColor = col2.a > 0.5 ? col2 : col1 * brightness;
-             // gl_FragColor = mix( col1, col2, 0.25 );
            }
          `
       };
@@ -429,7 +429,6 @@ class FlipCardRender {
     canvas.height = 256;
 
     var context = canvas.getContext("2d");
-    // context.fillStyle = "white";
     context.fillStyle = "rgba(255, 255, 255, 0)";
     // Rotates canvas if the card is not flipping horizontally.
     var flip = 1;
@@ -442,19 +441,19 @@ class FlipCardRender {
     // Draw texts
     var x = (flip * canvas.width) / 2 - 110;
     var y = (flip * canvas.height) / 2 - 70;
-    context.fillStyle = "white";
+    context.fillStyle = color;
     context.textAlign = "left";
     context.font =
       fontWeight +
       " " +
       CONFIGURATION_.boldFontSize.toString() +
-      "pt Helvetica";
+      "pt Noto Sans";
     if (title != "") {
       context.fillText(title, x, y);
       y += CONFIGURATION_.lineHeight;
     }
     context.font =
-      fontWeight + " " + CONFIGURATION_.fontSize.toString() + "pt Helvetica";
+      fontWeight + " " + CONFIGURATION_.fontSize.toString() + "pt Noto Sans";
     for (const text of textArray) {
       context.fillText(text, x, y);
       y += CONFIGURATION_.lineHeight;
@@ -517,6 +516,10 @@ class FlipCardRender {
    */
   transitionAway(cardVisited) {
     this.cardLastVisited_ = cardVisited;
+
+    // Create a master timeline for better performance
+    const masterTimeline = gsap.timeline();
+
     for (let card of this.cards_) {
       // Flips back the cards that are turned around.
       if (card.flip.progress != 1.0) {
@@ -531,32 +534,35 @@ class FlipCardRender {
       // Removes the flip animation completely
       card.flip.clear();
 
-      let config_ripple = {
-        ease: Elastic.easeOut,
-        duration: 2,
-        z: 100
-      };
+      const distance = calcDistance(card.gridPos, cardVisited.gridPos);
+      const delay = 0.2 * distance;
 
-      config_ripple["delay"] =
-        0.2 * calcDistance(card.gridPos, cardVisited.gridPos);
+      // Batch position animation
+      masterTimeline.to(
+        card.position,
+        {
+          ease: Elastic.easeOut,
+          duration: 2,
+          z: 100,
+          delay: delay
+        },
+        delay
+      );
 
-      let config_fade = {
-        ease: Power4.easeOut,
-        duration: 1,
-        opacity: 0
-      };
-      config_fade["delay"] =
-        config_ripple["delay"] + config_ripple["duration"] - 1.2;
-
-      // Moves the cards up on z axis.
-      gsap.to(card.position, config_ripple);
-      // Add fading animation to the all sides of the cards
-      gsap.to(card.material[0], config_fade);
-      gsap.to(card.material[1], config_fade);
-      gsap.to(card.material[2], config_fade);
-      gsap.to(card.material[3], config_fade);
-      gsap.to(card.material[4], config_fade);
-      gsap.to(card.material[5], config_fade);
+      // Batch material opacity animations
+      const fadeDelay = delay + 0.8; // Reduced delay for better performance
+      for (let i = 0; i < 6; i++) {
+        masterTimeline.to(
+          card.material[i],
+          {
+            ease: Power4.easeOut,
+            duration: 1,
+            opacity: 0,
+            delay: fadeDelay
+          },
+          fadeDelay
+        );
+      }
     }
   }
 

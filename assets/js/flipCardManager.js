@@ -491,6 +491,7 @@ class FlipCardManager {
    * @private
    */
   scrollDevice_(event) {
+    event.preventDefault();
     let changedPosY = this.camera_.position.y - event.deltaY;
     if (changedPosY >= this.cameraY_) this.camera_.position.y = this.cameraY_;
     else if (changedPosY <= -this.cameraY_ + this.CAMERA_BOTTOM_MARGIN)

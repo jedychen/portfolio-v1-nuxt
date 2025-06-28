@@ -8,10 +8,13 @@
     <vimeo-player
       v-if="content != null"
       ref="player"
+      :unmute-button="false"
       :options="{
         responsive: true,
         muted: content.muted,
-        autopause: !content.autoPlay
+        unmute_button: false,
+        autopause: !content.autoPlay,
+        background: content.background == null ? false : content.background
       }"
       :video-id="videoId"
       :autoplay="content.autoPlay"

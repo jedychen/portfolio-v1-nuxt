@@ -75,7 +75,6 @@
 
   .side-nav__button {
     display: inline-block;
-    white-space: normal;
   }
 }
 

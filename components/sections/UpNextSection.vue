@@ -4,8 +4,8 @@
       <v-divider class="secondary" />
     </v-col>
     <v-col cols="12">
-      <v-row class="mx-lg-16 mx-md-4 mx-sm-2">
-        <v-col cols="12">
+      <v-row no-gutters class="pa-0 ma-0">
+        <v-col cols="12 mx-lg-16 mx-md-4 mx-sm-2">
           <h2 class="mt-8 mb-4 up-next-title">
             Work
           </h2>
@@ -29,7 +29,7 @@
               >
                 <p
                   :style="'color:' + getProjectColor(project)"
-                  class="mx-4 my-4 up-next-section__sub-title"
+                  class="mx-8 my-8 up-next-section__sub-title"
                 >
                   {{ project.title }}
                 </p>
@@ -50,13 +50,18 @@
 
   .up-next-section__sub-title {
     transition: opacity 0.2s ease-in-out;
+    text-transform: uppercase;
+    font-family: "Futura-Book", sans-serif;
+    font-size: 2.5rem;
+    font-weight: 400;
+    line-height: $line-height-sm;
   }
 }
 
 .up-next-title {
-  font-family: "CantataOne-Regular", serif;
+  font-family: "Futura-Book", sans-serif;
   font-size: $font-size-lg-screen-lg;
-  font-weight: 500;
+  font-weight: 800;
   line-height: $line-height-sm;
   color: $theme-yellow;
   @include bp(sm) {
@@ -74,11 +79,8 @@
   }
 }
 
-.up-next-section__sub-title {
-  font-family: "Montserrat-Regular", sans-serif;
-  font-size: 2.5rem;
-  font-weight: 400;
-  line-height: $line-height-sm;
+.up-next-section__image {
+  align-items: end;
 }
 
 .up-next-section__image .v-image__image {
@@ -108,9 +110,6 @@ export default {
     },
 
     getProjectColor(project) {
-      if (project.linkColor != null) {
-        return project.linkColor;
-      }
       return project.themeColor;
     },
     imgSrc(img) {

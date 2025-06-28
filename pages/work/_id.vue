@@ -39,7 +39,7 @@ body::-webkit-scrollbar {
 }
 
 .project-page__container {
-  // padding: 0;
+  cursor: default;
 }
 
 .intro-section-col,

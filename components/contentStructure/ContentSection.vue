@@ -60,9 +60,9 @@
 
 <style lang="scss" scoped>
 .content-section__title {
-  font-family: "CantataOne-Regular", serif;
+  font-family: "Futura-Book", sans-serif;
   font-size: $font-size-md-screen-lg;
-  font-weight: 400;
+  font-weight: 800;
   line-height: $line-height-sm;
   @include bp(sm) {
     font-size: $font-size-md-screen-sm;

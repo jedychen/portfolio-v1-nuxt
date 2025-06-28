@@ -10,10 +10,10 @@
           <v-col cols="6" sm="6" md="4" align-self="center">
             <nuxt-link to="/" class="header__link">
               <v-toolbar-title class="header__title d-none d-sm-flex">
-                Jedy Chen
+                JEDY CHEN
               </v-toolbar-title>
               <v-toolbar-title class="header__title d-xs-flex d-sm-none">
-                Jedy
+                JEDY
               </v-toolbar-title>
             </nuxt-link>
           </v-col>
@@ -51,7 +51,8 @@
 
 <style lang="scss" scoped>
 .header-bar.header-bar__bg.v-toolbar.v-sheet {
-  background-color: rgba($color: $neutral-black, $alpha: 0.95);
+  background-color: rgba($color: $neutral-black, $alpha: 0.9);
+  z-index: 3; // To be above the intro-section__title
 }
 
 a.header__link {
@@ -69,7 +70,7 @@ a.header__link {
 }
 
 .header__title {
-  font-family: "Mayeka-Light", sans-serif;
+  font-family: "Futura-Light", sans-serif;
   font-size: 24px;
   letter-spacing: 0.2rem;
   white-space: nowrap;

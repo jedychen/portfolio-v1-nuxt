@@ -35,7 +35,7 @@
 <style lang="scss" scoped>
 .about-section__title {
   color: $theme-orange;
-  font-family: "CantataOne-Regular", serif;
+  font-family: "Futura-Book", sans-serif;
   font-size: $font-size-lg-screen-lg;
   font-weight: 500;
   line-height: $line-height-sm;
