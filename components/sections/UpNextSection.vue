@@ -1,21 +1,25 @@
 <template>
-  <v-row v-if="content" class="mb-8 pb-16 up-next-section">
-    <v-col cols="12">
+  <v-row v-if="content" class="up-next-section elevation-4 pb-8">
+    <v-col cols="12" class="pb-0 px-0">
       <v-divider class="secondary" />
     </v-col>
     <v-col cols="12">
       <v-row no-gutters class="pa-0 ma-0">
-        <v-col cols="12 mx-lg-16 mx-md-4 mx-sm-2">
-          <h2 class="mt-8 mb-4 up-next-title">
-            Work
-          </h2>
+        <v-col cols="12 mb-4">
+          <h1 class="mt-8 mb-4 up-next-title">
+            Explore related projects
+          </h1>
         </v-col>
-        <v-col v-for="project in content" :key="project.title" cols="12" md="4">
+        <v-col
+          v-for="project in content"
+          :key="project.title"
+          cols="12"
+          md="4"
+          class="pa-1"
+        >
           <v-hover v-slot:default="{ hover }">
             <v-card :href="'/work/' + project.slug" class="mt-0">
               <v-img
-                gradient="rgba(0, 0, 0, 0.3),
-                        rgba(0, 0, 0, 0)"
                 aspect-ratio="1.5"
                 :src="
                   require(`~/assets/images/${imgSrc(getProjectImage(project))}`)
@@ -27,15 +31,24 @@
                   'up-next-section--selected': hover
                 }"
               >
-                <p
-                  :style="'color:' + getProjectColor(project)"
-                  class="mx-8 my-8 up-next-section__sub-title"
-                >
-                  {{ project.title }}
-                </p>
               </v-img>
             </v-card>
           </v-hover>
+          <p class="mx-2 my-2 up-next-section__sub-title">
+            {{ project.title }}
+          </p>
+          <!-- tags -->
+          <div v-if="project.keyWords" class="mr-2">
+            <v-chip
+              small
+              outlined
+              v-for="(tag, i) in project.keyWords"
+              :key="'project main tag' + i"
+              class="mr-2 mb-2 tag-text"
+            >
+              {{ tagClean(tag) }}
+            </v-chip>
+          </div>
         </v-col>
       </v-row>
     </v-col>
@@ -43,16 +56,18 @@
 </template>
 
 <style lang="scss">
+@import "~vuetify/src/styles/settings/_variables"; // For breakpoint specific styles
+
 .up-next-section {
   .v-image__image {
     transition: opacity 0.2s ease-in-out;
   }
 
   .up-next-section__sub-title {
+    color: rgba(255, 255, 255, 0.8);
     transition: opacity 0.2s ease-in-out;
-    text-transform: uppercase;
     font-family: "Futura-Book", sans-serif;
-    font-size: 2.5rem;
+    font-size: 1.5rem;
     font-weight: 400;
     line-height: $line-height-sm;
   }
@@ -60,22 +75,19 @@
 
 .up-next-title {
   font-family: "Futura-Book", sans-serif;
-  font-size: $font-size-lg-screen-lg;
+  font-size: $font-size-md-screen-lg;
   font-weight: 800;
   line-height: $line-height-sm;
   color: $theme-yellow;
-  @include bp(sm) {
+
+  @media #{map-get($display-breakpoints, 'md-and-down')} {
     font-size: $font-size-lg-screen-sm;
   }
 }
 
 .up-next-section--selected {
   .v-image__image {
-    opacity: 0.5;
-  }
-
-  .up-next-section__sub-title {
-    opacity: 0.8;
+    opacity: 0.7;
   }
 }
 
@@ -85,6 +97,12 @@
 
 .up-next-section__image .v-image__image {
   background-size: 100% 100%;
+}
+
+.up-next-section {
+  .tag-text {
+    color: $neutral-grey-b;
+  }
 }
 </style>
 
@@ -108,7 +126,6 @@ export default {
       }
       return project.coverImage;
     },
-
     getProjectColor(project) {
       return project.themeColor;
     },
@@ -117,6 +134,14 @@ export default {
     },
     imgBase64(img) {
       return imageUtils.imgBase64(img);
+    },
+    tagClean(tag) {
+      const textArray = tag.split(":");
+      let description = tag;
+      if (textArray.length > 1) {
+        description = textArray[1];
+      }
+      return description.replaceAll(",", " ");
     }
   }
 };

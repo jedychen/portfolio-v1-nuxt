@@ -24,11 +24,8 @@
       class="video-player"
       @ready="onReady"
     />
-    <p
-      v-if="content.description"
-      class="text-h6 mt-4 font-weight-light caption-text"
-    >
-      <span class="caption-arrow mr-1">&#11096; </span>{{ content.description }}
+    <p v-if="content.description" class="text-body-1 caption-text mt-2 ml-1">
+      <span class="caption-dot">&#8226;</span> {{ content.description }}
     </p>
   </div>
 </template>
@@ -44,6 +41,10 @@
 
 .caption-text {
   color: $copy-caption;
+
+  .caption-dot {
+    color: $copy-caption-dot;
+  }
 }
 </style>
 

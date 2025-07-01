@@ -9,22 +9,13 @@
         :src="content.url"
         class="inline-iframe"
       />
-      <v-btn
-        class="mx-2 my-2"
-        dark
-        color="primary"
-        :href="content.url"
-        target="_blank"
-      >
+      <v-btn class="mx-2 my-2" dark :href="content.url" target="_blank">
         <v-icon dark>mdi-fullscreen</v-icon>
         &nbsp;Full Screen
       </v-btn>
     </v-card>
-    <p
-      v-if="content.caption"
-      class="text-h6 mt-4 font-weight-light caption-text"
-    >
-      <span class="caption-arrow">&#11096; </span>{{ content.caption }}
+    <p v-if="content.caption" class="text-body-1 caption-text mt-2 ml-1">
+      <span class="caption-dot">&#8226;</span> {{ content.caption }}
     </p>
   </div>
 </template>
@@ -62,6 +53,10 @@
 
 .caption-text {
   color: $copy-caption;
+
+  .caption-dot {
+    color: $copy-caption-dot;
+  }
 }
 </style>
 

@@ -16,11 +16,11 @@
     </v-img>
     <p
       v-if="content.image.description"
-      class="text-h6 mt-4 font-weight-light caption-text"
+      class="text-body-1 caption-text mt-2 ml-1"
     >
-      <span class="caption-arrow mr-1">&#11096; </span
-      >{{ content.image.description }}
+      <span class="caption-dot">&#8226;</span> {{ content.image.description }}
     </p>
+
     <v-dialog v-model="dialog" :max-width="maxWidth">
       <v-img
         :src="require(`~/assets/images/${imgSrc(content.image)}`)"
@@ -37,6 +37,7 @@
 <style lang="scss" scoped>
 .inline-image {
   cursor: pointer;
+  align-items: end;
 }
 
 .caption-arrow {
@@ -45,6 +46,10 @@
 
 .caption-text {
   color: $copy-caption;
+
+  .caption-dot {
+    color: $copy-caption-dot;
+  }
 }
 </style>
 

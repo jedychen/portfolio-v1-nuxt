@@ -1,4 +1,4 @@
-
+@import '~vuetify/src/styles/settings/_variables';
 
 $theme-yellow: #f88826;
 $theme-orange: #ff6a5c;
@@ -14,7 +14,8 @@ $neutral-white: #fff;
 $icon-color: $neutral-white;
 $copy-color: $neutral-white;
 $copy-about: $neutral-grey-c;
-$copy-side-nav: $neutral-grey-c;
+$copy-side-nav: $neutral-grey-d;
+$copy-caption-dot: $neutral-grey-b;
 $copy-caption: $neutral-grey-c;
 $copy-color-black-transparent:  rgba($neutral-black,0.3);
 $caption-symbol-color: $theme-orange;
@@ -24,11 +25,13 @@ $side-nav-bar-width: 6px;
 
 $line-height-sm: 1.1em;
 $line-height-md: 1.5em;
-$font-size-xxl-screen-lg: 6em;
+$font-size-xxl-screen-lg: 6em; // Page title
+$font-size-xxl-screen-md: 5em;
 $font-size-xxl-screen-sm: 3em;
 $font-size-xl-screen-lg: 4.5em;
 $font-size-xl-screen-sm: 2.5em;
 $font-size-lg-screen-lg: 4em;
+$font-size-lg-screen-md: 3em;
 $font-size-lg-screen-sm: 2.5em;
 $font-size-md-screen-lg: 3em;
 $font-size-md-screen-sm: 2.5em;
@@ -52,23 +55,10 @@ $font-size-sm-screen-sm: 2.5em;
   }
 }
 
-@mixin bp($point) {
-  
-  $bp-xs: "(max-width: 340px)";
-  $bp-sm: "(max-width: 540px)";
-  $bp-md: "(max-width: 800px - 24px)";
-  $bp-lg: "(max-width: 1280px - 24px)";
-
-  @if $point == xs {
-    @media #{$bp-xs} { @content; }
-  }
-  @else if $point == sm {
-    @media #{$bp-sm} { @content; }
-  }
-  @else if $point == md {
-    @media #{$bp-md}  { @content; }
-  }
-  @else if $point == lg {
-    @media #{$bp-lg}  { @content; }
-  }
-}
+$grid-breakpoints: (
+  'xs': 0,
+  'sm': 340px,
+  'md': 540px,
+  'lg': 800px - 24px,
+  'xl': 1280px - 24px
+);

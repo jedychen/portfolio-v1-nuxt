@@ -75,10 +75,6 @@ a.header__link {
   letter-spacing: 0.2rem;
   white-space: nowrap;
   color: $neutral-white;
-
-  @include bp(xs) {
-    font-size: 16px;
-  }
 }
 
 .header-link {

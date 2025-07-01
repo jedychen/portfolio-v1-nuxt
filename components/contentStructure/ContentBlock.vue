@@ -1,6 +1,6 @@
 <template>
   <!-- Single Content Block -->
-  <v-col cols="6" :md="width" class="pa-4 content-block">
+  <v-col cols="12" :md="width" sm="12" class="content-block">
     <ContentComponent
       :component="block"
       :fullWidth="fullWidth"
@@ -35,7 +35,7 @@ export default {
   computed: {
     width() {
       if (this.block.fullWidth && this.block.fullWidth == true) return 12;
-      return 8;
+      return 6;
     },
     fullWidth() {
       if (this.block.fullWidth && this.block.fullWidth == true) return true;

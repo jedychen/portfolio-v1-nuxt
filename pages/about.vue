@@ -73,6 +73,8 @@
 </template>
 
 <style lang="scss" scoped>
+@import "~vuetify/src/styles/settings/_variables"; // For breakpoint specific styles
+
 .about__photo {
   width: 30vw;
 }
@@ -83,7 +85,8 @@
   font-size: $font-size-xl-screen-lg;
   font-weight: 500;
   line-height: $line-height-sm;
-  @include bp(sm) {
+
+  @media #{map-get($display-breakpoints, 'sm-and-down')} {
     font-size: $font-size-xl-screen-sm;
   }
 }

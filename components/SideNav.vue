@@ -35,6 +35,8 @@
 .side-nav__container {
   width: 100%;
   pointer-events: none;
+  color: black;
+  mix-blend-mode: difference;
 }
 
 .side-nav__list {
@@ -54,15 +56,19 @@
   padding: 0;
   pointer-events: auto;
 
+  .side-nav__list-item-text-container {
+    color: rgba($copy-side-nav, 0.8);
+  }
+
   .side-nav__list-item-text {
     font-weight: 300;
-    color: rgba($copy-side-nav, 0.3);
-    animation: appear 0.5s ease-in 1.3s;
+    color: rgba($copy-side-nav, 0.8);
+    animation: appear 0.5s ease-in 1s;
     animation-fill-mode: both;
     transition: color 0.2s ease-in-out;
 
     :hover {
-      color: rgba($copy-side-nav, 0.7);
+      color: rgba($copy-side-nav, 1);
     }
   }
 

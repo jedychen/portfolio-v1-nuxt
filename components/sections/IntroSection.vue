@@ -18,13 +18,12 @@
     <v-col cols="12">
       <v-row class="mx-lg-16 mx-md-4 mx-sm-2 mt-0">
         <!-- copy -->
-        <v-col cols="7">
+        <v-col cols="12" md="7" sm="12">
           <p class="text-body-1 font-weight-regular content__text">
             {{ content.description }}
           </p>
         </v-col>
-        <v-col cols="1"></v-col>
-        <v-col cols="4">
+        <v-col cols="12" md="4" sm="12" offset-md="1">
           <!-- subtitle -->
           <p
             v-if="content.subtitle"
@@ -60,8 +59,8 @@
 <style lang="scss" scoped>
 @import "~vuetify/src/styles/settings/_variables"; // For breakpoint specific styles
 
-@media #{map-get($display-breakpoints, 'md-and-up')} {
-  .intro-section {
+.intro-section {
+  @media #{map-get($display-breakpoints, 'md-and-up')} {
     margin-right: -6px;
   }
 }
@@ -81,12 +80,20 @@
   font-family: "Futura-Book", sans-serif;
   font-size: $font-size-xxl-screen-lg;
   font-weight: 400;
-  color: rgba(255, 255, 255);
+  color: white;
   line-height: $line-height-sm;
   position: absolute;
   bottom: 0;
 
-  @include bp(sm) {
+  @media #{map-get($display-breakpoints, 'lg-and-down')} {
+    font-size: $font-size-xxl-screen-lg;
+  }
+
+  @media #{map-get($display-breakpoints, 'md-and-down')} {
+    font-size: $font-size-xxl-screen-md;
+  }
+
+  @media #{map-get($display-breakpoints, 'sm-and-down')} {
     font-size: $font-size-xxl-screen-sm;
   }
 }
@@ -99,8 +106,13 @@
   bottom: 12%;
   pointer-events: none;
   justify-items: end;
-  color: rgba(0, 0, 0);
+  color: black;
   mix-blend-mode: difference;
+
+  @media #{map-get($display-breakpoints, 'md-and-down')} {
+    width: 100%;
+    bottom: 15%;
+  }
 }
 
 .intro-section__subtitle {

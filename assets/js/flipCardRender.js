@@ -535,34 +535,19 @@ class FlipCardRender {
       card.flip.clear();
 
       const distance = calcDistance(card.gridPos, cardVisited.gridPos);
-      const delay = 0.2 * distance;
+      const delay = 0.1 * distance;
 
       // Batch position animation
       masterTimeline.to(
         card.position,
         {
           ease: Elastic.easeOut,
-          duration: 2,
+          duration: 1.5,
           z: 100,
           delay: delay
         },
         delay
       );
-
-      // Batch material opacity animations
-      const fadeDelay = delay + 0.8; // Reduced delay for better performance
-      for (let i = 0; i < 6; i++) {
-        masterTimeline.to(
-          card.material[i],
-          {
-            ease: Power4.easeOut,
-            duration: 1,
-            opacity: 0,
-            delay: fadeDelay
-          },
-          fadeDelay
-        );
-      }
     }
   }
 

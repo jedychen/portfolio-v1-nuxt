@@ -3,7 +3,7 @@
   <div
     v-if="type == 'text'"
     v-html="parsedHtml"
-    class="rich-text-content text-body-1 font-weight-light content__text mb-4"
+    class="content__text rich-text-content text-body-1 font-weight-light mb-4 ml-4 mr-md-8 mr-sm-4"
   />
   <InlineImage
     v-else-if="type == 'inlineImage'"

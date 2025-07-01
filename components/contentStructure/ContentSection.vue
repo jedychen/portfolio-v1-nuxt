@@ -11,19 +11,15 @@
             .join('-')
         "
         class="mt-16 content-section__title"
-        :class="{
-          'mb-10': !section.description,
-          'mb-2': section.description
-        }"
       >
         {{ section.title }}
       </h1>
-      <p v-if="section.description" class="text-h5 content-section__subtitle">
-        &#95;&#95;&#95;&#95;&#95;&#95;
+      <p class="text-h5 ml-1 mb-4">
+        &#95;&#95;&#95;&#95;&#95;
       </p>
       <p
         v-if="section.description"
-        class="text-h5 content-section__subtitle mb-6"
+        class="text-h6 content-section__subtitle mb-6"
       >
         {{ section.description }}
       </p>
@@ -59,18 +55,22 @@
 </template>
 
 <style lang="scss" scoped>
+@import "~vuetify/src/styles/settings/_variables"; // For breakpoint specific styles
+
 .content-section__title {
   font-family: "Futura-Book", sans-serif;
   font-size: $font-size-md-screen-lg;
   font-weight: 800;
   line-height: $line-height-sm;
-  @include bp(sm) {
+  @media #{map-get($display-breakpoints, 'sm-and-down')} {
     font-size: $font-size-md-screen-sm;
   }
 }
+
 .content-section__subtitle {
-  color: $theme-orange;
+  // color: $theme-orange;
   line-height: $line-height-md;
+  width: 60%;
 }
 </style>
 

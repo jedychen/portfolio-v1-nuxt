@@ -23,21 +23,19 @@
         />
       </v-carousel-item>
     </v-carousel>
-    <p
-      v-if="content.captions"
-      class="text-h6 mt-4 font-weight-light caption-text"
-    >
-      <span class="carousel-count font-weight-regular"
+    <p v-if="content.captions" class="text-body-1 caption-text mt-2 ml-0">
+      <span class="carousel-count"
         >{{ currentIndex + 1 }} / {{ content.slides.length }}</span
-      >
-      {{ "&nbsp;&nbsp;&nbsp;&nbsp;" + currentDescription }}
+      >{{ "&nbsp;&nbsp;&nbsp;&nbsp;" + currentDescription }}
     </p>
   </div>
 </template>
 
 <style lang="scss">
+@import "~vuetify/src/styles/settings/_variables"; // For breakpoint specific styles
+
 .carousel-count {
-  color: $caption-symbol-color;
+  color: $copy-caption-dot;
 }
 
 .carousel {
@@ -52,13 +50,11 @@
 }
 
 .caption-text {
+  font-weight: 600;
   color: $copy-caption;
 
-  @include bp(sm) {
-    max-lines: 1;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
+  .caption-dot {
+    color: $copy-caption-dot;
   }
 }
 </style>

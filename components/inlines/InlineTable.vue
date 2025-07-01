@@ -1,46 +1,49 @@
 <template>
-  <div class="inline-table pb-0">
-    <v-simple-table>
-      <template v-slot:default>
-        <tbody>
-          <tr v-for="row in content.rows" :key="row.summary">
-            <td
-              width="30%"
-              :key="row.summary"
-              class="text-h6 table-cell-first font-weight-light inline-table--title"
-            >
-              <div v-html="$md.render(row.summary)" class="my-4" />
-            </td>
-            <td
-              v-for="cell in row.cells"
-              width="30%"
-              :key="cell.content"
-              :colspan="cell.colspan"
-              :rowspan="cell.rowspan"
-              class="text-subtitle-1 font-weight-light inline-table--content"
-            >
-              <div v-html="$md.render(cell.content)" class="my-4" />
-            </td>
-          </tr>
-        </tbody>
-      </template>
-    </v-simple-table>
-  </div>
+  <v-simple-table density="compact" class="inline-table pb-0">
+    <template v-slot:default>
+      <thead>
+        <tr class="mr-4">
+          <th
+            v-for="row in content.rows"
+            :key="row.summary"
+            class="font-weight-bold table-cell-first inline-table--title ml-0 pt-4"
+          >
+            <div v-html="$md.render(row.summary)" class="mt-2 mb-0" />
+            <v-divider color="white" class="my-0"></v-divider>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="mr-4">
+          <td
+            v-for="row in content.rows"
+            :key="row.summary"
+            class="font-weight-light inline-table--content pb-4"
+          >
+            <div
+              v-if="row.content != null"
+              v-html="$md.render(row.content)"
+              class="my-2"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </template>
+  </v-simple-table>
 </template>
 
 <style lang="scss">
 .inline-table {
-  border-width: 0;
+  thead {
+    background-color: rgba($theme-grey, 0.2);
+    th {
+      border-bottom: thin solid rgba(255, 255, 255, 0) !important;
+    }
+  }
 
   tbody {
+    background-color: rgba($theme-grey, 0.2);
     td {
-      width: 75%;
-      background-color: rgba($theme-grey, 0.2);
-
-      &.table-cell-first {
-        width: 25%;
-      }
-
       a {
         color: $neutral-grey-c;
       }
@@ -54,10 +57,21 @@
 
 .inline-table--title {
   vertical-align: 0%;
+  font-family: "Noto Sans", sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: white !important;
+  p {
+    margin-bottom: 6px;
+  }
 }
 
 .inline-table--content {
+  vertical-align: top;
   color: $neutral-grey-d;
+  font-family: "Noto Sans", sans-serif;
+  font-size: 12px;
+  font-weight: 400;
 }
 </style>
 

@@ -77,7 +77,7 @@
     opacity: 0;
     visibility: hidden;
     transition: all 1s ease;
-    transition-delay: 2s;
+    transition-delay: 1.5s;
   }
 }
 
