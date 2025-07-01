@@ -59,9 +59,9 @@ a.header__link {
   text-decoration: none;
 
   &:hover {
-    text-decoration: underline;
-    text-decoration-thickness: 1px;
-    text-decoration-color: $neutral-white;
+    .header__title {
+      color: $neutral-grey-c;
+    }
   }
 }
 

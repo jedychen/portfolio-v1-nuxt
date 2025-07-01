@@ -258,7 +258,7 @@ class FlipCardRender {
       let description = projectConfig.keyWords[i];
       if (titleArray.length > 1) {
         title = titleArray[0];
-        description = titleArray[1];
+        description = projectConfig.keyWords[i].replace(title + ":", "");
       }
       const textImage = this.drawTextAsTexture_(
         title,
@@ -276,7 +276,8 @@ class FlipCardRender {
             xscale: 1,
             yscale: 1,
             xoffset: 0,
-            yoffset: 0
+            yoffset: 0,
+            darken: false
           }
         ]),
         vertexShader: `
@@ -300,6 +301,7 @@ class FlipCardRender {
            uniform float yscale;
            uniform float xoffset;
            uniform float yoffset;
+           uniform bool darken;
            varying vec2 vUv;
     
            float map(float value, float min1, float max1, float min2, float max2) {
@@ -311,11 +313,10 @@ class FlipCardRender {
              vec4 col1 = texture2D(texture1, newvUv);
              vec4 col2 = texture2D(texture2, vUv);
              float level = col1.r + col1.g + col1.b;
-             float brightness = 1.0;
-            //  float brightness = map(level, 2.1, 3.0, 1.0, 0.8);
-            //  if (brightness > 1.0) {
-            //    brightness = 1.0;
-            //  }
+             float brightness = map(level, 2.5, 3.0, 1.0, 0.7);
+             if (brightness > 1.0 || !darken) {
+               brightness = 1.0;
+             }
              gl_FragColor = col2.a > 0.5 ? col2 : col1 * brightness;
            }
          `
@@ -341,6 +342,11 @@ class FlipCardRender {
       textCombinedMaterial.uniforms.xoffset.value = shaderOffsets[i].x;
       textCombinedMaterial.uniforms.yoffset.value = shaderOffsets[i].y;
 
+      var themeColorRgb = this.hexToRgb_(projectConfig.themeColor);
+      var textBrightness = themeColorRgb.r + themeColorRgb.g + themeColorRgb.b;
+
+      textCombinedMaterial.uniforms.darken.value = textBrightness > 100 * 3;
+
       let cardMaterial = [
         sideImageMaterial, //left
         sideImageMaterial, //right
@@ -364,6 +370,17 @@ class FlipCardRender {
       this.addCardFlipAnimation_(card);
       this.cards_.push(card);
     }
+  }
+
+  hexToRgb_(hex) {
+    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result
+      ? {
+          r: parseInt(result[1], 16),
+          g: parseInt(result[2], 16),
+          b: parseInt(result[3], 16)
+        }
+      : null;
   }
 
   /**
@@ -429,7 +446,7 @@ class FlipCardRender {
     canvas.height = 256;
 
     var context = canvas.getContext("2d");
-    context.fillStyle = "rgba(255, 255, 255, 0)";
+    context.fillStyle = "rgba(0, 0, 0, 0)";
     // Rotates canvas if the card is not flipping horizontally.
     var flip = 1;
     if (!horizontalFlip) {
