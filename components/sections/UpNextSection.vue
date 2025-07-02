@@ -43,10 +43,11 @@
               small
               outlined
               v-for="(tag, i) in project.keyWords"
+              v-if="i"
               :key="'project main tag' + i"
               class="mr-2 mb-2 tag-text"
             >
-              {{ tagClean(tag) }}
+              {{ tagDescription(tag) }}
             </v-chip>
           </div>
         </v-col>
@@ -135,11 +136,11 @@ export default {
     imgBase64(img) {
       return imageUtils.imgBase64(img);
     },
-    tagClean(tag) {
+    tagDescription(tag) {
       const textArray = tag.split(":");
       let description = tag;
       if (textArray.length > 1) {
-        description = textArray[1];
+        description = tag.replace(textArray[0] + ":", "");
       }
       return description.replaceAll(",", " ");
     }

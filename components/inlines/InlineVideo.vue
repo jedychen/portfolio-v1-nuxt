@@ -5,25 +5,27 @@
       'video-wrapper-minified pb-0': content.smaller
     }"
   >
-    <vimeo-player
-      v-if="content != null"
-      ref="player"
-      :unmute-button="false"
-      :options="{
-        responsive: true,
-        muted: content.muted,
-        unmute_button: false,
-        autopause: !content.autoPlay,
-        background: content.background == null ? false : content.background
-      }"
-      :video-id="videoId"
-      :autoplay="content.autoPlay"
-      :player-height="1080"
-      :player-width="1920"
-      :loop="loop"
-      class="video-player"
-      @ready="onReady"
-    />
+    <div class="video-player__container">
+      <vimeo-player
+        v-if="content != null"
+        ref="player"
+        :unmute-button="false"
+        :options="{
+          responsive: true,
+          muted: content.muted,
+          unmute_button: false,
+          autopause: !content.autoPlay,
+          background: content.background == null ? false : content.background
+        }"
+        :video-id="videoId"
+        :autoplay="content.autoPlay"
+        :player-height="1080"
+        :player-width="1920"
+        :loop="loop"
+        class="video-player"
+        @ready="onReady"
+      />
+    </div>
     <p v-if="content.description" class="text-body-1 caption-text mt-2 ml-1">
       <span class="caption-dot">&#8226;</span> {{ content.description }}
     </p>
@@ -32,8 +34,17 @@
 
 <style lang="scss" scoped>
 .video-wrapper-minified {
-  width: 50%;
-  margin-left: 25%;
+  aspect-ratio: 1/1;
+
+  .video-player__container {
+    background-color: black;
+  }
+
+  .video-player {
+    width: 50%;
+    margin-left: 25%;
+  }
+  // overflow: hidden;
 }
 .caption-arrow {
   color: $caption-symbol-color;

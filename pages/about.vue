@@ -2,22 +2,25 @@
   <v-container fluid class="about__container">
     <v-row no-gutters class="about-page mx-lg-16 mx-md-4 mx-sm-2">
       <!-- Page Content -->
-      <v-col cols="12" class="page-content-col mt-12">
-        <v-row no-gutters class="mb-12">
-          <v-col cols="12" md="5" class="py-8 d-none d-md-flex">
+      <v-col cols="12" class="page-content-col mt-12 pa-sm-0 pa-xs-0">
+        <v-container class="d-flex flex-row pa-sm-0">
+          <v-container class="about-page__image py-8 d-none d-md-flex ">
             <v-img
               :src="require(`~/assets/images/${imgSrc(content.photo)}`)"
               :alt="content.photo.title"
               :lazy-src="imgBase64(content.photo)"
+              gradient="to right,rgba(0,0,0,0),rgba(0,0,0,0.7)"
             >
               <template v-slot:placeholder>
                 <v-row class="fill-height ma-0" align="center" justify="center">
-                  <v-progress-circular indeterminate color="primary" />
+                  <v-progress-circular indeterminate color="white" />
                 </v-row>
               </template>
             </v-img>
-          </v-col>
-          <v-col cols="12" md="6" lg="6" class="offset-md-1">
+          </v-container>
+          <v-container
+            class="about-page__description mt-16 ml-md-n16 ml-sm-0 pa-sm-0 pa-xs-0"
+          >
             <!-- Title and Subtitle. -->
             <div class="py-6">
               <h1 class="intro__title">
@@ -55,12 +58,13 @@
 
             <!-- Introduction. -->
             <div class="py-6">
-              <div class="text-h8 font-weight-light text-justify">
-                {{ content.introduction }}
-              </div>
+              <div
+                class="text-h8 font-weight-light text-justify"
+                v-html="$md.render(this.content.introduction)"
+              />
             </div>
-          </v-col>
-        </v-row>
+          </v-container>
+        </v-container>
 
         <AboutSection
           v-for="item in contentSectionItems"
@@ -74,9 +78,32 @@
 
 <style lang="scss" scoped>
 @import "~vuetify/src/styles/settings/_variables"; // For breakpoint specific styles
+.about-page {
+  pointer-events: default;
+}
 
-.about__photo {
-  width: 30vw;
+.about-page__image {
+  width: 40vw;
+}
+
+.about-page__description {
+  width: 60vw;
+  z-index: 2;
+  animation: slide-in 0.5s forwards ease-in-out;
+  animation-delay: 0.5s;
+  transform: translateX(20%);
+  opacity: 0;
+
+  @media #{map-get($display-breakpoints, 'sm-and-down')} {
+    width: 100%;
+  }
+}
+
+@keyframes slide-in {
+  100% {
+    transform: translateX(0%);
+    opacity: 1;
+  }
 }
 
 .intro__title,

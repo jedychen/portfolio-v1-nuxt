@@ -35,14 +35,14 @@
 <style lang="scss">
 .inline-table {
   thead {
-    background-color: rgba($theme-grey, 0.2);
+    background-color: $card-background;
     th {
       border-bottom: thin solid rgba(255, 255, 255, 0) !important;
     }
   }
 
   tbody {
-    background-color: rgba($theme-grey, 0.2);
+    background-color: $card-background;
     td {
       a {
         color: $neutral-grey-c;
