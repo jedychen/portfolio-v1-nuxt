@@ -18,7 +18,11 @@
           class="pa-1"
         >
           <v-hover v-slot:default="{ hover }">
-            <v-card :href="'/work/' + project.slug" class="mt-0">
+            <v-card
+              :href="'/work/' + project.slug"
+              class="mt-0"
+              :ripple="false"
+            >
               <v-img
                 aspect-ratio="1.5"
                 :src="

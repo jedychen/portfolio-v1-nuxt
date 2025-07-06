@@ -214,19 +214,38 @@ class FlipCardRender {
   setupSingleProject_(index, projectConfig, cardImages, geometry) {
     const projectIndex = index;
 
-    const imageOffsets = [
-      { x: 0, y: 0.5 },
-      { x: 0.333, y: 0.5 },
-      { x: 0.666, y: 0.5 },
-      { x: 0, y: 0 },
-      { x: 0.333, y: 0 },
-      { x: 0.666, y: 0 }
-    ]; // Cordinate's origin is at left bottom corner
+    const sideImage = cardImages[projectIndex].clone();
+    const sideImageOffsets = [
+      { x: 0.0, y: 1.5 },
+      { x: 0.333, y: 1.5 },
+      { x: 0.666, y: 1.5 },
+      { x: 0.0, y: -0.5 },
+      { x: 0.333, y: -0.5 },
+      { x: 0.666, y: -0.5 }
+    ];
+    sideImage.offset.set(
+      sideImageOffsets[projectConfig.coverIndex].x,
+      sideImageOffsets[projectConfig.coverIndex].y
+    );
+    const sideImageMaterial = new THREE.MeshBasicMaterial({
+      map: sideImage,
+      transparent: false,
+      side: THREE.DoubleSide
+    });
+    sideImageMaterial.map.needsUpdate = true;
 
     for (let i = 0; i < 6; i++) {
       // Jedy: Disabled horizontal flip
       let horizontalFlip = false; //projectConfig.cards[i].horizontalFlip;
       const cardImage = cardImages[projectIndex].clone();
+      const imageOffsets = [
+        { x: 0, y: 0.5 },
+        { x: 0.333, y: 0.5 },
+        { x: 0.666, y: 0.5 },
+        { x: 0, y: 0 },
+        { x: 0.333, y: 0 },
+        { x: 0.666, y: 0 }
+      ]; // Cordinate's origin is at left bottom corner
       cardImage.offset.set(imageOffsets[i].x, imageOffsets[i].y);
       const frontImageMaterial = new THREE.MeshBasicMaterial({
         // front
@@ -235,23 +254,6 @@ class FlipCardRender {
         side: THREE.FrontSide
       });
       frontImageMaterial.map.needsUpdate = true;
-
-      const sideImage = cardImage.clone();
-      const sideImageOffsets = [
-        { x: 0.0, y: 1.5 },
-        { x: 0.333, y: 1.5 },
-        { x: 0.666, y: 1.5 },
-        { x: 0.0, y: -0.5 },
-        { x: 0.333, y: -0.5 },
-        { x: 0.666, y: -0.5 }
-      ];
-      sideImage.offset.set(sideImageOffsets[i].x, sideImageOffsets[i].y);
-      const sideImageMaterial = new THREE.MeshBasicMaterial({
-        map: sideImage,
-        transparent: false,
-        side: THREE.DoubleSide
-      });
-      sideImageMaterial.map.needsUpdate = true;
 
       const titleArray = projectConfig.keyWords[i].split(":");
       let title = "";
@@ -313,34 +315,22 @@ class FlipCardRender {
              vec4 col1 = texture2D(texture1, newvUv);
              vec4 col2 = texture2D(texture2, vUv);
              float level = col1.r + col1.g + col1.b;
-             float brightness = map(level, 2.5, 3.0, 1.0, 0.7);
-             if (brightness > 1.0 || !darken) {
-               brightness = 1.0;
-             }
-             gl_FragColor = col2.a > 0.5 ? col2 : col1 * brightness;
+             gl_FragColor = col2.a > 0.5 ? col2 : col1;
            }
          `
       };
 
-      // Dummy box for reference.
-      //scene.add( new THREE.Mesh(new THREE.BoxGeometry(), new THREE.MeshStandardMaterial({color:0xff0000})) );
-      const shaderOffsets = [
-        { x: 0.0, y: 1.5 },
-        { x: 0.333, y: 1.5 },
-        { x: 0.666, y: 1.5 },
-        { x: 0.0, y: -0.5 },
-        { x: 0.333, y: -0.5 },
-        { x: 0.666, y: -0.5 }
-      ];
+      const offsetXScale = (projectConfig.coverIndex % 3) * 0.333;
+      const offsetYScale = projectConfig.coverIndex / 2 > 1 ? -0.5 : 1.5;
       const textCombinedMaterial = new THREE.ShaderMaterial(
         pitchMaterialParams
       );
-      textCombinedMaterial.uniforms.texture1.value = sideImage;
+      textCombinedMaterial.uniforms.texture1.value = cardImages[projectIndex];
       textCombinedMaterial.uniforms.texture2.value = textImage;
       textCombinedMaterial.uniforms.xscale.value = 0.333;
       textCombinedMaterial.uniforms.yscale.value = 0.5;
-      textCombinedMaterial.uniforms.xoffset.value = shaderOffsets[i].x;
-      textCombinedMaterial.uniforms.yoffset.value = shaderOffsets[i].y;
+      textCombinedMaterial.uniforms.xoffset.value = offsetXScale;
+      textCombinedMaterial.uniforms.yoffset.value = offsetYScale;
 
       var themeColorRgb = this.hexToRgb_(projectConfig.themeColor);
       var textBrightness = themeColorRgb.r + themeColorRgb.g + themeColorRgb.b;

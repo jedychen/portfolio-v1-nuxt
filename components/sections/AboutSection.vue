@@ -58,8 +58,8 @@
           v-for="block in section.contentBlocks"
           :key="block.title"
           cols="12"
-          :md="4 + block.isBlock * 8"
-          :sm="6 + block.isBlock * 6"
+          :md="4"
+          :sm="6"
           class="mb-4 about-section__content"
         >
           <h5 class="text-body-1 font-weight-bold mb-2">
@@ -81,8 +81,7 @@
           v-for="(block, i) in section.contentBlocks"
           :key="block.title"
           cols="12"
-          :md="4 + block.isBlock * 8"
-          :sm="6 + block.isBlock * 6"
+          :md="12"
           class="mb-4 about-section__content"
         >
           <v-lazy

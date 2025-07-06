@@ -2,6 +2,9 @@ import * as THREE from "three";
 import gsap from "gsap";
 import FlipCardRender from "./flipCardRender.js";
 import { mobileCheck, tabletCheck } from "./utils.js";
+import imageUtils from "./imageUtils";
+
+const path = require("path");
 
 /**
  * Window breakpoint configuration.
@@ -272,14 +275,15 @@ class FlipCardManager {
 
     for (let i = 0; i < this.projectNum_; i++) {
       // 6 cards per project.
-      // for (let j = 0; j < 6; j++) {
-      let cardImage = imageLoader.load(
-        this.projectsConfig_.projects[i].coverImage.file.url
+      const filename = imageUtils.imgSrc(
+        this.projectsConfig_.projects[i].coverImage
       );
+      let cardImage = imageLoader.load("/" + filename);
+      // let cardImage = imageLoader.load(
+      //   this.projectsConfig_.projects[i].coverImage.file.url
+      // );
       cardImage.repeat.set(0.333, 0.5);
-      // cardImage.offset.set(imageOffsets[j].x, imageOffsets[j].y);
       this.cardImages_.push(cardImage);
-      // }
     }
 
     loadManager.onLoad = () => {

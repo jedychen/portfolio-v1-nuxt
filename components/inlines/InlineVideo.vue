@@ -9,7 +9,6 @@
       <vimeo-player
         v-if="content != null"
         ref="player"
-        :unmute-button="false"
         :options="{
           responsive: true,
           muted: content.muted,

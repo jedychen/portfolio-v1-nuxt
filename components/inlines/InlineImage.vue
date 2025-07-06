@@ -93,10 +93,10 @@ export default {
       return "?w=" + this.maxWidth;
     },
     sizeSettingMax() {
-      return "?w=1740";
+      return "?w=1920";
     },
     maxWidth() {
-      if (this.fullWidth == true) return "1740";
+      if (this.fullWidth == true) return "1920";
       return "960";
     }
   }

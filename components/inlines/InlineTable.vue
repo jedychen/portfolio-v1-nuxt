@@ -56,7 +56,7 @@
 }
 
 .inline-table--title {
-  vertical-align: 0%;
+  vertical-align: top;
   font-family: "Noto Sans", sans-serif;
   font-size: 16px;
   font-weight: 400;
