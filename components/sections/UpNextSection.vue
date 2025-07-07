@@ -7,7 +7,7 @@
       <v-row no-gutters class="pa-0 ma-0">
         <v-col cols="12 mb-4">
           <h1 class="mt-8 mb-4 up-next-title">
-            Explore related projects
+            Explore more projects
           </h1>
         </v-col>
         <v-col

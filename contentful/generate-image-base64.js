@@ -54,38 +54,61 @@ async function sqipItems() {
 
   console.log("// --------------------------------------------");
 
-  console.log("Downloading Images for Static Website...");
-  const projectConfigurationJson = require(PROJECT_CONFIGURATION_PATH);
-  const projectConfigurationString = JSON.stringify(projectConfigurationJson);
+  console.log("Creating Base64...");
+
+  wait(10000);
+
+  const base64Results = require(BASE64_PATH);
+  const base64Array = base64Results.content;
+  let finishedNumber = 0;
   await Promise.all(
-    images.map(({ url, filename }, index) => {
-      // process.stdout.clearLine();  // clear current text
-      // process.stdout.cursorTo(0);  // move cursor to beginning of line
-      // process.stdout.write(`[${index + 1}/${images.length}] ${filename}`)
+    images.map(async ({ id, filename, filetype }, index) => {
+      if (
+        base64Array.some(item => item.name === filename) &&
+        !RESET_ALL_BASE64_DATA
+      )
+        return;
 
-      // For cover images, download the image and save into the static folder, for flipCardManager to use
-      if (projectConfigurationString.includes(filename.split(".")[0])) {
-        if (!fs.existsSync(STATIC_FOLDER + "/" + filename)) {
-          console.log(`Image ${filename} doesn't exist in static folder`);
-          download(url.replace(/\/\//, "https://"), STATIC_FOLDER, {
-            filename
-          });
-        }
-      }
-
-      // For normal images, download the image with width 1920
-      if (!fs.existsSync(IMAGE_FOLDER + "/" + filename)) {
-        console.log(`Image ${filename} doesn't exist in image folder`);
-        download(url.replace(/\/\//, "https://") + "?w=1920", IMAGE_FOLDER, {
-          filename
-        });
-      }
+      const svgData = await sqip({
+        input: path.join(IMAGE_FOLDER, filename),
+        plugins: [
+          {
+            name: "sqip-plugin-primitive",
+            options: {
+              numberOfPrimitives: 20, //default is 8
+              mode: 0
+            }
+          },
+          {
+            name: "sqip-plugin-blur",
+            options: {
+              blur: 10 //default is 12
+            }
+          },
+          "sqip-plugin-svgo",
+          "sqip-plugin-data-uri"
+        ]
+      });
+      // Debug Info Start: This line below might cause issue. Can remove if needed
+      process.stdout.clearLine(); // clear current text
+      process.stdout.cursorTo(0); // move cursor to beginning of line
+      finishedNumber += 1;
+      process.stdout.write(`[${finishedNumber}/${images.length}] ${filename}`);
+      // Debug Info End
+      base64Array.push({
+        name: filename,
+        data: svgData.metadata.dataURIBase64
+      });
       return;
     })
   );
-  console.log("Images All Downloaded");
+  base64Results.content = base64Array;
 
-  console.log("// --------------------------------------------");
+  console.log("Writing response-base64Generated.json...");
+  await writeFile(path.join(BASE64_PATH), JSON.stringify(base64Results));
+
+  console.log("SVGs created");
+  console.log("// -----------------Image Process All Done------------------");
 }
 
 sqipItems();

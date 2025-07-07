@@ -15,6 +15,13 @@
         height="300"
         class="inline-iframe"
       />
+      <v-img
+        v-if="!isLoaded && content.placeholderImage != null"
+        :src="require(`~/assets/images/${imgSrc(content.placeholderImage)}`)"
+        :lazy-src="imgBase64(content.placeholderImage)"
+        @load="onReady"
+        class="inline-iframe__placeholder"
+      ></v-img>
       <v-btn
         v-if="isLoaded"
         class="mx-2 my-2"
@@ -32,7 +39,7 @@
       <v-btn
         v-if="!isLoaded"
         class="mx-auto my-auto inline-frame__play-button"
-        light
+        dark
         @click.native="playDemo"
         ><v-icon dark>mdi-play</v-icon>&nbsp;Play Demo</v-btn
       >
@@ -81,6 +88,15 @@
   top: 0;
 }
 
+.inline-iframe__placeholder {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  pointer-events: none;
+}
+
 .caption-arrow {
   color: $caption-symbol-color;
 }
@@ -95,6 +111,8 @@
 </style>
 
 <script>
+import imageUtils from "../../assets/js/imageUtils";
+
 export default {
   name: "InlineIframe",
 
@@ -135,6 +153,12 @@ export default {
     stopDemo() {
       document.getElementById(this.content.title + "-iframe").src = "";
       this.isLoaded = false;
+    },
+    imgSrc(image) {
+      return imageUtils.imgSrc(image);
+    },
+    imgBase64(image) {
+      return imageUtils.imgBase64(image);
     }
   },
 

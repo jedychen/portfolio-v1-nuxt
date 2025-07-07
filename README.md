@@ -15,7 +15,8 @@ $ npm install
 # get images only from contentful
 $ nvm use 18
 $ npm install sqip
-$ npm run fetch-images
+$ npm run fetch-images // Download missing images
+$ npm run generate-image-base64 // Generate thumbnail metadata for the missing images
 
 # get content (text and page structure) only from contentful
 $ nvm use 18
@@ -46,17 +47,18 @@ Copy all the content generated in dist/ folder to a desired server.
 
 ### Update Alibaba Server
 In Alibaba server, go to /var/www/html, keep the demo/ folder and google***.html.
-Copy all the content in the local dist/ folder and replace the rest files.
+Copy all the content in the local dist/ folder and replace the rest of files.
 
 ## For Development
 
-All the contentful data is stored locally, including images. (in contentful/)
+- All the contentful data is stored locally, including images. (in contentful/)
 
-Modify component in components/ folder.
+- Modify component in components/ folder.
 
-Modify Three.js landing page in assets/js/ folder or pages/index.vue.
+- Modify Three.js landing page in assets/js/ folder or pages/index.vue.
 
-For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
+For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org) and Vuetify JS documentations.
+
 # portfolio-v1-nuxt
 
 
