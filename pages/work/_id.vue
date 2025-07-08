@@ -27,7 +27,7 @@
         <IntroSection :content="introSectionItem" @ready="calcuPageLength" />
       </v-col>
       <v-col cols="12" order="3" class="up-next-section-col">
-        <UpNextSection :content="upNextSectionItems" />
+        <UpNextSection :projectId="projectId" />
       </v-col>
     </v-row>
   </v-container>
@@ -102,7 +102,7 @@ export default {
       scrollTop: 0, // Scrolling distance to top.
       introSectionItem: {},
       contentSectionItems: [],
-      upNextSectionItems: [],
+      projectId: "",
       sideNavWaypointOffset: 50,
       activeWaypointTitle: ""
     };
@@ -183,9 +183,9 @@ export default {
       // Divide the contentful response by data type
       for (let item of flattenedData) {
         if (item.slug == this.$route.params.id) {
+          this.projectId = item.slug;
           this.introSectionItem = item.introSection;
           this.contentSectionItems = item.contentSections;
-          this.upNextSectionItems = item.otherWork;
           break;
         }
       }

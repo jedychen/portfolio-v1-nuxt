@@ -306,6 +306,10 @@ export default {
       const flattenedData = prettify(this.projects);
       // Divide the contentful response by data type
       this.$store.commit("flipCardStore/setConfigsData", flattenedData[0]);
+      this.$store.commit(
+        "styleStore/setProjectConfigs",
+        flattenedData[0].projects
+      );
       this.projectLinks = flattenedData[0].projects;
     }
   }

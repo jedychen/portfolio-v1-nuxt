@@ -1,5 +1,5 @@
 <template>
-  <v-row v-if="content" class="up-next-section elevation-4 pb-8">
+  <v-row v-if="otherProjects" class="up-next-section elevation-4 pb-8">
     <v-col cols="12" class="pb-0 px-0">
       <v-divider class="secondary" />
     </v-col>
@@ -11,7 +11,7 @@
           </h1>
         </v-col>
         <v-col
-          v-for="project in content"
+          v-for="project in otherProjects"
           :key="project.title"
           cols="12"
           md="4"
@@ -113,14 +113,78 @@
 
 <script>
 import imageUtils from "../../assets/js/imageUtils";
+import contentful from "@/plugins/contentful.js";
+import * as prettify from "pretty-contentful";
 
 export default {
   name: "UpNextSection",
 
   props: {
-    content: {
-      default: null,
-      type: Array
+    projectId: {
+      default: "",
+      type: String
+    }
+  },
+
+  data() {
+    return {
+      projectLinks: []
+    };
+  },
+
+  async mounted() {
+    this.projectLinks = this.$store.getters["styleStore/getProjectConfigs"];
+    if (this.projectLinks == "") {
+      let response = await Promise.all([
+        // fetch all blog posts sorted by creation date
+        contentful.getEntries({
+          content_type: "projectConfigurations",
+          include: 6
+        })
+      ])
+        .then(([result]) => {
+          // return data that should be available
+          // in the template
+          return {
+            projects: result.items
+          };
+        })
+        .catch(console.error);
+      const flattenedData = prettify(response.projects);
+      this.projectLinks = flattenedData[0].projects;
+      // Divide the contentful response by data type
+      this.$store.commit("styleStore/setProjectConfigs", this.projectLinks);
+    }
+  },
+
+  computed: {
+    otherProjects() {
+      let selectedProjects = [];
+
+      if (this.projectLinks.length > 0) {
+        const matchSlug = element => element.slug == this.projectId;
+        let foundNum = 0;
+        let totalProjectNum = this.projectLinks.length;
+        let curProjectIndex = this.projectLinks.findLastIndex(matchSlug);
+        let offset = 1;
+        while (foundNum < 3) {
+          let newOffset = curProjectIndex - offset;
+          if (newOffset >= 0) {
+            foundNum += 1;
+            selectedProjects.push(this.projectLinks[newOffset]);
+            if (foundNum === 3) break;
+          }
+          newOffset = curProjectIndex + offset;
+          if (newOffset <= totalProjectNum - 1) {
+            foundNum += 1;
+            selectedProjects.push(this.projectLinks[newOffset]);
+            if (foundNum === 3) break;
+          }
+          offset += 1;
+        }
+      }
+
+      return selectedProjects;
     }
   },
 
