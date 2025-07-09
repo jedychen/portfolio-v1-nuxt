@@ -2,11 +2,11 @@
   <v-app dark>
     <div class="error-page">
       <div class="error-page__block mb-12">
-        <h1 v-if="error.statusCode === 404" class="text-h2 mx-8 mb-4">
+        <h1 v-if="error.statusCode === 404" class="error-page__title mx-8 mb-4">
           {{ pageNotFound }} &#128575;
         </h1>
-        <h1 v-else class="text-h2 mx-8 mb-4">{{ otherError }} &#129488;</h1>
-        <NuxtLink to="/" class="text-h4 mx-8">
+        <h1 v-else class="error-page__title mx-8 mb-4">{{ otherError }}</h1>
+        <NuxtLink to="/" class="text-h5 mx-8">
           Go back to the home page
         </NuxtLink>
       </div>
@@ -40,6 +40,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.error-page__title {
+  font-family: "Futura-Book", sans-serif;
+  font-size: $font-size-xl-screen-lg;
+  font-weight: $font-weight-regular;
+}
+
 .error-page {
   align-items: center;
   display: flex;

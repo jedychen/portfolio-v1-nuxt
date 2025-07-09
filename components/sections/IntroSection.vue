@@ -79,8 +79,8 @@
 .intro-section__title {
   font-family: "Futura-Book", sans-serif;
   font-size: $font-size-xxl-screen-lg;
-  font-weight: 400;
-  color: white;
+  font-weight: $font-weight-medium;
+  color: $neutral-white;
   line-height: $line-height-sm;
   position: absolute;
   bottom: 0;

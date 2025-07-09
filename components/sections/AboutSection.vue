@@ -122,7 +122,7 @@
 .about-section__title {
   font-family: "Futura-Book", sans-serif;
   font-size: $font-size-lg-screen-sm;
-  font-weight: 500;
+  font-weight: $font-weight-bold;
   line-height: $line-height-sm;
   color: $theme-orange;
 

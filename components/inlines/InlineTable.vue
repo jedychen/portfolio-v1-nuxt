@@ -6,7 +6,7 @@
           <th
             v-for="row in content.rows"
             :key="row.summary"
-            class="font-weight-bold table-cell-first inline-table--title ml-0 pt-4"
+            class="inline-table__title table-cell-first ml-0 pt-4"
           >
             <div v-html="$md.render(row.summary)" class="mt-2 mb-0" />
             <v-divider color="white" class="my-0"></v-divider>
@@ -18,7 +18,7 @@
           <td
             v-for="row in content.rows"
             :key="row.summary"
-            class="font-weight-light inline-table--content pb-4"
+            class="font-weight-light inline-table__content pb-4"
           >
             <div
               v-if="row.content != null"
@@ -37,7 +37,7 @@
   thead {
     background-color: $card-background;
     th {
-      border-bottom: thin solid rgba(255, 255, 255, 0) !important;
+      border-bottom: thin solid rgba($neutral-white, 0) !important;
     }
   }
 
@@ -55,23 +55,20 @@
   }
 }
 
-.inline-table--title {
+.inline-table__title {
   vertical-align: top;
-  font-family: "Noto Sans", sans-serif;
-  font-size: 16px;
-  font-weight: 400;
-  color: white !important;
+
   p {
+    font-weight: $font-weight-bold;
+    font-size: 14px;
     margin-bottom: 6px;
+    color: $neutral-white;
   }
 }
 
-.inline-table--content {
+.inline-table__content {
   vertical-align: top;
   color: $neutral-grey-d;
-  font-family: "Noto Sans", sans-serif;
-  font-size: 12px;
-  font-weight: 400;
 }
 </style>
 

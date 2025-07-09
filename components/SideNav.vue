@@ -61,7 +61,7 @@
   }
 
   .side-nav__list-item-text {
-    font-weight: 300;
+    font-weight: $font-weight-light;
     color: rgba($copy-side-nav, 0.8);
     animation: appear 0.5s ease-in 1s;
     animation-fill-mode: both;
@@ -74,7 +74,7 @@
 
   &.side-nav__list-item-active {
     .side-nav__list-item-text {
-      font-weight: 500;
+      font-weight: $font-weight-medium;
       color: rgba($copy-side-nav, 1);
     }
   }

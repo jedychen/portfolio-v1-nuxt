@@ -38,7 +38,7 @@
               </v-img>
             </v-card>
           </v-hover>
-          <p class="mx-2 my-2 up-next-section__sub-title">
+          <p class="mx-2 my-2 up-next-section__subtitle">
             {{ project.title }}
           </p>
           <!-- tags -->
@@ -68,12 +68,12 @@
     transition: opacity 0.2s ease-in-out;
   }
 
-  .up-next-section__sub-title {
-    color: rgba(255, 255, 255, 0.8);
+  .up-next-section__subtitle {
+    color: rgba($neutral-white, 0.8);
     transition: opacity 0.2s ease-in-out;
     font-family: "Futura-Book", sans-serif;
-    font-size: 1.5rem;
-    font-weight: 400;
+    font-size: 1.8rem;
+    font-weight: $font-weight-regular;
     line-height: $line-height-sm;
   }
 }
@@ -81,7 +81,7 @@
 .up-next-title {
   font-family: "Futura-Book", sans-serif;
   font-size: $font-size-md-screen-lg;
-  font-weight: 800;
+  font-weight: $font-weight-bold;
   line-height: $line-height-sm;
   color: $theme-yellow;
 
@@ -166,22 +166,13 @@ export default {
         let foundNum = 0;
         let totalProjectNum = this.projectLinks.length;
         let curProjectIndex = this.projectLinks.findLastIndex(matchSlug);
-        let offset = 1;
-        while (foundNum < 3) {
-          let newOffset = curProjectIndex - offset;
-          if (newOffset >= 0) {
-            foundNum += 1;
-            selectedProjects.push(this.projectLinks[newOffset]);
-            if (foundNum === 3) break;
-          }
-          newOffset = curProjectIndex + offset;
-          if (newOffset <= totalProjectNum - 1) {
-            foundNum += 1;
-            selectedProjects.push(this.projectLinks[newOffset]);
-            if (foundNum === 3) break;
-          }
-          offset += 1;
-        }
+        let offsetArray = [1, -1, -2];
+        offsetArray.forEach(element => {
+          let offset = curProjectIndex + element;
+          if (offset < 0) offset += totalProjectNum;
+          if (offset >= totalProjectNum) offset -= totalProjectNum;
+          selectedProjects.push(this.projectLinks[offset]);
+        });
       }
 
       return selectedProjects;

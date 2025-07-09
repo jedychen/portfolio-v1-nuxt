@@ -50,7 +50,7 @@
 }
 
 .caption-text {
-  font-weight: 600;
+  font-weight: $font-weight-medium;
   color: $copy-caption;
 
   .caption-dot {

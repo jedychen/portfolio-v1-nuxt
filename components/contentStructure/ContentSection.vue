@@ -41,7 +41,7 @@
 .content-section__title {
   font-family: "Futura-Book", sans-serif;
   font-size: $font-size-md-screen-lg;
-  font-weight: 800;
+  font-weight: $font-weight-bold;
   line-height: $line-height-sm;
   @media #{map-get($display-breakpoints, 'sm-and-down')} {
     font-size: $font-size-md-screen-sm;
@@ -49,7 +49,7 @@
 }
 
 .content-section__subtitle {
-  // color: $theme-orange;
+  color: $neutral-grey-c;
   line-height: $line-height-md;
   width: 60%;
 }

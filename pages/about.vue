@@ -59,7 +59,7 @@
             <!-- Introduction. -->
             <div class="py-6">
               <div
-                class="text-h8 font-weight-light text-justify"
+                class="text-body-1 font-weight-light text-justify"
                 v-html="$md.render(this.content.introduction)"
               />
             </div>
@@ -110,7 +110,7 @@
 .intro__sub-title {
   font-family: "Futura-Book", sans-serif;
   font-size: $font-size-xl-screen-lg;
-  font-weight: 500;
+  font-weight: $font-weight-bold;
   line-height: $line-height-sm;
 
   @media #{map-get($display-breakpoints, 'sm-and-down')} {

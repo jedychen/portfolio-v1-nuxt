@@ -27,7 +27,7 @@
       </v-row>
     </v-container>
     <div class="feature-work__placeholder-links mx-8">
-      <h2 class="text-h3">
+      <h2 class="text-h5">
         Projects:
       </h2>
       <div
@@ -35,7 +35,7 @@
         :key="'project link' + i"
         class="feature-work__placeholder-container my-4"
       >
-        <NuxtLink :to="'/work/' + link.slug" class="text-h4 ">
+        <NuxtLink :to="'/work/' + link.slug" class="text-h5 ">
           {{ link.title }}
         </NuxtLink>
       </div>
