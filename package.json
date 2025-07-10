@@ -9,7 +9,7 @@
     "build": "nuxt build",
     "start": "nuxt start",
     "fetch-all": "node contentful/fetch-content.js & node contentful/fetch-images.js & node contentful/generate-image-base64.js",
-    "fetch-images": "node contentful/fetch-images.js",
+    "fetch-images": "node contentful/fetch-images.js & node contentful/generate-image-base64.js",
     "generate-image-base64": "node contentful/generate-image-base64.js",
     "fetch-content": "node contentful/fetch-content.js",
     "generate": "nuxt generate",

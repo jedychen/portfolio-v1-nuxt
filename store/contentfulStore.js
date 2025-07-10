@@ -1,6 +1,7 @@
 //init store
 export const state = () => ({
-  projectConfigs: ""
+  projectConfigs: "",
+  useLocalData: true
 });
 
 export const getters = {

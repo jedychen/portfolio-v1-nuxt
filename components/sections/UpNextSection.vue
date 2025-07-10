@@ -133,7 +133,9 @@ export default {
   },
 
   async mounted() {
-    this.projectLinks = this.$store.getters["styleStore/getProjectConfigs"];
+    this.projectLinks = this.$store.getters[
+      "contentfulStore/getProjectConfigs"
+    ];
     if (this.projectLinks == "") {
       let response = await Promise.all([
         // fetch all blog posts sorted by creation date
@@ -152,8 +154,10 @@ export default {
         .catch(console.error);
       const flattenedData = prettify(response.projects);
       this.projectLinks = flattenedData[0].projects;
-      // Divide the contentful response by data type
-      this.$store.commit("styleStore/setProjectConfigs", this.projectLinks);
+      this.$store.commit(
+        "contentfulStore/setProjectConfigs",
+        this.projectLinks
+      );
     }
   },
 

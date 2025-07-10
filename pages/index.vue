@@ -138,7 +138,7 @@
 <script>
 import contentful from "@/plugins/contentful.js";
 import * as prettify from "pretty-contentful";
-import { gsap, Elastic, Power4 } from "gsap";
+import { gsap } from "gsap";
 import projectConfigurations from "@/contentful/response-projectConfigurations.json"; // Adjust path as needed
 
 export default {
@@ -149,7 +149,7 @@ export default {
         {
           hid: "Home Page of JedyChen.com",
           name: "Home Page",
-          content: "Entry to all my featured work."
+          content: "A collection of Jedy's featured work."
         }
       ]
     };
@@ -310,7 +310,7 @@ export default {
       // Divide the contentful response by data type
       this.$store.commit("flipCardStore/setConfigsData", flattenedData[0]);
       this.$store.commit(
-        "styleStore/setProjectConfigs",
+        "contentfulStore/setProjectConfigs",
         flattenedData[0].projects
       );
       this.projectLinks = flattenedData[0].projects;
