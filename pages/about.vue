@@ -108,7 +108,7 @@
 
 .intro__title,
 .intro__sub-title {
-  font-family: "Futura-Book", sans-serif;
+  font-family: $title-font-family, sans-serif;
   font-size: $font-size-xl-screen-lg;
   font-weight: $font-weight-medium;
   line-height: $line-height-sm;
@@ -123,7 +123,7 @@
 }
 
 .intro__sub-title {
-  font-family: "Futura-Book", sans-serif;
+  font-family: $title-font-family, sans-serif;
 }
 
 .page-enter-active,

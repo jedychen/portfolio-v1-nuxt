@@ -41,7 +41,7 @@ export default {
 
 <style lang="scss" scoped>
 .error-page__title {
-  font-family: "Futura-Book", sans-serif;
+  font-family: $title-font-family, sans-serif;
   font-size: $font-size-xl-screen-lg;
   font-weight: $font-weight-regular;
 }

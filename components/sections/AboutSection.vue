@@ -120,7 +120,7 @@
 @import "~vuetify/src/styles/settings/_variables"; // For breakpoint specific styles
 
 .about-section__title {
-  font-family: "Futura-Book", sans-serif;
+  font-family: $title-font-family, sans-serif;
   font-size: $font-size-lg-screen-sm;
   font-weight: $font-weight-bold;
   line-height: $line-height-sm;

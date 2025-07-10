@@ -17,11 +17,11 @@ $theme-background-color: #161719;
   background-color: var(--v-background-base, $theme-background-color);
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;600;800&display=swap');
+$title-font-family: 'Futura';
 $body-font-family: 'Noto Sans';
 
 .v-application {
-  font-family: $body-font-family, 'Roboto', sans-serif !important;
+  font-family: $body-font-family, sans-serif !important;
   overflow: hidden; 
 }
 

@@ -71,7 +71,7 @@
   .up-next-section__subtitle {
     color: rgba($neutral-white, 0.8);
     transition: opacity 0.2s ease-in-out;
-    font-family: "Futura-Book", sans-serif;
+    font-family: $title-font-family, sans-serif;
     font-size: 1.8rem;
     font-weight: $font-weight-regular;
     line-height: $line-height-sm;
@@ -79,7 +79,7 @@
 }
 
 .up-next-title {
-  font-family: "Futura-Book", sans-serif;
+  font-family: $title-font-family, sans-serif;
   font-size: $font-size-md-screen-lg;
   font-weight: $font-weight-bold;
   line-height: $line-height-sm;

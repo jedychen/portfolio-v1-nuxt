@@ -1,12 +1,15 @@
 //init store
 export const state = () => ({
   projectConfigs: "",
-  useLocalData: true
+  useLocalData: true // Update here if need to connect to remote Contentful data in real time
 });
 
 export const getters = {
   getProjectConfigs(state) {
     return state.projectConfigs;
+  },
+  getUseLocalData(state) {
+    return state.useLocalData;
   }
 };
 

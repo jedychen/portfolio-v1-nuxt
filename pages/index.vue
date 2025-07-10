@@ -162,12 +162,18 @@ export default {
       loadingFirstPos: 100, // For loading gradience, grey
       loadingSecondPos: 100, // For loading gradience, orange
       loadingThirdPos: 100, // For loading gradience, yellow
-      projectLinks: [], // To hold contentful project data
-      projectsNew: projectConfigurations
+      projectLinks: [] // To hold contentful project data
     };
   },
 
   asyncData({ params }) {
+    // let useLocalData = this.$store.getters["contentfulStore/getUseLocalData"];
+    // console.log(useLocalData);
+    // if (useLocalData) {
+    //   return {
+    //     projects: projectConfigurations.items
+    //   };
+    // }
     return Promise.all([
       // fetch all blog posts sorted by creation date
       contentful.getEntries({
@@ -305,7 +311,7 @@ export default {
       this.$store.commit("flipCardStore/swipeDevice", direction);
     },
     parseContentful() {
-      console.log(this.projectsNew);
+      console.log(this.projects);
       const flattenedData = prettify(this.projects);
       // Divide the contentful response by data type
       this.$store.commit("flipCardStore/setConfigsData", flattenedData[0]);

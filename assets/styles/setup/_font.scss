@@ -1,13 +1,47 @@
 @font-face {
-  font-family: 'Futura-Book';
-  src: url('~@/assets/fonts/Futura-Book.otf') format('font-opentype'),
-  url('~@/assets/fonts/Futura-Book.woff') format('woff'),
-  url('~@/assets/fonts/Futura-Book.ttf') format('truetype');
-}
-
-@font-face {
-  font-family: 'Futura-Light';
+  font-family: 'Futura';
   src: url('~@/assets/fonts/Futura-Light-bt.otf') format('font-opentype'),
   url('~@/assets/fonts/Futura-Light-bt.woff') format('woff'),
   url('~@/assets/fonts/Futura-Light-bt.ttf') format('truetype');
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: 'Futura';
+  src: url('~@/assets/fonts/Futura-Book.otf') format('font-opentype'),
+  url('~@/assets/fonts/Futura-Book.woff') format('woff'),
+  url('~@/assets/fonts/Futura-Book.ttf') format('truetype');
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: 'Noto Sans';
+  src: url('~@/assets/fonts/NotoSans-Light.otf') format('font-opentype'),
+  url('~@/assets/fonts/NotoSans-Light.woff') format('woff'),
+  url('~@/assets/fonts/NotoSans-Light.ttf') format('truetype');
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: 'Noto Sans';
+  src: url('~@/assets/fonts/NotoSans-Regular.otf') format('font-opentype'),
+  url('~@/assets/fonts/NotoSans-Regular.woff') format('woff'),
+  url('~@/assets/fonts/NotoSans-Regular.ttf') format('truetype');
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'Noto Sans';
+  src: url('~@/assets/fonts/NotoSans-Medium.otf') format('font-opentype'),
+  url('~@/assets/fonts/NotoSans-Medium.woff') format('woff'),
+  url('~@/assets/fonts/NotoSans-Medium.ttf') format('truetype');
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: 'Noto Sans';
+  src: url('~@/assets/fonts/NotoSans-Bold.otf') format('font-opentype'),
+  url('~@/assets/fonts/NotoSans-Bold.woff') format('woff'),
+  url('~@/assets/fonts/NotoSans-Bold.ttf') format('truetype');
+  font-weight: 700;
 }
