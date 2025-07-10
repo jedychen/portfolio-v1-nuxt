@@ -28,7 +28,7 @@
         :lazy-src="imgBase64(content.image)"
         @load="onReady"
         @click.stop="dialog = false"
-        class="inline-image"
+        class="inline-image inline-image__dialog"
       />
     </v-dialog>
   </div>
@@ -36,8 +36,12 @@
 
 <style lang="scss" scoped>
 .inline-image {
-  cursor: pointer;
+  cursor: zoom-in;
   align-items: end;
+}
+
+.inline-image.inline-image__dialog {
+  cursor: zoom-out;
 }
 
 .caption-arrow {
@@ -46,6 +50,7 @@
 
 .caption-text {
   color: $copy-caption;
+  font-weight: $font-weight-medium;
 
   .caption-dot {
     color: $copy-caption-dot;

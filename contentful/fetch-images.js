@@ -14,7 +14,7 @@ const CLIENT = contentful.createClient({
 });
 
 const IMAGE_FOLDER = path.join(__dirname, "../assets/images");
-const STATIC_FOLDER = path.join(__dirname, "../static");
+const STATIC_FOLDER = path.join(__dirname, "../static/cover");
 const BASE64_PATH = path.join(
   __dirname,
   "../contentful/response-base64Generated.json"

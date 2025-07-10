@@ -103,6 +103,7 @@
 
 .caption-text {
   color: $copy-caption;
+  font-weight: $font-weight-medium;
 
   .caption-dot {
     color: $copy-caption-dot;

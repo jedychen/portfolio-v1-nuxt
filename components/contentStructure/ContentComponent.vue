@@ -3,7 +3,7 @@
   <div
     v-if="type == 'text'"
     v-html="parsedHtml"
-    class="content__text rich-text-content text-body-1 font-weight-light mb-4 ml-4 mr-md-8 mr-sm-4"
+    class="content__text rich-text-content text-body-1 mb-4 ml-4 mr-md-8 mr-sm-4"
   />
   <InlineImage
     v-else-if="type == 'inlineImage'"
@@ -36,6 +36,7 @@
 .content__text {
   line-height: $line-height-md;
   color: $neutral-grey-c;
+  font-weight: $font-weight-light;
 }
 </style>
 

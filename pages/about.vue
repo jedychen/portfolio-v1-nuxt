@@ -110,7 +110,7 @@
 .intro__sub-title {
   font-family: "Futura-Book", sans-serif;
   font-size: $font-size-xl-screen-lg;
-  font-weight: $font-weight-bold;
+  font-weight: $font-weight-medium;
   line-height: $line-height-sm;
 
   @media #{map-get($display-breakpoints, 'sm-and-down')} {

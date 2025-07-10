@@ -278,7 +278,7 @@ class FlipCardManager {
       const filename = imageUtils.imgSrc(
         this.projectsConfig_.projects[i].coverImage
       );
-      let cardImage = imageLoader.load("/" + filename);
+      let cardImage = imageLoader.load("/cover/" + filename);
       // let cardImage = imageLoader.load(
       //   this.projectsConfig_.projects[i].coverImage.file.url
       // );

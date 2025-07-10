@@ -139,6 +139,7 @@
 import contentful from "@/plugins/contentful.js";
 import * as prettify from "pretty-contentful";
 import { gsap, Elastic, Power4 } from "gsap";
+import projectConfigurations from "@/contentful/response-projectConfigurations.json"; // Adjust path as needed
 
 export default {
   head() {
@@ -161,7 +162,8 @@ export default {
       loadingFirstPos: 100, // For loading gradience, grey
       loadingSecondPos: 100, // For loading gradience, orange
       loadingThirdPos: 100, // For loading gradience, yellow
-      projectLinks: [] // To hold contentful project data
+      projectLinks: [], // To hold contentful project data
+      projectsNew: projectConfigurations
     };
   },
 
@@ -303,6 +305,7 @@ export default {
       this.$store.commit("flipCardStore/swipeDevice", direction);
     },
     parseContentful() {
+      console.log(this.projectsNew);
       const flattenedData = prettify(this.projects);
       // Divide the contentful response by data type
       this.$store.commit("flipCardStore/setConfigsData", flattenedData[0]);
