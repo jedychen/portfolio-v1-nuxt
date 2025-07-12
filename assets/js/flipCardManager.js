@@ -78,7 +78,7 @@ class FlipCardManager {
     this.container_ = null;
     this.aspectRatio_ = 1;
 
-    this.projectsConfig_ = {};
+    this.projectsConfigs_ = {};
     this.projectNum_ = 0;
     this.projectColNum_ = 3;
     this.cardImages_ = []; // Images for each card.
@@ -123,9 +123,9 @@ class FlipCardManager {
     );
     this.raycaster_ = new THREE.Raycaster();
 
-    while (this.projectsConfig_ == null) {}
+    while (this.projectsConfigs_ == null) {}
 
-    this.projectNum_ = this.projectsConfig_.projects.length;
+    this.projectNum_ = this.projectsConfigs_.length;
 
     this.loadCoverImages_();
     this.addEventListeners_();
@@ -148,7 +148,7 @@ class FlipCardManager {
    * @public
    */
   setProjectConfigs(json) {
-    this.projectsConfig_ = json; // Load the Json file from contentful
+    this.projectsConfigs_ = json; // Load the Json file from contentful
   }
 
   /**
@@ -275,9 +275,7 @@ class FlipCardManager {
 
     for (let i = 0; i < this.projectNum_; i++) {
       // 6 cards per project.
-      const filename = imageUtils.imgSrc(
-        this.projectsConfig_.projects[i].coverImage
-      );
+      const filename = imageUtils.imgSrc(this.projectsConfigs_[i].coverImage);
       let cardImage = imageLoader.load("/cover/" + filename);
       // let cardImage = imageLoader.load(
       //   this.projectsConfig_.projects[i].coverImage.file.url
@@ -355,7 +353,7 @@ class FlipCardManager {
     // Set up the flip cards layout.
     if (this.flipCardRender.isInitialized() == false) {
       this.flipCardRender.initializeProjects(
-        this.projectsConfig_,
+        this.projectsConfigs_,
         projectsWidth,
         projectsHeight,
         this.projectColNum_,

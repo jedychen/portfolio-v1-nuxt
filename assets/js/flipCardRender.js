@@ -156,7 +156,7 @@ class FlipCardRender {
 
   /**
    * Set up all the project cards.
-   * @param {JSON} projectsConfig Json data of projects' configs.
+   * @param {JSON} projectsConfigs Json data of projects' configs.
    * @param {number} projectsWidth Width of all the projects.
    * @param {number} projectsHeight Height of all the projects.
    * @param {number} projectColNum Number of colums of projects.
@@ -164,7 +164,7 @@ class FlipCardRender {
    * @public
    */
   initializeProjects(
-    projectsConfig,
+    projectsConfigs,
     projectsWidth,
     projectsHeight,
     projectColNum,
@@ -178,9 +178,7 @@ class FlipCardRender {
       this.CARD_SIZE,
       CONFIGURATION_.cardThickness
     );
-    for (let [index, projectConfig] of this.enumerate(
-      projectsConfig.projects
-    )) {
+    for (let [index, projectConfig] of this.enumerate(projectsConfigs)) {
       this.setupSingleProject_(index, projectConfig, cardImages, geometry);
     }
     this.isInitialized_ = true;

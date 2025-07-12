@@ -110,7 +110,6 @@ export default {
 
   asyncData({ params, payload }) {
     return Promise.all([
-      // fetch all blog posts sorted by creation date
       contentful.getEntries({
         "fields.slug": payload ? payload : params.id,
         content_type: "projectPage",
@@ -118,8 +117,6 @@ export default {
       })
     ])
       .then(([result]) => {
-        // return data that should be available
-        // in the template
         return {
           projects: result.items
         };

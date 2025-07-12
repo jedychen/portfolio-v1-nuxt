@@ -60,7 +60,11 @@
             <div class="py-6">
               <div
                 class="text-body-1 font-weight-light text-justify"
-                v-html="$md.render(this.content.introduction)"
+                v-html="
+                  $md.render(
+                    content.introduction != null ? content.introduction : ''
+                  )
+                "
               />
             </div>
           </v-container>
@@ -138,8 +142,6 @@
 </style>
 
 <script>
-import contentful from "@/plugins/contentful.js";
-import * as prettify from "pretty-contentful";
 import AboutSection from "@/components/sections/AboutSection";
 import imageUtils from "../assets/js/imageUtils";
 
@@ -164,44 +166,19 @@ export default {
   data() {
     return {
       theme_class: "feature-work__container",
-      container: null,
-      content: "",
-      contentSectionItems: []
+      container: null
     };
   },
 
-  asyncData({ params }) {
-    return Promise.all([
-      // fetch all blog posts sorted by creation date
-      contentful.getEntries({
-        content_type: "aboutPage",
-        include: 6
-      })
-    ])
-      .then(([result]) => {
-        // return data that should be available
-        // in the template
-        return {
-          projects: result.items
-        };
-      })
-      .catch(console.error);
-  },
-
-  beforeMount() {
-    this.parseContentful();
+  async asyncData({ store }) {
+    const results = await store.getters["contentfulStore/getAboutPage"];
+    return {
+      content: results[0],
+      contentSectionItems: results[0].contentSections
+    };
   },
 
   methods: {
-    parseContentful() {
-      const flattenedData = prettify(this.projects);
-      // Divide the contentful response by data type
-      for (let item of flattenedData) {
-        this.content = item;
-        this.contentSectionItems = item.contentSections;
-        break;
-      }
-    },
     imgSrc(image) {
       return imageUtils.imgSrc(image);
     },

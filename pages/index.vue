@@ -136,10 +136,7 @@
 </style>
 
 <script>
-import contentful from "@/plugins/contentful.js";
-import * as prettify from "pretty-contentful";
 import { gsap } from "gsap";
-import projectConfigurations from "@/contentful/response-projectConfigurations.json"; // Adjust path as needed
 
 export default {
   head() {
@@ -164,31 +161,6 @@ export default {
       loadingThirdPos: 100, // For loading gradience, yellow
       projectLinks: [] // To hold contentful project data
     };
-  },
-
-  asyncData({ params }) {
-    // let useLocalData = this.$store.getters["contentfulStore/getUseLocalData"];
-    // console.log(useLocalData);
-    // if (useLocalData) {
-    //   return {
-    //     projects: projectConfigurations.items
-    //   };
-    // }
-    return Promise.all([
-      // fetch all blog posts sorted by creation date
-      contentful.getEntries({
-        content_type: "projectConfigurations",
-        include: 6
-      })
-    ])
-      .then(([result]) => {
-        // return data that should be available
-        // in the template
-        return {
-          projects: result.items
-        };
-      })
-      .catch(console.error);
   },
 
   computed: {
@@ -232,13 +204,15 @@ export default {
     }
   },
 
-  beforeMount() {
-    this.parseContentful();
-  },
-
-  mounted() {
+  async mounted() {
     // Jedy: Password Disabled
     // this.$passwordProtect.removeAuthorisation()
+    // 1. Pull contentful and assign to project links
+    this.projectLinks = await this.$store.getters[
+      "contentfulStore/getProjectConfigurations"
+    ];
+    // 2. Create the WebGL Animation
+    this.$store.commit("flipCardStore/setConfigsData", this.projectLinks);
     this.container = document.querySelector(".feature-work__container");
     this.detectWebGL();
     this.$store.commit(
@@ -309,17 +283,6 @@ export default {
     },
     swipe(direction) {
       this.$store.commit("flipCardStore/swipeDevice", direction);
-    },
-    parseContentful() {
-      console.log(this.projects);
-      const flattenedData = prettify(this.projects);
-      // Divide the contentful response by data type
-      this.$store.commit("flipCardStore/setConfigsData", flattenedData[0]);
-      this.$store.commit(
-        "contentfulStore/setProjectConfigs",
-        flattenedData[0].projects
-      );
-      this.projectLinks = flattenedData[0].projects;
     }
   }
 };

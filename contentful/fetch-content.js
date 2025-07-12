@@ -10,7 +10,7 @@ var url =
   "/entries?access_token=" +
   process.env.CONTENTFUL_ACCESS_TOKEN;
 
-var aboutPageUrl = url + "&content_type=aboutPage";
+var aboutPageUrl = url + "&content_type=aboutPage&include=6";
 var projectPageUrl = url + "&content_type=projectPage";
 var projectConfigurationUrl = url + "&content_type=projectConfiguration";
 var projectConfigurationsUrl = url + "&content_type=projectConfigurations";

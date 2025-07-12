@@ -113,8 +113,6 @@
 
 <script>
 import imageUtils from "../../assets/js/imageUtils";
-import contentful from "@/plugins/contentful.js";
-import * as prettify from "pretty-contentful";
 
 export default {
   name: "UpNextSection",
@@ -133,32 +131,9 @@ export default {
   },
 
   async mounted() {
-    this.projectLinks = this.$store.getters[
-      "contentfulStore/getProjectConfigs"
+    this.projectLinks = await this.$store.getters[
+      "contentfulStore/getProjectConfigurations"
     ];
-    if (this.projectLinks == "") {
-      let response = await Promise.all([
-        // fetch all blog posts sorted by creation date
-        contentful.getEntries({
-          content_type: "projectConfigurations",
-          include: 6
-        })
-      ])
-        .then(([result]) => {
-          // return data that should be available
-          // in the template
-          return {
-            projects: result.items
-          };
-        })
-        .catch(console.error);
-      const flattenedData = prettify(response.projects);
-      this.projectLinks = flattenedData[0].projects;
-      this.$store.commit(
-        "contentfulStore/setProjectConfigs",
-        this.projectLinks
-      );
-    }
   },
 
   computed: {
