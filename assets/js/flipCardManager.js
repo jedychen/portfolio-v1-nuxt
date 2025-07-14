@@ -11,10 +11,10 @@ const path = require("path");
  * @private
  */
 const BREAKPOINTS_ = {
-  xs: 600,
-  sm: 960,
-  md: 1264,
-  lg: 1904
+  xs: 340,
+  sm: 540,
+  md: 800,
+  lg: 1280
 };
 
 /**
@@ -32,7 +32,8 @@ const CAMERA_DISTANCE_ = {
  * @private
  */
 const CONFIGURATION_ = {
-  swipeSpeed: 400 // Speed of vertically swipping screen on mobile.
+  swipeSpeed: 400, // Speed of vertically swipping screen on mobile.
+  renderFrequency: 2 // Render in every (n+1) frames
 };
 
 /**
@@ -68,7 +69,7 @@ class FlipCardManager {
     this.isInitialized_ = false;
     this.cameraY_ = 0;
     this.cameraZ_ = 0;
-    this.intersectedObject_ = null; // Intersected object with raycaster.
+    this.curIntersectedCard_ = null; // Intersected object with raycaster.
     this.projectClicked_ = false;
     this.loadingProgress_ = 0;
     this.url_ = "";
@@ -82,6 +83,9 @@ class FlipCardManager {
     this.projectNum_ = 0;
     this.projectColNum_ = 3;
     this.cardImages_ = []; // Images for each card.
+
+    // Delay rendering
+    this.renderCount_ = 0;
   }
 
   // Main public functions
@@ -122,11 +126,7 @@ class FlipCardManager {
       this.container_.clientHeight
     );
     this.raycaster_ = new THREE.Raycaster();
-
-    while (this.projectsConfigs_ == null) {}
-
     this.projectNum_ = this.projectsConfigs_.length;
-
     this.loadCoverImages_();
     this.addEventListeners_();
   }
@@ -177,15 +177,6 @@ class FlipCardManager {
   // }
 
   /**
-   * Set if the canvas is rendering.
-   * @param {boolean} render True if rendering the canvas.
-   * @public
-   */
-  setRendering(render) {
-    this.isRendering_ = render;
-  }
-
-  /**
    * Call when need to transition away to another vue view.
    * @public
    */
@@ -221,45 +212,43 @@ class FlipCardManager {
       return;
     }
 
-    // Update the picking ray with the camera and mouse position.
-    this.raycaster_.setFromCamera(this.mouse_, this.camera_);
+    if (this.renderCount_ < CONFIGURATION_.renderFrequency) {
+      this.renderCount_++;
+    } else {
+      // When this.renderCount_ == CONFIGURATION_.renderInterval
+      this.renderCount_ = 0;
 
-    // Calculate objects intersecting the picking ray.
-    const intersects = this.raycaster_.intersectObjects(this.group_.children);
+      // Update the picking ray with the camera and mouse position.
+      this.raycaster_.setFromCamera(this.mouse_, this.camera_);
 
-    let intersectCard = false;
+      // Calculate objects intersecting the picking ray.
+      const intersects = this.raycaster_.intersectObjects(this.group_.children);
 
-    // 1. When there is a ray intersection.
-    if (intersects.length > 0) {
-      // 1.1. When the mouse is moving on a new card.
-      if (this.intersectedObject_ != intersects[0].object) {
-        // 1.1.1. Previous card should continue its flipping animation.
-        if (this.flipCardRender.isCard(this.intersectedObject_)) {
-          this.flipCardRender.continueFlip(this.intersectedObject_);
+      let intersectCard = false;
+
+      // When there is a ray intersection.
+      if (intersects.length > 0) {
+        // 1. When the mouse is moving on a new card.
+        if (this.curIntersectedCard_ != intersects[0].object) {
+          // New card should start its flipping animation from begining.
+          if (this.flipCardRender.isCard(intersects[0].object)) {
+            this.curIntersectedCard_ = intersects[0].object;
+            this.flipCardRender.startFlip(this.curIntersectedCard_);
+            intersectCard = true;
+          }
         }
-        // 1.1.2. New card should start its flipping animation from begining.
-        if (this.flipCardRender.isCard(intersects[0].object)) {
+        // 2. When the mouse is focusing on one single card.
+        else if (this.curIntersectedCard_ != null) {
+          // The current card holds on the flipped status (text canvas).
+          this.flipCardRender.holdFlip(this.curIntersectedCard_);
           intersectCard = true;
-          this.flipCardRender.startFlip(intersects[0].object);
         }
-        this.intersectedObject_ = intersects[0].object;
       }
-      // 1.2. When the mouse is focusing on one single card.
-      else if (this.flipCardRender.isCard(this.intersectedObject_)) {
-        // The current card holds on the flipped status (text canvas).
-        intersectCard = true;
-        this.flipCardRender.holdFlip(this.intersectedObject_);
-      }
-      // 1.3. Else omitted... When the mouse is focusing on a none card, do nothing.
-    }
-    // 2. When no intersection, the current card just continues its flipping animation.
-    else if (this.flipCardRender.isCard(this.intersectedObject_)) {
-      this.flipCardRender.continueFlip(this.intersectedObject_);
-    }
 
-    document.documentElement.style.cursor = intersectCard
-      ? "pointer"
-      : "default";
+      document.documentElement.style.cursor = intersectCard
+        ? "pointer"
+        : "default";
+    }
 
     this.renderer_.render(this.scene_, this.camera_);
   }
@@ -389,22 +378,18 @@ class FlipCardManager {
       case clientWidth < BREAKPOINTS_.xs * this.devicePixelRatio_:
         this.projectColNum_ = 1;
         this.cameraZ_ = CAMERA_DISTANCE_.single / this.aspectRatio_;
-        // console.log("Screen size: xs");
         break;
       case clientWidth < BREAKPOINTS_.sm * this.devicePixelRatio_:
         this.projectColNum_ = 2;
         this.cameraZ_ = CAMERA_DISTANCE_.double / this.aspectRatio_;
-        // console.log("Screen size: sm");
         break;
       case clientWidth < BREAKPOINTS_.md * this.devicePixelRatio_:
         this.projectColNum_ = 3;
         this.cameraZ_ = CAMERA_DISTANCE_.triple / this.aspectRatio_;
-        // console.log("Screen size: md");
         break;
       default:
         this.projectColNum_ = 3;
         this.cameraZ_ = CAMERA_DISTANCE_.triple / this.aspectRatio_;
-        // console.log("Screen size: default");
         break;
     }
   }
@@ -440,12 +425,10 @@ class FlipCardManager {
    * @private
    */
   addEventListeners_() {
-    this.container_.addEventListener(
-      "wheel",
-      this.scrollDevice_.bind(this),
-      false
-    );
-
+    this.container_.addEventListener("wheel", this.scrollDevice_.bind(this), {
+      capture: true,
+      passive: true
+    });
     this.container_.addEventListener(
       "mousemove",
       this.onMouseMove_.bind(this),
@@ -511,7 +494,7 @@ class FlipCardManager {
       changedPosY = -this.cameraY_ + this.CAMERA_BOTTOM_MARGIN;
     this.hammerSwipe = gsap.to(this.camera_.position, {
       duration: 0.5,
-      ease: "power1.out",
+      ease: Elastic.easeOut,
       y: changedPosY
     });
   }
@@ -525,7 +508,7 @@ class FlipCardManager {
     if (changedPosY >= this.cameraY_) changedPosY = this.cameraY_;
     this.hammerSwipe = gsap.to(this.camera_.position, {
       duration: 0.5,
-      ease: "power1.out",
+      ease: Elastic.easeOut,
       y: changedPosY
     });
   }
@@ -558,36 +541,13 @@ class FlipCardManager {
       intersects.length > 0 &&
       this.flipCardRender.isCard(intersects[0].object)
     ) {
-      this.intersectedObject_ = intersects[0].object;
-      this.flipCardRender.transitionAway(this.intersectedObject_);
-      this.url_ = this.flipCardRender.getUrl(this.intersectedObject_);
+      this.curIntersectedCard_ = intersects[0].object;
+      this.flipCardRender.transitionAway(this.curIntersectedCard_);
+      this.url_ = this.flipCardRender.getUrl(this.curIntersectedCard_);
       // Jedy: Password Disabled
       // this.passwordProtected_ = this.flipCardRender.getPasswordProtectionState(this.intersectedObject_);
       this.projectClicked_ = true;
     }
-  }
-
-  // Utilities
-
-  /**
-   * @private
-   */
-  isMobile_() {
-    return this.DEVICE_ == DEVICE_.MOBILE;
-  }
-
-  /**
-   * @private
-   */
-  isTablet_() {
-    return this.DEVICE_ == DEVICE_.TABLET;
-  }
-
-  /**
-   * @private
-   */
-  isDesktop_() {
-    return this.DEVICE_ == DEVICE_.DESKTOP;
   }
 }
 

@@ -11,8 +11,7 @@ var url =
   process.env.CONTENTFUL_ACCESS_TOKEN;
 
 var aboutPageUrl = url + "&content_type=aboutPage&include=6";
-var projectPageUrl = url + "&content_type=projectPage";
-var projectConfigurationUrl = url + "&content_type=projectConfiguration";
+var projectPageUrl = url + "&content_type=projectPage&include=6";
 var projectConfigurationsUrl = url + "&content_type=projectConfigurations";
 request(url, function(error, response, body) {
   if (!error && response.statusCode == 200) {
@@ -30,12 +29,6 @@ request(projectPageUrl, function(error, response, body) {
   if (!error && response.statusCode == 200) {
     var data = JSON.stringify(JSON.parse(body)); // curTemp holds the value we want
     writeFile(path.join("contentful/response-projectPage.json"), data);
-  }
-});
-request(projectConfigurationUrl, function(error, response, body) {
-  if (!error && response.statusCode == 200) {
-    var data = JSON.stringify(JSON.parse(body)); // curTemp holds the value we want
-    writeFile(path.join("contentful/response-projectConfiguration.json"), data);
   }
 });
 request(projectConfigurationsUrl, function(error, response, body) {

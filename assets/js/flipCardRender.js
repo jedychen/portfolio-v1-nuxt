@@ -131,15 +131,6 @@ class FlipCardRender {
   }
 
   /**
-   * Continue the flipping animation.
-   * @param {THREE.Mesh} element Card element.
-   * @public
-   */
-  continueFlip(element) {
-    element.flip.play();
-  }
-
-  /**
    * Hold the flipping animation to the 50% progress.
    * @param {THREE.Mesh} element Card element.
    * @public
@@ -147,7 +138,7 @@ class FlipCardRender {
   holdFlip(element) {
     if (element.flip.progress() >= 0.5) {
       element.flip.tweenTo(2, {
-        ease: Power4.easeOut
+        ease: Elastic.easeOut
       });
     }
   }
@@ -529,7 +520,7 @@ class FlipCardRender {
       // Flips back the cards that are turned around.
       if (card.flip.progress != 1.0) {
         let config_flip_back = {
-          ease: Power4.easeOut,
+          ease: Elastic.easeOut,
           duration: 0.5
         };
         config_flip_back[card.rotateAxis] = 0;
@@ -574,7 +565,7 @@ class FlipCardRender {
     }
     for (let card of this.cards_) {
       let config_fade = {
-        ease: Power4.easeOut,
+        ease: Elastic.easeOut,
         duration: 1,
         opacity: 1
       };

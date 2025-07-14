@@ -64,8 +64,6 @@ body::-webkit-scrollbar {
 </style>
 
 <script>
-import contentful from "@/plugins/contentful.js";
-import * as prettify from "pretty-contentful";
 import debounce from "lodash/debounce";
 import SideNav from "@/components/SideNav";
 import IntroSection from "@/components/sections/IntroSection";
@@ -100,35 +98,30 @@ export default {
     return {
       pageLength: 0, // Page's total length.
       scrollTop: 0, // Scrolling distance to top.
-      introSectionItem: {},
-      contentSectionItems: [],
-      projectId: "",
       sideNavWaypointOffset: 50,
       activeWaypointTitle: ""
     };
   },
 
-  asyncData({ params, payload }) {
-    return Promise.all([
-      contentful.getEntries({
-        "fields.slug": payload ? payload : params.id,
-        content_type: "projectPage",
-        include: 6
-      })
-    ])
-      .then(([result]) => {
-        return {
-          projects: result.items
-        };
-      })
-      .catch(console.error);
+  async asyncData({ store, route }) {
+    const response = await store.getters["contentfulStore/getProjectPage"](
+      route.params.id
+    );
+    if (response.slug == route.params.id) {
+      return {
+        projectId: response.slug,
+        introSectionItem: response.introSection,
+        contentSectionItems: response.contentSections
+      };
+    }
+    return {
+      introSectionItem: {},
+      contentSectionItems: [],
+      projectId: ""
+    };
   },
 
-  beforeMount() {
-    this.parseContentful();
-  },
-
-  mounted() {
+  async mounted() {
     this.calcuPageLength();
   },
 
@@ -174,18 +167,6 @@ export default {
     },
     clamp(num, min, max) {
       return num <= min ? min : num >= max ? max : num;
-    },
-    parseContentful() {
-      const flattenedData = prettify(this.projects);
-      // Divide the contentful response by data type
-      for (let item of flattenedData) {
-        if (item.slug == this.$route.params.id) {
-          this.projectId = item.slug;
-          this.introSectionItem = item.introSection;
-          this.contentSectionItems = item.contentSections;
-          break;
-        }
-      }
     }
   }
 };
