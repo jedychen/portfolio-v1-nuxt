@@ -90,7 +90,8 @@ export default {
   vuetify: {
     treeShake: true,
     customVariables: ["~/assets/styles/_vuetifyvariables.scss"],
-    frameworkOptions: "./vuetify.options.js"
+    frameworkOptions: "./vuetify.options.js",
+    defaultAssets: false
   },
   /*
    ** password page protection configuration
