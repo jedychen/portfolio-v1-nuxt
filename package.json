@@ -44,6 +44,7 @@
     "nuxt-password-protect": "^1.0.6",
     "pretty-contentful": "^1.0.1",
     "raw-loader": "^4.0.2",
+    "request": "^2.88.2",
     "sharp": "^0.33.5",
     "sqip": "^1.0.0-alpha.51",
     "sqip-plugin-blur": "^1.0.0-alpha.53",
@@ -63,7 +64,6 @@
     "babel-jest": "^26.6.1",
     "jest": "^26.6.1",
     "sass": "~1.32.12",
-    "sass-loader": "^10.1.1",
     "vue-jest": "^4.0.0-rc.0"
   }
 }

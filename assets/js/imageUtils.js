@@ -8,6 +8,13 @@ export default {
     var imageName = id.split("/")[1] + "." + url.split(".").pop();
     return imageName;
   },
+  imgSrcCover(image) {
+    //return url+sizeSettingMax();
+    var url = image.file.url;
+    var id = url.replace("//images.ctfassets.net/", "");
+    var imageName = id.split("/")[1] + "." + url.split(".").pop();
+    return "cover/" + imageName;
+  },
   imgBase64(image) {
     //return url+sizeSettingMax();
     var fileName = this.imgSrc(image);

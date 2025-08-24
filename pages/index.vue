@@ -1,132 +1,141 @@
 <template>
-  <div
-    class="feature-work__container"
-    ref="container"
-    :class="{
-      'loading-in-progress': loadingProgress < 100,
-      'loading-completed': loadingProgress >= 100
-    }"
-  >
-    <div
-      id="threejs-container"
-      v-touch="{
-        left: () => swipe('Left'),
-        right: () => swipe('Right'),
-        up: () => swipe('Up'),
-        down: () => swipe('Down')
-      }"
-    />
-    <v-container class="loading__container">
-      <v-row class="fill-height" align-content="center" justify="center">
-        <div class="loading-circle__container">
-          <span
-            class="loading-circle"
-            :style="{ backgroundImage: tweenedGradienceColor }"
-          />
-        </div>
-      </v-row>
-    </v-container>
-    <div class="feature-work__placeholder-links mx-8">
-      <h2 class="text-h5">
-        Projects:
-      </h2>
-      <div
+  <div class="feature-work__container mt-16" ref="container">
+    <v-row no-gutters>
+      <v-col
+        cols="12"
+        md="4"
+        sm="6"
         v-for="(link, i) in projectLinks"
         :key="'project link' + i"
-        class="feature-work__placeholder-container my-4"
       >
-        <NuxtLink :to="'/work/' + link.slug" class="text-h5 ">
-          {{ link.title }}
+        <NuxtLink :to="'/work/' + link.slug">
+          <v-row no-gutters>
+            <v-col cols="4" v-for="index in 6" :key="index + link.title">
+              <div class="flip-card">
+                <div class="flip-card-inner">
+                  <div
+                    class="flip-card-front flip-card_cover-image"
+                    :style="
+                      'background-image: url(' +
+                        getImageSrc(link) +
+                        '); background-position:' +
+                        ((index - 1) % 3) * 50 +
+                        '% ' +
+                        Math.floor((index - 1) / 3) * 100 +
+                        '%;'
+                    "
+                  ></div>
+                  <div
+                    class="flip-card-back pl-4 pt-4"
+                    :style="'background-color:' + getThemeColor(link) + ';'"
+                  >
+                    <h5 class="flip-card-back_title">
+                      {{ parseKeywordTitle(link.keyWords[index - 1]) }}
+                    </h5>
+                    <p
+                      class="flip-card-back_content"
+                      v-for="description in parseKeywordContent(
+                        link.keyWords[index - 1]
+                      )"
+                      :key="description"
+                    >
+                      {{ description }}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </v-col>
+          </v-row>
         </NuxtLink>
-      </div>
-    </div>
+      </v-col>
+    </v-row>
   </div>
 </template>
 
 <style lang="scss" scoped>
-.feature-work__container {
-  align-items: center;
-  display: flex;
-  height: 100vh;
-  justify-content: center;
-  opacity: 1;
-  visibility: visible;
-  width: 100vw;
+@import "~vuetify/src/styles/settings/_variables"; // For breakpoint specific styles
 
-  &.loading-completed {
-    .loading__container {
-      visibility: hidden;
+/* The flip card container - set the width and height to whatever you want. We have added the border property to demonstrate that the flip itself goes out of the box on hover (remove perspective if you don't want the 3D effect */
+.flip-card {
+  background-color: transparent;
+  perspective: 1000px; /* Remove this if you don't want the 3D effect */
 
-      .loading-circle {
-        opacity: 0;
-      }
-    }
-
-    #threejs-container {
-      opacity: 1;
-    }
+  @media #{map-get($display-breakpoints, 'md-and-up')} {
+    width: 11.11111vw;
+    height: 11.11111vw;
   }
 
-  &.loading-in-progress {
-    .loading__container {
-      visibility: visible;
-    }
+  @media #{map-get($display-breakpoints, 'sm-and-down')} {
+    width: 16.66666vw;
+    height: 16.66666vw;
   }
 
-  &.project-clicked {
-    opacity: 0;
-    visibility: hidden;
-    transition: all 1s ease;
-    transition-delay: 1.5s;
+  @media #{map-get($display-breakpoints, 'xs-only')} {
+    width: 33.33333vw;
+    height: 33.33333vw;
   }
 }
 
-.feature-work__placeholder-links {
-  position: absolute;
-  left: 0;
-  align-items: center;
-  z-index: -1;
-  visibility: hidden;
+.flip-card_cover-image {
+  background-size: cover;
+  background-size: 300% 200%;
 }
 
-#threejs-container {
+/* This container is needed to position the front and back side */
+.flip-card-inner {
+  position: relative;
+  width: 100%;
   height: 100%;
-  opacity: 0;
+  text-align: center;
+  transition: transform 0.5s;
+  transform-style: preserve-3d;
+}
+
+/* Do an horizontal flip when you move the mouse over the flip box container */
+.flip-card:hover .flip-card-inner {
+  transform: rotateX(180deg);
+}
+
+/* Position the front and back side */
+.flip-card-front,
+.flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden; /* Safari */
+  backface-visibility: hidden;
+  text-align: left;
+}
+
+/* Style the front side (fallback if image is missing) */
+.flip-card-front {
+  background-color: #bbb;
+  color: black;
+}
+
+/* Style the back side */
+.flip-card-back {
+  color: white;
+  transform: rotateX(180deg);
+}
+
+.flip-card-back_title {
+  font-family: $body-font-family, sans-serif;
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.flip-card-back_content {
+  font-family: $body-font-family, sans-serif;
+  font-size: 16px;
   padding: 0;
   margin: 0;
-  transition: all 1s ease;
-  transition-delay: 0.5s;
-  width: 100%;
-}
-
-.loading-circle__container {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.loading-circle {
-  height: 100px;
-  width: 100px;
-  border-radius: 50%;
-  display: inline-block;
-}
-
-.loading__container {
-  position: fixed;
-  visibility: hidden;
-
-  .loading-circle {
-    opacity: 1;
-    transition: all 0.5s ease;
-    animation-delay: 0.3s;
-  }
 }
 
 .page-enter-active,
 .page-leave-active {
   transition: opacity 0.5s;
+  transition-timing-function: ease-in-out;
 }
 
 .page-enter,
@@ -136,8 +145,7 @@
 </style>
 
 <script>
-import { gsap } from "gsap";
-
+import imageUtils from "../assets/js/imageUtils";
 export default {
   head() {
     return {
@@ -156,133 +164,48 @@ export default {
     return {
       theme_class: "feature-work__container",
       container: null,
-      loadingFirstPos: 100, // For loading gradience, grey
-      loadingSecondPos: 100, // For loading gradience, orange
-      loadingThirdPos: 100, // For loading gradience, yellow
       projectLinks: [] // To hold contentful project data
     };
   },
 
-  computed: {
-    loadingProgress() {
-      return this.$store.getters["flipCardStore/getLoadingProgress"];
-    },
-    clickedProject() {
-      return this.$store.getters["flipCardStore/getClickedProject"];
-    },
-    tweenedGradienceColor() {
-      return `linear-gradient(180deg, rgba(88, 78, 87, 1) ${this.loadingFirstPos}%, rgba(183, 75, 65, 1) ${this.loadingSecondPos}%, rgba(248, 136, 38, 1) ${this.loadingThirdPos}%)`;
-    }
-  },
+  computed: {},
 
   watch: {
-    loadingProgress(value) {
-      const firstPos = (100 - value) * 1 - 50;
-      const secondPos = (100 - value) * 1;
-      const thirdPos = 100;
-      // Tween the gradience position to make the loading animation smoother
-      gsap.to(this.$data, {
-        duration: 1,
-        loadingFirstPos: firstPos,
-        loadingSecondPos: secondPos,
-        loadingThirdPos: thirdPos
-      });
-    },
     clickedProject(value) {
       if (value != "") {
         this.container.classList.add("project-clicked");
-        // Jedy: Password Disabled
-        // let passwordProtectionState = this.$store.getters[
-        //   "flipCardStore/getPasswordProtectionState"
-        // ];
-        // this.$store.commit(
-        //   "passwordStore/setProtectionState",
-        //   passwordProtectionState
-        // );
         this.$router.push({ path: `/work/${value}` });
       }
     }
   },
 
   async mounted() {
-    // Jedy: Password Disabled
-    // this.$passwordProtect.removeAuthorisation()
-    // 1. Pull contentful and assign to project links
     this.projectLinks = await this.$store.getters[
       "contentfulStore/getProjectConfigurations"
     ];
-    // 2. Create the WebGL Animation
-    this.$store.commit("flipCardStore/setConfigsData", this.projectLinks);
-    this.container = document.querySelector(".feature-work__container");
-    this.detectWebGL();
-    this.$store.commit(
-      "flipCardStore/init",
-      document.querySelector("#threejs-container")
-    );
   },
 
   methods: {
-    detectWebGL() {
-      /* https://threejs.org/examples/js/Detector.js */
-      const Detector = {
-        canvas: !!window.CanvasRenderingContext2D,
-        webgl: (function() {
-          try {
-            var e = document.createElement("canvas");
-            return (
-              !!window.WebGLRenderingContext &&
-              (e.getContext("webgl") || e.getContext("experimental-webgl"))
-            );
-          } catch (t) {
-            return false;
-          }
-        })(),
-        workers: !!window.Worker,
-        fileapi:
-          window.File && window.FileReader && window.FileList && window.Blob,
-        getWebGLErrorMessage: function() {
-          var e = document.createElement("div");
-          e.id = "webgl-error-message";
-          e.style.fontFamily = "monospace";
-          e.style.fontSize = "13px";
-          e.style.fontWeight = "normal";
-          e.style.textAlign = "center";
-          e.style.background = "#fff";
-          e.style.color = "#000";
-          e.style.padding = "1.5em";
-          e.style.width = "400px";
-          e.style.margin = "5em auto 0";
-          if (!this.webgl) {
-            e.innerHTML = window.WebGLRenderingContext
-              ? [
-                  'Your graphics card does not seem to support <a href="http://khronos.org/webgl/wiki/Getting_a_WebGL_Implementation" style="color:#000">WebGL</a>.<br />',
-                  'Find out how to get it <a href="http://get.webgl.org/" style="color:#000">here</a>.'
-                ].join("\n")
-              : [
-                  'Your browser does not seem to support <a href="http://khronos.org/webgl/wiki/Getting_a_WebGL_Implementation" style="color:#000">WebGL</a>.<br/>',
-                  'Find out how to get it <a href="http://get.webgl.org/" style="color:#000">here</a>.'
-                ].join("\n");
-            document.querySelector(
-              ".feature-work__placeholder-links"
-            ).style.visibility = "visible";
-          }
-          return e;
-        },
-        addGetWebGLMessage: function(e) {
-          var t, n, r;
-          e = e || {};
-          t = e.parent !== undefined ? e.parent : document.body;
-          n = e.id !== undefined ? e.id : "oldie";
-          r = Detector.getWebGLErrorMessage();
-          r.id = n;
-          t.appendChild(r);
-        }
-      };
-      const script = document.createElement("script");
-      if (!Detector.webgl) Detector.addGetWebGLMessage();
+    getImageSrc(link) {
+      return imageUtils.imgSrcCover(link.coverImage);
     },
-    swipe(direction) {
-      this.$store.commit("flipCardStore/swipeDevice", direction);
+    getThemeColor(link) {
+      return link.themeColor;
+    },
+    parseKeywordTitle(keyword) {
+      const contentArray = keyword.split(":");
+      if (contentArray.length > 1) {
+        return contentArray[0];
+      }
+      return "";
+    },
+    parseKeywordContent(keyword) {
+      const contentArray = keyword.split(":");
+      if (contentArray.length > 1) {
+        let title = contentArray[0];
+        return keyword.replace(title + ":", "").split(",");
+      }
+      return keyword.split(",");
     }
   }
 };

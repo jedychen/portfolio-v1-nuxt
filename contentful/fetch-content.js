@@ -13,6 +13,7 @@ var url =
 var aboutPageUrl = url + "&content_type=aboutPage&include=6";
 var projectPageUrl = url + "&content_type=projectPage&include=6";
 var projectConfigurationsUrl = url + "&content_type=projectConfigurations";
+var projectConfigurationUrl = url + "&content_type=projectConfiguration";
 request(aboutPageUrl, function(error, response, body) {
   if (!error && response.statusCode == 200) {
     var data = JSON.stringify(JSON.parse(body));
@@ -23,6 +24,12 @@ request(projectPageUrl, function(error, response, body) {
   if (!error && response.statusCode == 200) {
     var data = JSON.stringify(JSON.parse(body));
     writeFile(path.join("contentful/response-projectPage.json"), data);
+  }
+});
+request(projectConfigurationUrl, function(error, response, body) {
+  if (!error && response.statusCode == 200) {
+    var data = JSON.stringify(JSON.parse(body));
+    writeFile(path.join("contentful/response-projectConfiguration.json"), data);
   }
 });
 request(projectConfigurationsUrl, function(error, response, body) {
