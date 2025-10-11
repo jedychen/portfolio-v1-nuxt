@@ -8,7 +8,7 @@ import contentful from "@/plugins/contentful.js";
 //init store
 export const state = () => ({
   cachedProjectConfigs: "",
-  useLocalData: false // Update here if need to connect to remote Contentful data in real time
+  useLocalData: true // Update here if need to connect to remote Contentful data in real time
 });
 
 export const getters = {

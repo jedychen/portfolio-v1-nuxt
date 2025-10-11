@@ -4,46 +4,42 @@
     :scroll-target="contentId"
     class="header-bar header-bar__bg"
   >
-    <v-row no-gutters>
-      <v-col cols="12">
-        <v-row class="ml-lg-16 mr-lg-11 ml-md-4 mr-md-0 ml-sm-2">
-          <v-col cols="6" sm="6" md="4" align-self="center">
-            <nuxt-link to="/" class="header__link">
-              <v-toolbar-title class="header__title d-none d-sm-flex">
-                JEDY CHEN
-              </v-toolbar-title>
-              <v-toolbar-title class="header__title d-xs-flex d-sm-none">
-                JEDY
-              </v-toolbar-title>
-            </nuxt-link>
-          </v-col>
-          <v-spacer></v-spacer>
-          <v-col cols="6" sm="4" md="3" lg="2" align-self="center">
-            <nuxt-link
-              to="/about"
-              exact
-              exact-active-class="header-link--active"
-              class="header-link"
-            >
-              <v-btn text nuxt :ripple="false" class="font-weight-light">
-                About
-              </v-btn>
-            </nuxt-link>
-            <nuxt-link
-              to="/"
-              exact
-              exact-active-class="header-link--active"
-              :class="{
-                'header-link--active nuxt-link-active': isRouteActive('work')
-              }"
-              class="header-link"
-            >
-              <v-btn text nuxt :ripple="false" class="font-weight-light">
-                Work
-              </v-btn>
-            </nuxt-link>
-          </v-col>
-        </v-row>
+    <v-row no-gutters class="ml-lg-16 mr-lg-11 ml-md-4 mr-md-0 ml-sm-2">
+      <v-col cols="6" sm="6" md="4" align-self="center">
+        <nuxt-link to="/" class="header__link">
+          <v-toolbar-title class="header__title d-none d-sm-flex">
+            JEDY CHEN
+          </v-toolbar-title>
+          <v-toolbar-title class="header__title d-xs-flex d-sm-none">
+            JEDY
+          </v-toolbar-title>
+        </nuxt-link>
+      </v-col>
+      <v-spacer></v-spacer>
+      <v-col cols="6" sm="4" md="3" lg="2" align-self="center">
+        <nuxt-link
+          to="/about"
+          exact
+          exact-active-class="header-link--active"
+          class="header-link"
+        >
+          <v-btn text nuxt :ripple="false" class="font-weight-light">
+            About
+          </v-btn>
+        </nuxt-link>
+        <nuxt-link
+          to="/"
+          exact
+          exact-active-class="header-link--active"
+          :class="{
+            'header-link--active nuxt-link-active': isRouteActive('work')
+          }"
+          class="header-link"
+        >
+          <v-btn text nuxt :ripple="false" class="font-weight-light">
+            Work
+          </v-btn>
+        </nuxt-link>
       </v-col>
     </v-row>
   </v-app-bar>

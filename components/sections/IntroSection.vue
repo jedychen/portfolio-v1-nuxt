@@ -79,7 +79,7 @@
 .intro-section__title {
   font-family: $title-font-family, sans-serif;
   font-size: $font-size-xxl-screen-lg;
-  font-weight: $font-weight-medium;
+  font-weight: $font-weight-bold;
   color: $neutral-white;
   line-height: $line-height-sm;
   position: absolute;
