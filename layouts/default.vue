@@ -14,6 +14,8 @@
 <style lang="scss" scoped>
 .sheet-theme {
   scrollbar-width: none !important;
+  max-width: 100%; // Disable horizontal scrolling
+  overflow-x: hidden;
 }
 </style>
 

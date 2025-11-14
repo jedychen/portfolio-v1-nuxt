@@ -16,7 +16,7 @@ $ npm install
 ```bash
 # Pull images from contentful
 $ nvm use 18
-$ npm install sqip
+$ npm install sqip # Optional, if skipping this line fails, run this line
 $ npm run fetch-images # Download missing images
 
 # Not in use: generate thumbnails for the images

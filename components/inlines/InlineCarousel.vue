@@ -10,6 +10,16 @@
       height="auto"
       class="carousel"
     >
+      <template v-slot:prev="{ on, attrs }">
+        <v-btn elevation="2" icon v-bind="attrs" v-on="on"
+          ><v-icon>mdi-chevron-left</v-icon></v-btn
+        >
+      </template>
+      <template v-slot:next="{ on, attrs }">
+        <v-btn elevation="2" icon v-bind="attrs" v-on="on"
+          ><v-icon>mdi-chevron-right</v-icon></v-btn
+        >
+      </template>
       <v-carousel-item
         v-for="(slide, i) in content.slides"
         :key="content.title + i"
@@ -33,6 +43,7 @@
 
 <style lang="scss">
 @import "~vuetify/src/styles/settings/_variables"; // For breakpoint specific styles
+@import "@mdi/font/css/materialdesignicons.css";
 
 .carousel-count {
   color: $copy-caption-dot;
