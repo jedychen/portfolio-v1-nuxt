@@ -28,7 +28,7 @@ $ npm run fetch-content
 
 # Pull all contents from contentful
 $ nvm use 18
-$ npm install sqip
+$ npm install sqip // Optional
 $ npm run fetch-all
 
 2. Fire Up the Dev Environment
@@ -38,6 +38,7 @@ $ nvm use 12
 $ npm run dev
 
 # build for production and launch server
+$ nvm use 12
 $ npm run build
 $ npm run start
 ```
@@ -49,6 +50,9 @@ $ npm run start
 
 1. Please use node 12.14.0, run the following code
 ```bash
+# Pull all contents from contentful
+$ nvm use 18
+$ npm run fetch-all
 # generate static project
 $ nvm use 12
 $ npm run generate
